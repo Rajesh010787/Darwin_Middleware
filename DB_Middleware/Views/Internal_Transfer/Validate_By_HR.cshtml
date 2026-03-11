@@ -1,0 +1,542 @@
+﻿
+@{
+    ViewData["Title"] = "Validate_By_HR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/formplugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet" />
+<style>
+    .highlight {
+        border: 2px solid red; /* Highlight with a red border */
+        background-color: rgba(255, 0, 0, 0.1); /* Light red background */
+    }
+</style>
+<main id="js-page-content" role="main" class="page-content">
+    <div class="row">
+        <div class="col-xl-6">
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        Existing  <span class="fw-300"><i>Employee Details</i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                    </div>
+                </div>
+                <div class="panel-container show">
+                    <div class="panel-content">
+
+                
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="simpleinput">Emp. Code</label>
+                                    <input type="text" id="Exictingempcode" name="Exictingempcode" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-email-2">Full Name</label>
+                                    <input type="text" id="Exictingfullname" name="Exictingfullname" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-password">Email ID</label>
+                                    <input type="text" id="Exictingemailid" name="Exictingemailid" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="simpleinput">Date of Joining</label>
+                                    <input type="text" id="Exictingtxtdateofjoining" name="Exictingtxtdateofjoining" class="form-control" readonly="readonly">
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Department</label>
+                                    <input type="text" id="Exictingdepartment" name="Exictingdepartment" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Job Level</label>
+                                    <input type="text" id="Exictingjoblevel" name="Exictingjoblevel" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Manager Name</label>
+                                    <input type="text" id="Exictingmanager" name="Exictingmanager" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Manager Email</label>
+                                    <input type="text" id="Exictingmanageremail" name="Exictingmanageremail" class="form-control" readonly="readonly">
+                                </div>
+                               
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Company Group</label>
+                                    <input type="text" id="Exictingbusinessvertical" name="Exictingbusinessvertical" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Cost Center</label>
+                                    <input type="text" id="Exictingdivisionvertical" name="Exictingdivisionvertical" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Mobile Number</label>
+                                    <input type="text" id="Exictingmobilenumber" name="Exictingmobilenumber" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-2">
+                                    <label class="form-label" for="example-textarea">Location</label>
+                                    <textarea id="Exictingtxtlocation" name="Exictingtxtlocation" rows="2" class="form-control" readonly="readonly"></textarea>
+                                </div>
+                            </div>
+
+
+                      
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-xl-6">
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        Transfer To<span class="fw-300"><i>elements</i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                    </div>
+                </div>
+                <div class="panel-container show">
+                    <div class="panel-content">
+
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="simpleinput">Emp. Code</label>
+                                    <input type="text" id="newempcode" name="newempcode" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-email-2">Full Name</label>
+                                    <input type="text" id="newfullname" name="newfullname" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-password">Email ID</label>
+                                    <input type="text" id="newemailid" name="newemailid" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="simpleinput">Date of Joining</label>
+                                    <input type="text" id="newtxtdateofjoining" name="newtxtdateofjoining" class="form-control" readonly="readonly">
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Department</label>
+                                    <input type="text" id="newdepartment" name="newdepartment" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Job Level</label>
+                                    <input type="text" id="newjoblevel" name="newjoblevel" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Manager</label>
+                                    <input type="text" id="newmanager" name="newmanager" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Manager Email</label>
+                                    <input type="text" id="newmanageremail" name="newmanageremail" class="form-control" readonly="readonly">
+                                </div>
+                               
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Company Group</label>
+                                    <input type="text" id="newbusinessvertical" name="newbusinessvertical" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Cost Center</label>
+                                    <input type="text" id="newdivisionvertical" name="newdivisionvertical" class="form-control" readonly="readonly">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label" for="example-palaceholder">Mobile Number</label>
+                                    <input type="text" id="newmobilenumber" name="newmobilenumber" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <label class="form-label" for="example-textarea">Location</label>
+                                <textarea id="newtxtlocation" name="newtxtlocation" rows="2" class="form-control" readonly="readonly"></textarea>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-xl-12">
+
+            <form id="HR_Update_By_Internal_Tranfer">
+
+                <div id="panel-3" class="panel">
+                    <div class="panel-hdr">
+                        <h2>
+                            Action Details
+                        </h2>
+                        <div class="panel-toolbar">
+                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                            <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        </div>
+                    </div>
+                    <div class="panel-container show">
+                        <div class="panel-content">
+
+
+                            <div class="row">
+                                <div class="col-md-7 mb-2">
+                                    <label for="validationCustom02">Access To Domain And Email ID Req.</label><span class="text-danger">*</span>
+                                    <div class="frame-wrap">
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" class="custom-control-input" id="defaultInline1Radio" name="inlineDefaultRadiosExample" readonly="readonly" checked="">
+                                            <label class="custom-control-label" for="defaultInline1Radio">For Darwin Box access only</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" class="custom-control-input" id="defaultInline2Radio" name="inlineDefaultRadiosExample" readonly="readonly">
+                                            <label class="custom-control-label" for="defaultInline2Radio">For Internal Communication</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" class="custom-control-input" id="defaultInline4Radio" name="inlineDefaultRadiosExample" readonly="readonly">
+                                            <label class="custom-control-label" for="defaultInline4Radio">For Internal / External Communication</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-5 mb-2">
+
+                                    <label for="validationCustom02">Access Requested For The Following Group</label><span class="text-danger">*</span>
+
+                                    <select readonly="readonly" data-placeholder="Select Email Group..." class="select2" id="dbchoosegroup" name="dbchoosegroup" multiple="" data-select1-id="multiple-icons" tabindex="-1" aria-hidden="true" style="width: 180.4px;">
+                                    </select>
+
+                                </div>
+
+
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-2">
+
+                                    <label for="validationCustom02">Effective Date</label><span class="text-danger">*</span>
+                                    <input type="text" id="tsteffectivedate" name="tsteffectivedate" class="form-control">
+
+                                </div>
+                                <div class="col-md-6 mb-2">
+
+
+                                    <label for="validationCustom02">Remark</label><span class="text-danger">*</span>
+
+                                    <textarea rows="2" class="form-control" id="txtremark" name="txtremark">  </textarea>
+                                </div>
+                                <div class="col-md-3 mb-6">
+
+
+                                    <label for="submit">
+
+                                    </label>
+
+                                    <br />
+                                    <button type="submit" class="btn btn-primary" onclick="Validate_By_HR_ForTranfer()" id="btnsubmithrtranfer"  name="btnsubmithrtranfer">Submit</button>
+
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script src="~/js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+
+    <script src="~/js/Action_JS/JS.js"></script>
+
+    <script type='text/javascript'>
+
+        var date = new Date();
+        var year = date.getFullYear(); //get year
+        var month = date.getMonth(); //get month
+        var controls = {
+            leftArrow: '<i class="fal fa-angle-left" style="font-size: 1.25rem"></i>',
+            rightArrow: '<i class="fal fa-angle-right" style="font-size: 1.25rem"></i>'
+        }
+        var runDatePicker = function () {
+
+            $("#tsteffectivedate").datepicker({
+                startDate: new Date(year, month, '01'), //set it here
+
+                autoclose: true
+
+            });
+        }
+        var totalList = [];
+        var iterms = "";
+        $(document).ready(function () {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            var cid = params['id'];
+            $('.select2').select2();
+            Bindexicitingnewrecords(cid);
+
+            runDatePicker();
+            //Binddomainname();
+            //runDatePicker();
+            //Bindgroupemail();
+            /*  BindMSLicense();*/
+
+        });
+        function Bindeditgroupemail(groupemails) {
+            var groupemail = new Array();
+            // This will return an array with strings "1", "2", etc.
+            groupemail = groupemails.split(",");
+            $.ajax({
+
+                url: "/Bind_Master/Bind_GEmail",
+                type: "GET",
+                async: false,
+                data: { Groupcompanyname: $("#txtbusinessvertical").val(), Cost_Center_Name: $("#txtdivision").val() },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].groupemailids + '" >' + JsData[index].groupemailids + '</option>';
+                    }
+                    $("#dbchoosegroup").html(binddata);
+
+                    $("#dbchoosegroup").val(groupemail);
+                }
+            });
+        }
+        function Bindgroupemail(newbusinessvertical, newdivisionvertical) {
+
+            $.ajax({
+
+                url: "/Bind_Master/Bind_GEmail",
+                type: "GET",
+                async: false,
+                data: { Groupcompanyname: newbusinessvertical, Cost_Center_Name: newdivisionvertical },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].groupemailids + '" >' + JsData[index].groupemailids + '</option>';
+                    }
+                    $("#dbchoosegroup").html(binddata);
+
+
+                }
+            });
+        }
+
+
+        function Bindexicitingnewrecords(pageCid) {
+            $.ajax({
+                url: "/Internal_Transfer/getactibGetemployeedetails",
+                type: "GET",
+                data: { Uniquesid: pageCid.toString() },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    if (Array.isArray(data)) {
+                        let newEmployee = null;
+                        let existingEmployee = null;
+
+                        // Separate new and existing employees
+                        data.forEach(function (item) {
+                            if (item.requestype === "New") {
+                                newEmployee = item;
+                            } else if (item.requestype === "Existing") {
+                                existingEmployee = item;
+                            }
+                        });
+
+                        // Fill fields and highlight mismatches
+                        if (newEmployee) {
+                            fillFields("#new", newEmployee);
+
+                            Bindgroupemail(newEmployee.group_company, newEmployee.department_cost_center_name);
+
+
+                        }
+                        if (existingEmployee) {
+                            fillFields("#Exicting", existingEmployee);
+                        }
+
+                        // Highlight mismatches between New and Existing fields
+                        highlightMismatches(newEmployee, existingEmployee);
+                    }
+                }
+            });
+
+            function fillFields(prefix, employee) {
+                $(prefix + "empcode").val(employee.employee_id);
+                $(prefix + "fullname").val(employee.fname);
+                $(prefix + "emailid").val(employee.company_email_id);
+                $(prefix + "department").val(employee.department);
+                $(prefix + "divisionvertical").val(employee.department_cost_center_name);
+                $(prefix + "businessvertical").val(employee.group_company);
+                $(prefix + "txtlocation").val(employee.office_location);
+                $(prefix + "txtdateofjoining").val(employee.date_of_joining);
+
+
+                $(prefix + "joblevel").val(employee.job_level);
+                $(prefix + "mobilenumber").val(employee.office_mobile_no);
+                $(prefix + "manageremail").val(employee.direct_manager_email);
+                $(prefix + "manager").val(employee.direct_manager_name);
+
+            }
+
+            function highlightMismatches(newEmployee, existingEmployee) {
+                if (!newEmployee || !existingEmployee) return;
+
+                const fields = [
+                    { id: "empcode", newValue: newEmployee.employee_id, existingValue: existingEmployee.employee_id },
+                    { id: "fullname", newValue: newEmployee.fname, existingValue: existingEmployee.fname },
+                    { id: "emailid", newValue: newEmployee.company_email_id, existingValue: existingEmployee.company_email_id },
+                    { id: "department", newValue: newEmployee.department, existingValue: existingEmployee.department },
+                    { id: "divisionvertical", newValue: newEmployee.department_cost_center_name, existingValue: existingEmployee.department_cost_center_name },
+                    { id: "businessvertical", newValue: newEmployee.group_company, existingValue: existingEmployee.group_company },
+                    { id: "txtlocation", newValue: newEmployee.office_location, existingValue: existingEmployee.office_location },
+                    { id: "txtdateofjoining", newValue: newEmployee.date_of_joining, existingValue: existingEmployee.date_of_joining },
+
+                    { id: "joblevel", newValue: newEmployee.job_level, existingValue: existingEmployee.job_level },
+                    { id: "mobilenumber", newValue: newEmployee.office_mobile_no, existingValue: existingEmployee.office_mobile_no },
+                    { id: "manageremail", newValue: newEmployee.direct_manager_email, existingValue: existingEmployee.direct_manager_email },
+                    { id: "manager", newValue: newEmployee.direct_manager_name, existingValue: existingEmployee.direct_manager_name },
+                ];
+
+                fields.forEach(field => {
+
+                  
+                    if (field.newValue !== field.existingValue) {
+                        $(`#new${field.id}, #existing${field.id}`).addClass("highlight");
+                    }
+                });
+            }
+        }
+
+        //-------------------------------get replace employeedetails------------------------
+
+        function BindreplacementEmpdetails() {
+
+            $.ajax({
+
+                url: "/Email_Request/Bind_Repempdetails",
+                type: "GET",
+                data: { empid: "" + $("#txtreplaceecode").val() + "" },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+
+
+                    for (var index = 0; index < data.length; index++) {
+
+
+                        $("#txtrepemployeename").val(data[index].fname);
+
+                        $("#txtrepgradelevel").val(data[index].level_Grade);
+                        $("#txtrepdesignation").val(data[index].job_level);
+                        $("#txtexicitingemail").val(data[index].company_email_id);
+
+
+
+
+                    }
+                }
+            });
+        }
+
+        //---------------------------------------------End Replacement employee details-----------------------------------------------------
+        function Binddomainname() {
+
+            $.ajax({
+
+                url: "/Bind_Master/Bind_Domain",
+                type: "GET",
+                async: false,
+                data: { Groupcompanyname: $("#txtbusinessvertical").val(), Cost_Center_Name: $("#txtdivision").val() },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].domainname + '" >' + JsData[index].domainname + '</option>';
+                    }
+                    $("#dbchoosedomain").html(binddata);
+                    $("#dbchoosedomain").val(domainname);
+                }
+            });
+        }
+        function BindMSLicense() {
+
+            $.ajax({
+
+                url: "/Bind_Master/Bind_MSLicense",
+                type: "GET",
+                async: false,
+                data: {},
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].mslicense + '" >' + JsData[index].mslicense + '</option>';
+                    }
+                    $("#dbmslicenceallocated").html(binddata);
+
+                }
+            });
+        }
+
+
+    </script>
+
+</main>
+

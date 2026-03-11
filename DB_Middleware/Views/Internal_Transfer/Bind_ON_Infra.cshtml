@@ -1,0 +1,319 @@
+﻿
+@{
+    ViewData["Title"] = "Bind_ON_Infra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /* Custom CSS to add space between the page size dropdown and the table */
+
+    /* Add margin to the page size selector dropdown */
+    .dataTables_length {
+        margin-bottom: 10px; /* Adjust space between the dropdown and table */
+    }
+
+    /* Optional: Adjust the margin between other controls like search box and buttons */
+    .dataTables_filter {
+        margin-left: 20px; /* Adjust space between search box and page size dropdown */
+    }
+
+    /* You can also adjust the space between the export buttons */
+    .dt-buttons {
+        margin-left: 5px;
+        margin-bottom: 10px;
+    }
+
+    /* Add space between pagination controls and table */
+    .dataTables_paginate {
+        margin-top: 20px; /* Adjust space between table and pagination */
+    }
+</style>
+<main id="js-page-content" role="main" class="page-content">
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div id="panel-2" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        Active Employee Details<span class="fw-300"><i></i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                    </div>
+                </div>
+
+
+
+
+                <div class="panel-container show">
+                    <div class="panel-content">
+
+                        <div class="tab-pane" id="tab-events" role="tabpanel">
+                            <div class="d-flex flex-column h-100">
+                                <div class="h-auto">
+                                    <table id="example1" class="table table-bordered table-hover table-striped w-100">
+                                        <thead>
+                                            <tr>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+    @*//-------------------------------------------------Model Popup-----------------------for Tracking History=-----------------*@
+
+
+    <div class="modal fade" id="modal-Tracking_history">
+        <div class="modal-dialog modal-lg modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tracking History(<strong><span id="txtuniqueidhistoty" name="txtuniqueidhistoty"></span></strong>)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="js-emailremove_updatebyinfra">
+                        <div class="frame-wrap">
+                            <div class="panel-container show">
+                                <div class="panel-content">
+
+                                    <div class="tab-pane" id="tab-events" role="tabpanel">
+                                        <div class="d-flex flex-column h-100">
+                                            <div class="h-auto">
+                                                <table id="example2" class="table table-bordered table-hover table-striped w-100">
+                                                    <thead>
+                                                        <tr>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*----------------------------------------------------End Popap Infra Team Details ------------------------------------------------------*@
+
+
+    <script src="~/js/jquery.min.js"></script>
+
+    <script src="~/js/Action_JS/JS.js"></script>
+
+    <script type='text/javascript'>
+        var totalList = [];
+        var iterms = "";
+        $(document).ready(function () {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            var cid = params['id'];
+
+            BindActive_Empdetails();
+
+        });
+        function Redirect(id, Ctatus) {
+
+            window.location.href = '/Internal_Transfer/Validate_By_Infra?id=' + id;
+
+        }
+        //------------------Bind Tracking History ---------------------------------------------
+
+
+        function BindEmptrackinghistory(Eid, fullname) {
+            $("#txtuniqueidhistoty").text(fullname);
+            $('#modal-Tracking_history').modal('show');
+            $.ajax({
+                url: "/DB_View/get_tracking_emp_records_history",
+                type: "GET",
+                data: { UniqueID: "" + Eid + "", Requesttype: 'Block Email ID' },
+
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    /*     console.log(data); // Log the data to inspect*/
+
+                    if (Array.isArray(data) && data.length > 0) {
+                        // Destroy the existing DataTable instance if it exists
+                        if ($.fn.DataTable.isDataTable('#example2')) {
+                            $('#example2').DataTable().clear().destroy();
+                        }
+                        // Initialize DataTable with new data
+                        $('#example2').DataTable({
+                            responsive: true,
+                            processing: true,
+                            async: true,
+                            data: data,
+                            order: [[4, 'desc']],
+
+                            columns: [
+
+                                { data: 'actionby', title: 'Action By', width: '20%' },
+                                { data: 'peningon', title: 'Pending On', width: '20%' },
+                                { data: 'cstatus', title: 'Action Status', width: '10%' },
+                                { data: 'requestfor', title: 'Request For', width: '10%' },
+                                { data: 'actiondate', title: 'Action Date', width: '10%', type: 'date' },
+                                { data: 'remark', title: 'Remark', width: '20%' }
+
+                            ]
+
+                        });
+
+                        // Handle click event on "Edit" link
+                        $('#example2').on('click', '.edit-link', function (e) {
+                            e.preventDefault();
+
+                            // Replace the following line with your edit logic, e.g., opening a modal or redirecting
+                            /* console.log('Edit button clicked for ID: ' + id);*/
+                        });
+                    } else {
+                        console.error("No data found or data is not an array");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                }
+            });
+        }
+
+        //----------------------------------Bind Tracking History -------------------------------------------------
+
+        function BindActive_Empdetails() {
+            $.ajax({
+                url: "/Internal_Transfer/getactibveemployeedetails",
+                type: "GET",
+                data: {
+                    bindtype:1
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (Array.isArray(data) && data.length > 0) {
+                        // Destroy the existing DataTable instance if it exists
+                        if ($.fn.DataTable.isDataTable('#example1')) {
+                            $('#example1').DataTable().clear().destroy();
+                        }
+                        // Initialize DataTable with new data
+                        $('#example1').DataTable({
+                            responsive: true,
+                            processing: true,
+                            data: data,
+                            order: [[4, 'desc']],
+                            columns: [
+                                {
+                                    data: null,
+                                    title: 'Action',
+                                    render: function (data, type, row) {
+                                        // Ensure UserUniqueID exists in the row data
+                                        if (row.userUniqueID) {
+                                            return '<a style="text-decoration: none; color:black;" href="#"  onclick=\'javascript:Redirect("' + row.userUniqueID + '"); \'><span class="badge badge-pill badge-success">Update</span></a>';
+                                        } else {
+                                            return '<span></span>'; // Fallback if UserUniqueID is not present
+                                        }
+                                    }
+                                },
+                                { data: 'fname', title: 'Employee Name' },
+
+                                { data: 'date_of_joining', title: 'Date of Joining', type: 'date' },
+
+                                { data: 'company_email_id', title: 'Email ID' },
+                                { data: 'group_company', title: 'Group Company' },
+                                { data: 'department_cost_center_name', title: 'Cost Center Name' },
+                                { data: 'department', title: 'Department' },
+                                { data: 'cStatus', title: 'Status' },
+
+                                { data: 'direct_manager_name', title: 'RM' },
+
+                                { data: 'office_location', title: 'Office Location' },
+                                {
+                                    data: null,
+                                    title: 'Tracking',
+
+                                    render: function (data, type, row) {
+                                        // Ensure UserUniqueID exists in the row data
+                                        if (row.userUniqueID) {
+                                            return `
+                                                   <a style="text-decoration: none; color:black;"
+                                                       href="#"
+                                                       onclick='BindEmptrackinghistory("${row.user_id}", "${row.fname}");'>
+                                                        <span class="badge badge-pill badge-warning ">View</span>
+                                                    </a>`;
+                                        } else {
+                                            return '<span></span>'; // Fallback if UserUniqueID is not present
+                                        }
+
+
+                                    }
+                                },
+                            ],
+                            dom: 'Blfrtip',  // 'l' is kept to show the page size dropdown, 'p' is for pagination
+
+                            buttons: [
+                                {
+                                    extend: 'excelHtml5',
+                                    className: 'btn-outline-success btn-sm',  // Add custom classes to the Excel button
+                                    text: 'Export to Excel'
+                                },
+                                {
+                                    extend: 'csvHtml5',
+                                    className: 'btn-outline-primary btn-sm',  // Add custom classes to the CSV button
+                                    text: 'Export to CSV'
+                                },
+                                {
+                                    extend: 'copyHtml5',
+                                    className: 'btn-outline-success btn-sm',  // Add custom classes to the Copy button
+                                    text: 'Copy to Clipboard'
+                                }
+                            ],
+
+                        });
+
+                        // Handle click event on "Edit" link
+                        $('#example1').on('click', '.edit-link', function (e) {
+                            e.preventDefault();
+                            var id = $(this).data('id'); // Correct data attribute name
+
+                            // Redirect to the new URL with the unique ID
+
+                        });
+                    } else {
+                        console.error("No data found or data is not an array");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                }
+            });
+        }
+
+
+
+
+    </script>
+
+</main>
+

@@ -1,0 +1,601 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Initiated_Loan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ var userFullName = Context.Session.GetString("Sessionfullname");
+    var Empcode = Context.Session.GetString("Empcode");
+    var Depart = Context.Session.GetString("Depart");
+    var DOJ = Context.Session.GetString("DOJ");
+
+    var BV = Context.Session.GetString("BV");
+    var Plant = Context.Session.GetString("Plant");
+    var Division = Context.Session.GetString("Division");
+    }
+
+
+<link href="~/css/formplugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet" />
+<main id="js-page-content" role="main" class="page-content">
+
+
+
+    <div class="row">
+
+        <div class="col-xl-12">
+
+
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        Employee Loan Process Details<span class="fw-300">
+                        </span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        @*<button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>*@
+                    </div>
+                </div>
+                <form id="Loan_Request">
+                    <div class="panel-container show">
+
+                        <div class="frame-wrap">
+                            <div class="panel-content">
+
+
+
+                                <!-- /.box-header -->
+                                <!-- form start -->
+
+                                <div class="box-body">
+
+                                    <fieldset class="form-group border p-2">
+                                        <legend class="w-auto px-1" style="font-size: 13px;"><strong>Employee Information</strong></legend>
+                                        <div class="form-row">
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Name</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtname" autocomplete="off" value="@userFullName" name="txtname" disabled="disabled">
+
+                                            </div>
+
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Employee Code</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtempcode" autocomplete="off" name="txtempcode" value="@Empcode" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Department</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtdepartment" autocomplete="off" name="txtdepartment" value="@Depart" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Group Company</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtbusinessvertical" autocomplete="off" name="txtbusinessvertical" value="@BV" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Business Unit</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtdivision" autocomplete="off" name="txtdivision" value="@Division"  disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Dept. Cost Center</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtplant" autocomplete="off" name="txtplant" value="@Plant"  disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Date Of Joining</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtdatejoin" autocomplete="off" name="txtdatejoin" value="@DOJ" disabled="disabled">
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row">
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02"> Salary Drawn to Basic + HRA</label><span class="text-danger">*</span>
+                                                @*<input type="text" class="form-control input-sm" id="txtsalarydown" autocomplete="off" name="txtsalarydown">*@
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txtsalarydown"
+                                                       name="txtsalarydown"
+                                                       autocomplete="off"
+                                                       inputmode="numeric"
+                                                       pattern="^[0-9]+$"
+                                                       placeholder="Enter salary"
+                                                       title="Please enter numbers only"
+                                                       oninput="convertToWordssalarydown(this.value)">
+                                                <small id="amountWordssalarydown" style="font-weight:600;color:#555;"></small>
+                                            </div>
+
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Amount applied for Rs</label><span class="text-danger">*</span>
+                                                @*<input type="text" class="form-control input-sm" id="txtrupess" autocomplete="off" name="txtrupess">*@
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txtrupess"
+                                                       name="txtrupess"
+                                                       autocomplete="off"
+                                                       inputmode="numeric"
+                                                       pattern="^[0-9]+$"
+                                                       placeholder="Enter amount"
+                                                       title="Please enter numbers only"
+                                                       oninput="convertToWords(this.value)">
+                                                <small id="amountWords" style="font-weight:600;color:#555;"></small>
+                                            </div>
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Deviation</label><span class="text-danger">*</span>
+                                                <select class="form-control input-sm" id="dbdeviation" name="dbdeviation">
+
+                                                    <option value="">Select</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Number of installments for Repayment</label><span class="text-danger">*</span>
+                                                <input type="number"
+                                                       class="form-control input-sm"
+                                                       id="txtinstallments"
+                                                       name="txtinstallments"
+                                                       required
+                                                       autocomplete="off" />
+                                            </div>
+
+
+                                            <div class="col-md-4 mb-2">
+                                                <label for="validationCustom02">Purpose</label><span class="text-danger">*</span>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+
+
+
+                                                        <select class="form-control input-sm" id="dbpurpos" name="dbpurpos" style="width:150px;">
+                                                        </select>
+
+
+                                                    </div>
+                                                    <textarea class="form-control" rows="1" aria-label="With textarea" placeholder="Discription of Purpose" name="textpurpos" id="textpurpos"></textarea>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-2 mb-2">
+
+                                                <label for="validationCustom02">Attachment </label><span class="text-danger">*</span>
+                                                <input type="file" name="fileupload" class="form-control" id="fileupload">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Guarantor 1</label><span class="text-danger">*</span>
+                                                <select data-placeholder="Select Garantee 1..." class="select2" id="dbgarantee1" name="dbgarantee1">
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Guarantor 2</label><span class="text-danger">*</span>
+                                                <select data-placeholder="Select Garantee 2..." class="select2" id="dbgarantee2" name="dbgarantee2">
+                                                </select>
+
+                                            </div>
+
+                                        </div>
+                                    </fieldset>
+
+
+                                    <fieldset class="form-group border p-2">
+                                        <legend class="w-auto px-1" style="font-size: 13px;"><strong>Action</strong></legend>
+                                        <div class="form-row">
+
+                                            <div class="col-md-6 mb-2">
+
+                                                <label for="validationCustom02">Remark</label><span class="text-danger">*</span>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Comment</span>
+                                                    </div>
+                                                    <textarea class="form-control" aria-label="With textarea" id="txtremark" name="txtremark"></textarea>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-3 mb-2">
+                                                <br />
+                                                <button type="submit" class="btn btn-primary" onclick="Save_Loan_Request()" id="btnsubmithrloancreation" name="btnsubmithrloancreation">Submit</button>
+
+                                            </div>
+                                        </div>
+                                        <hr />
+
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="hiddenuniqueid" name="hiddenuniqueid" />
+
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="spinner" style="display:none">
+                <div class="center-div">
+
+                    <img src="~/img/1amw (1).gif" width="200">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+
+    <script src="~/js/Action_JS/loanjs.js"></script>
+
+    <script type='text/javascript'>
+
+
+        var totalList = [];
+        var iterms = "";
+
+        $(document).ready(function () {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            const cid = params.id || "";
+            Bindpurposemaster();
+            $('.select2').select2();
+
+            if (cid !== "") {
+                $("#btnsubmithrloancreation").text('Update');
+                bindLoanDetailsforedit(cid);
+                $("#hiddenuniqueid").val(cid);
+            } else {
+                Bindgaranteepeoplesname1();
+                Bindgaranteepeoplesname2();
+            }
+
+            $("#dbgarantee1").on("change", function () {
+                filterDropdowns();
+            });
+
+            $("#dbgarantee2").on("change", function () {
+                filterDropdowns();
+            });
+        
+        });
+
+        const deviation = document.getElementById("dbdeviation");
+        const installments = document.getElementById("txtinstallments");
+
+        // Handle Deviation changes
+        deviation.addEventListener("change", function () {
+            if (this.value === "No") {
+                installments.value = 10;
+                installments.min = 10;
+                installments.max = 10;
+                installments.readOnly = true;
+            }
+            else if (this.value === "Yes") {
+                installments.value = 10;
+                installments.min = 10;
+                installments.max = 24;
+                installments.readOnly = false;
+            }
+            else {
+                installments.value = "";
+                installments.readOnly = false;
+                installments.removeAttribute("min");
+                installments.removeAttribute("max");
+            }
+        });
+
+        // Validate only when user leaves the input (blur)
+        installments.addEventListener("blur", function () {
+            let val = parseInt(this.value, 10);
+
+            if (isNaN(val)) {
+                this.value = "";
+                return;
+            }
+
+            // enforce min/max only here
+            if (deviation.value === "Yes") {
+                if (val < 10) this.value = 10;
+                if (val > 24) this.value = 24;
+            }
+        });
+
+        // Optional: prevent typing non-numeric characters
+        installments.addEventListener("keypress", function (e) {
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+        // Salary Down
+
+        function convertToWordssalarydown(num) {
+            num = num.replace(/[^0-9]/g, '');
+            document.getElementById("txtsalarydown").value = num;
+
+            if (num === "") {
+                document.getElementById("amountWordssalarydown").innerHTML = "";
+                return;
+            }
+
+            document.getElementById("amountWordssalarydown").innerHTML = numberToWordsIndian(num);
+        }
+
+
+        // Input Rupess
+        function convertToWords(num) {
+            num = num.replace(/[^0-9]/g, '');
+            document.getElementById("txtrupess").value = num;
+
+            if (num === "") {
+                document.getElementById("amountWords").innerHTML = "";
+                return;
+            }
+
+            document.getElementById("amountWords").innerHTML = numberToWordsIndian(num);
+        }
+
+        function numberToWordsIndian(num) {
+            const a = [
+                '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+                'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
+                'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'
+            ];
+            const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+            if ((num = num.toString()).length > 9) return 'Overflow';
+
+            let n = ('000000000' + num).slice(-9).match(/(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})/);
+            if (!n) return '';
+
+            let str = '';
+            str += (n[1] != 0) ? (a[n[1]] || b[n[1][0]] + ' ' + a[n[1][1]]) + ' Crore ' : '';
+            str += (n[2] != 0) ? (a[n[2]] || b[n[2][0]] + ' ' + a[n[2][1]]) + ' Lakh ' : '';
+            str += (n[3] != 0) ? (a[n[3]] || b[n[3][0]] + ' ' + a[n[3][1]]) + ' Thousand ' : '';
+            str += (n[4] != 0) ? (a[n[4]] || b[n[4][0]] + ' ' + a[n[4][1]]) + ' Hundred ' : '';
+            str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[n[5]] || b[n[5][0]] + ' ' + a[n[5][1]]) + ' ' : '';
+
+            return str.trim();
+        }
+
+
+
+        function Bindgaranteepeoplesname1() {
+
+
+            $.ajax({
+
+                url: "/Loan/Bind_Garanted_Person",
+                type: "GET",
+                async: false,
+                data: { Ecode: @Empcode },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].gperson_Ecode + '" >' + JsData[index].gpersonname + '</option>';
+                    }
+                    $("#dbgarantee1").html(binddata);
+
+                }
+            });
+        }
+        function Bindgaranteepeoplesname2() {
+
+
+            $.ajax({
+
+                url: "/Loan/Bind_Garanted_Person",
+                type: "GET",
+                async: false,
+                data: { Ecode: @Empcode },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].gperson_Ecode + '" >' + JsData[index].gpersonname + '</option>';
+                    }
+                    $("#dbgarantee2").html(binddata);
+
+                }
+            });
+        }
+
+
+           function Bindpurposemaster() {
+
+
+            $.ajax({
+
+                url: "/Loan/Bind_Purpose",
+                type: "GET",
+                async: false,
+                data: {},
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].purpose + '" >' + JsData[index].purpose + '</option>';
+                    }
+                    $("#dbpurpos").html(binddata);
+
+                }
+            });
+        }
+
+
+
+
+
+        function Bindgaranteepeoplesnameedit1(garantee1) {
+
+
+            $.ajax({
+
+                url: "/Loan/Bind_Garanted_Person",
+                type: "GET",
+                async: false,
+                data: { Ecode: @Empcode },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].gperson_Ecode + '" >' + JsData[index].gpersonname + '</option>';
+                    }
+                    $("#dbgarantee1").html(binddata);
+                    $("#dbgarantee1").val(garantee1);
+                }
+            });
+        }
+        function Bindgaranteepeoplesnameedit2(garantee2) {
+
+
+            $.ajax({
+
+                url: "/Loan/Bind_Garanted_Person",
+                type: "GET",
+                async: false,
+                data: { Ecode: @Empcode },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].gperson_Ecode + '" >' + JsData[index].gpersonname + '</option>';
+                    }
+                    $("#dbgarantee2").html(binddata);
+                    $("#dbgarantee2").val(garantee2);
+
+                }
+            });
+        }
+        /* -------------------- VICE VERSA FILTER LOGIC -------------------- */
+        function filterDropdowns() {
+
+            var val1 = $("#dbgarantee1").val();
+            var val2 = $("#dbgarantee2").val();
+
+            // Reset all options
+            $("#dbgarantee1 option, #dbgarantee2 option")
+                .show()
+                .prop("disabled", false);
+
+            // Hide dbgarantee1 selection from dbgarantee2
+            if (val1 !== "") {
+                $("#dbgarantee2 option[value='" + val1 + "']")
+                    .hide()
+                    .prop("disabled", true);
+            }
+
+            // Hide dbgarantee2 selection from dbgarantee1
+            if (val2 !== "") {
+                $("#dbgarantee1 option[value='" + val2 + "']")
+                    .hide()
+                    .prop("disabled", true);
+            }
+
+            // Prevent same value selected in both
+            if (val1 !== "" && val1 === val2) {
+                $("#dbgarantee2").val("");
+            }
+        }
+
+
+
+        function bindLoanDetailsforedit(uniqueId) {
+            $.ajax({
+
+                url: "/Loan/get_loandetails_details_for_validate",
+                type: 'GET',
+                data: { uniqueid: uniqueId },
+                dataType: 'json',
+                async: false,
+                success: function (response) {
+
+                    if (response.length > 0) {
+                        var data = response[0];
+
+                        $('#txtempcode').val(data.ecode);
+                        $('#txtsalarydown').val(data.salarydown);
+
+                        $('#txtdepartment').val(data.department);
+
+
+                        $('#txtrupess').val(data.rupess);
+                        filterDropdowns();
+
+
+
+
+                        Bindgaranteepeoplesnameedit1(data.garanteesecode1);
+                        Bindgaranteepeoplesnameedit2(data.garanteesecode2);
+
+
+
+
+                        $('#tatpurpose').val(data.purpose);
+                        $('#dbdeviation').val(data.deviation);
+
+                        $('#txtname').val(data.fullname);
+
+
+                        $('#txtinstallments').val(data.installments); // bind value
+                        // Make read-only if needed
+
+                        $('#txtbusinessvertical').val(data.businessvertical);
+                        $('#txtdivision').val(data.division);
+                        $('#txtplant').val(data.plant);
+
+                    }
+                    else {
+                        alert('No loan details found.');
+                    }
+                },
+                error: function () {
+                    alert('Error while fetching loan details.');
+                }
+            });
+        }
+
+    </script>
+
+
+
+
+</main>
+

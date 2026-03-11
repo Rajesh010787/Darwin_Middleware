@@ -1,0 +1,1154 @@
+﻿
+@{
+    ViewData["Title"] = "get_emp_completion_report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<style>
+    #container {
+        height: 400px;
+    }
+
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+
+    .highcharts-description {
+        margin: 0.3rem 10px;
+    }
+</style>
+<!-- END Page Header -->
+<!-- BEGIN Page Content -->
+<!-- the #js-page-content id is needed for some plugins to initialize -->
+<link rel="stylesheet" media="screen, print" href="../css/statistics/c3/c3.css">
+<main id="js-page-content" role="main" class="page-content">
+    <ol class="breadcrumb page-breadcrumb">
+        <li class="breadcrumb-item"><a href="javascript:void(0);">Admin</a></li>
+        <li class="breadcrumb-item">Application</li>
+        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
+    </ol>
+    <div class="subheader">
+        <h1 class="subheader-title">
+            <i class='subheader-icon fal fa-chart-area'></i><span class='fw-300'>Dashboard</span>
+        </h1>
+
+    </div>
+
+    <!-- 🔹 Plant Details Modal -->
+    <!-- Main Plant Details Modal -->
+    <div class="col-lg-12 sortable-grid ui-sortable">
+        <div id="panel-1" class="panel panel-locked panel-sortable" data-panel-lock="false" data-panel-close="false" data-panel-fullscreen="false" data-panel-collapsed="false" data-panel-color="false" data-panel-locked="false" data-panel-refresh="false" data-panel-reset="false" role="widget">
+
+
+            <div class="box-body">
+                <fieldset class="form-group border p-2">
+
+
+                    @*<div class="input-group">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-info waves-effect waves-themed" type="button"><i class="fal fa-search"></i></button>
+                            </div>
+                            <input id="button-addon4" type="text" class="form-control" placeholder="Search anything..." aria-label="Example text with button addon" aria-describedby="button-addon4">
+                        </div>*@
+
+                    <div class="form-row">
+                        <div class="col-md-4 mb-2">
+
+
+                            <select data-placeholder="Select Plant..." class="select2" id="dbplant" name="dbplant" multiple="" data-select2-id="multiple-icons" tabindex="-1" aria-hidden="true" style="width: 180.4px;" placeholder="Search anything..." aria-label="Example text with button addon" aria-describedby="button-addon4">
+                            </select>
+
+
+                        </div>
+                        <div class="col-md-5 mb-2">
+
+                            <div class="input-group-prepend">
+                                <button class="btn btn-info waves-effect waves-themed" type="button" onclick="return get_dashboard_first_plant_wiese()">Refresh Graph</button>&nbsp;
+
+                                <button type="submit" class="btn btn-success btn-sm mr-1 waves-effect waves-themed" onclick="return exportEmployeeExcelMain()" id="rollicd">Export</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="modal fade" id="plantDetailsModal">
+            <div class="modal-dialog modal-xl" style="max-width:84%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="plantDetailsLabel">Plant Details</h5>
+
+                    </div>
+                    <div class="modal-body" id="plantDetailsBody" style="max-height:80vh; overflow-y:auto;">
+                        <div class="text-center">
+                            <i class="fal fa-spinner fa-spin fs-xl"></i> Loading...
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalBtn">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="empDetailsModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header bg-info text-white">
+                        <h5 class="modal-title" id="empDetailsTitle">Employee Details</h5>
+                        @*<button type="button" class="btn-close" data-bs-dismiss="modal"></button>*@
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalBtndetails">Close</button>
+                    </div>
+
+                    <div class="modal-body" id="empDetailsBody">
+                    </div>
+
+                    <div class="modal-footer">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+
+
+
+
+
+
+
+
+            <div class="col-lg-12 sortable-grid ui-sortable">
+                <div id="panel-2" class="panel panel-sortable" data-panel-fullscreen="false" role="widget">
+                    <div class="panel-hdr" role="heading">
+
+                        <i class="ni ni-printer" onclick="printChart4()"></i>
+                    </div>
+
+                    <div class="panel-container show" role="content">
+                        <div class="loader">
+                            <i class="fal fa-spinner-third fa-spin-4x fs-xxl"></i>
+                        </div>
+                        <div id="chart-legend" style="margin-left: 20px; font-size: 12px; line-height: 1.5;">
+                            <table style="border-collapse:collapse;">
+                                <tr>
+                                    <th style="background:#4CAF50; color:white; padding:3px 8px; border:1px solid #ccc;">Green</th>
+                                    <td style="padding:3px 8px; border:1px solid #ccc;">- 100%</td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#F4A300; color:white; padding:3px 8px; border:1px solid #ccc;">Orange</th>
+                                    <td style="padding:3px 8px; border:1px solid #ccc;">90–99%</td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#C00000; color:white; padding:3px 8px; border:1px solid #ccc;">Red</th>
+                                    <td style="padding:3px 8px; border:1px solid #ccc;">&lt; 90%</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- ✅ Chart container with responsive width -->
+                        <div id="chart-header" style="text-align:center; margin-bottom:5px; font-size:12px; font-weight:bold; color:#333;">
+                            <div style="font-size:16px; font-weight:bold;">Plant-wise Employee Profile Completion (%)</div>
+                            <div id="chart-subtitle">
+                                Total Employee: 0 | Basic: 0% | Education: 0% | Work: 0% | Overall: 0%
+                            </div>
+                        </div>
+
+                        <div id="containerplant_wrapper" style="width:100%; overflow-x:auto; overflow-y:hidden;">
+                            <div id="containerplant" style="min-width:1200px; height:500px;">
+                                <canvas id="plantChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+</main>
+
+<script src="~/js/Chart_JS/chart.js"></script>
+<script src="~/js/Chart_JS/chartjs-plugin-datalabels.js"></script>
+<script src="~/js/Action_JS/xlsx.full.min.js"></script>
+<script src="~/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/Action_JS/Bind_Droup_Down_Master.js"></script>
+
+<script type="text/javascript">
+    /* Activate smart panels */
+
+    var plant = [];
+    $(document).ready(function () {
+
+
+
+        Bind_Vertical_Dropdown();
+        get_dashboard_first_plant_wiese();
+
+        $('.select2').select2();
+
+
+    });
+   function Bind_Vertical_Dropdown() {
+
+    $.ajax({
+        url: '@Url.Action("Bind_Plant", "Emp_profile_completation_")',
+        type: 'GET',
+
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+
+
+            var JsData = data;
+
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+
+
+                binddata = binddata + '<option value="' + JsData[index].value + '" >' + JsData[index].name + '</option>';
+            }
+            $("#dbplant").html(binddata);
+
+            $("#dbplant").val(editid);
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+}
+
+
+    $('#filterBtn').click(function () {
+
+        plant = [];
+
+
+        for (var option of document.getElementById("dbplant").options) {
+            if (option.selected) {
+                plant.push(option.value);
+            }
+        }
+        get_dashboard_first_plant_wiese(plant);
+
+    });
+
+
+function exportEmployeeExcel(plant) {
+
+    $('#loader').show();
+
+    $.ajax({
+
+        url: '@Url.Action("GetPlantWiseDetailsExport", "Emp_profile_completation_")',
+        type: 'GET',
+        data: { plant: plant },
+
+        success: function (response) {
+
+            $('#loader').hide();
+
+            var allData = response;
+
+            if (!allData || allData.length === 0) {
+                alert("No employee data found.");
+                return;
+            }
+
+            /* ===========================
+               FIELD KEYS FROM API
+            ============================ */
+            var fields = [
+                'employeeId', 'employeeName', 'getentry', 'fatherName',
+
+                'dateOfJoining', 'groupDateOfJoining', 'gender',
+                'groupCompany', 'departmentCostCenterName',
+                'functionalAreaDept', 'functionalAreaSubDept', 'departmentName',
+                'jobLevel', 'levelGrade', 'employeeType',
+
+                'directManagerId', 'directManagerName',
+                'hodId', 'hodName',
+
+                'maritalStatus',
+                'companyEmail', 'officeMobile', 'personalEmail', 'personalMobile',
+                'emergencyContact', 'emergencyPerson',
+
+                'currentAddress', 'permanentAddress',
+
+                'uanNumber', 'bloodGroup',
+                'bankName', 'bankBranch', 'bankIFSC', 'bankAccount',
+
+                // Education
+                'institutionName', 'levelOfStudy', 'fieldOfStudy',
+                'gpaPercentage',
+
+                // Work
+                'workCompany', 'workTitle', 'workLocation',
+                'workFromDate', 'workToDate',
+
+                // Completion %
+                'basicPercent', 'educationPercent', 'workPercent', 'overall'
+            ];
+
+            /* ===========================
+               EXCEL COLUMN HEADERS
+            ============================ */
+            var headers = [
+                'Sr No', // <--- added serial number column
+
+                'Employee ID', 'Employee Name', 'Entry Route', 'Father Name',
+
+                'Date of Joining', 'Group Date of Joining', 'Gender',
+                'Group Company', 'Department Cost Center',
+                'Functional Area Dept', 'Functional Area Sub Dept', 'Department Name',
+                'Job Level', 'Level Grade', 'Employee Type',
+
+                'Direct Manager ID', 'Direct Manager Name',
+                'HOD ID', 'HOD Name',
+
+                'Marital Status',
+                'Company Email', 'Office Mobile', 'Personal Email', 'Personal Mobile',
+                'Emergency Contact', 'Emergency Person',
+
+                'Current Address', 'Permanent Address',
+
+                'UAN Number', 'Blood Group',
+                'Bank Name', 'Bank Branch', 'Bank IFSC', 'Bank Account',
+
+                // Education
+                'Education - Institution', 'Education - Level',
+                'Education - Field', 'Education - GPA %',
+
+                // Work
+                'Work - Company', 'Work - Title', 'Work - Location',
+                'Work - From', 'Work - To',
+
+                // Completion %
+                'Basic %', 'Education %', 'Work %', 'Overall %'
+            ];
+
+            /* ===========================
+               MAP DATA WITH SR NO
+            ============================ */
+            var tableData = allData.map(function (item, index) {
+                return [
+                    index + 1, // <--- Serial number (Sr No)
+                    ...fields.map(function (field) {
+                        return item[field] ?? '';
+                    })
+                ];
+            });
+
+            var worksheetData = [headers, ...tableData];
+
+            /* ===========================
+               CREATE & EXPORT EXCEL
+            ============================ */
+            var worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+            var workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Employees");
+
+            XLSX.writeFile(workbook, "Employee_Full_Details.xlsx");
+        },
+
+        error: function () {
+            $('#loader').hide();
+            alert("Error exporting Excel.");
+        }
+    });
+}
+
+
+
+       function exportEmployeeExcelMain(plant) {
+
+        $('#loader').show();
+           plant = [];
+
+
+           for (var option of document.getElementById("dbplant").options) {
+               if (option.selected) {
+                   plant.push(option.value);
+               }
+           }
+        $.ajax({
+
+             url: '@Url.Action("GetPlantWiseDetailsExport", "Emp_profile_completation_")',
+            type: 'GET',
+            data: { plant: plant.toString().trim()},
+
+            success: function (response) {
+                $('#loader').hide();
+
+                var allData = response;
+
+                if (!allData || allData.length === 0) {
+                    alert("No employee data found.");
+                    return;
+                }
+
+                /* ===========================
+                   FIELD KEYS FROM YOUR API
+                   =========================== */
+                var fields = [
+                    'employeeId', 'employeeName', 'getentry', 'fatherName',
+
+                    'dateOfJoining', 'groupDateOfJoining', 'gender',
+                    'groupCompany', 'departmentCostCenterName',
+                    'functionalAreaDept', 'functionalAreaSubDept', 'departmentName',
+                    'jobLevel', 'levelGrade', 'employeeType',
+
+                    'directManagerId', 'directManagerName',
+                    'hodId', 'hodName'
+
+                    , 'maritalStatus',
+                    'companyEmail', 'officeMobile', 'personalEmail', 'personalMobile',
+                    'emergencyContact', 'emergencyPerson',
+
+                    'currentAddress', 'permanentAddress',
+
+                   'uanNumber', 'bloodGroup',
+                    'bankName', 'bankBranch', 'bankIFSC', 'bankAccount',
+
+                    // Education fields
+                    'institutionName', 'levelOfStudy', 'fieldOfStudy',
+                    'gpaPercentage',
+
+                    // Work fields
+                    'workCompany', 'workTitle', 'workLocation',
+                    'workFromDate', 'workToDate',
+
+                    // Completion percentages
+                    'basicPercent', 'educationPercent', 'workPercent', 'overall'
+                ];
+
+                /* ===========================
+                   EXCEL COLUMN HEADERS
+                   =========================== */
+                var headers = [
+                    'Sr No', // <--- added serial number column
+                    'Employee ID', 'Employee Name', 'Entry Route', 'Father Name',
+
+                    'Date of Joining', 'Group Date of Joining', 'Gender',
+                    'Group Company', 'Department Cost Center',
+                    'Functional Area Dept', 'Functional Area Sub Dept', 'Department Name',
+                    'Job Level', 'Level Grade', 'Employee Type',
+
+                    'Direct Manager ID', 'Direct Manager Name',
+                    'HOD ID', 'HOD Name'
+
+                    , 'Marital Status',
+                    'Company Email', 'Office Mobile', 'Personal Email', 'Personal Mobile',
+                    'Emergency Contact', 'Emergency Person',
+
+                    'Current Address', 'Permanent Address',
+
+                    'UAN Number', 'Blood Group',
+                    'Bank Name', 'Bank Branch', 'Bank IFSC', 'Bank Account',
+
+                    // Education
+                    'Education - Institution', 'Education - Level',
+                    'Education - Field',
+                    'Education - GPA %',
+
+                    // Work
+                    'Work - Company', 'Work - Title', 'Work - Location',
+                    'Work - From', 'Work - To',
+
+                    // Completion %
+                    'Basic %', 'Education %', 'Work %', 'Overall %'
+                ];
+
+                /* ===========================
+                   MAP DATA ROWS
+                   =========================== */
+                var tableData = allData.map(function (item, index) {
+                    return [
+                        index + 1, // <--- Serial number (Sr No)
+                        ...fields.map(function (field) {
+                            return item[field] ?? '';
+                        })
+                    ];
+                });
+
+                var worksheetData = [headers, ...tableData];
+
+                // Create worksheet
+                var worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+                var workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Employees");
+
+                // Export file
+                XLSX.writeFile(workbook, "Employee_Full_Details.xlsx");
+            },
+
+            error: function () {
+                $('#loader').hide();
+                alert("Error exporting Excel.");
+            }
+        });
+    }
+
+    //-------------------------------------------plant wise graph ------------------------------
+function get_dashboard_first_plant_wiese() {
+
+    let plant = [];
+    for (let option of document.getElementById("dbplant").options) {
+        if (option.selected) plant.push(option.value);
+    }
+
+    $.ajax({
+        url: '@Url.Action("GetChartDataPlant", "Emp_profile_completation_")',
+        type: 'GET',
+        data: { plants: plant.toString().trim() },
+        contentType: "application/json; charset=utf-8",
+
+        success: function (data) {
+
+            const chartData = data.series[0].data;
+
+            const labels = chartData.map(d => d.name);
+            const values = chartData.map(d => d.y);
+            const summaries = chartData.map(d => d.summary);
+
+            const colors = chartData.map(p => {
+                if (p.y >= 100) return '#4CAF50';
+                else if (p.y >= 90) return '#F4A300';
+                else return '#C00000';
+            });
+
+            // ---- Update HTML subtitle (fixed) ----
+            $('#chart-subtitle').html(
+                `Total Employee: ${data.totalemp} | ` +
+                `Basic: ${data.grand_Basic.toFixed(2)}% | ` +
+                `Education: ${data.grand_Education.toFixed(2)}% | ` +
+                `Work: ${data.grand_Work.toFixed(2)}% | ` +
+                `Overall: ${data.grand_Overall.toFixed(2)}%`
+            );
+
+            // ---- Remove old canvas and set dynamic width for scrolling ----
+            $("#containerplant").html('<canvas id="plantChart"></canvas>');
+            let canvasWidth = labels.length * 50; // 80px per bar
+            $("#containerplant").css("min-width", canvasWidth + "px");
+
+            const ctx = document.getElementById('plantChart');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Overall Profile Completion (%)",
+                        data: values,
+                        backgroundColor: colors
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: { duration: 800 },
+
+                    scales: {
+                        x: {
+                            ticks: {
+                                maxRotation: 55,
+                                minRotation: 55,
+                                font: { size: 10, weight: 'bold' }
+                            }
+                        },
+                        y: {
+                            min: 0,
+                            max: 100,
+                            ticks: {
+                                callback: val => val + "%",
+                                font: { size: 12 }
+                            },
+                            title: {
+                                display: true,
+                                text: "Completion %"
+                            }
+                        }
+                    },
+
+                    plugins: {
+                        legend: { display: false },
+
+                        // Data labels
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: value => value.toFixed(2) + "%",
+                            color: '#000',
+                            font: { size: 9, weight: 'bold' }
+                        },
+
+                        // Tooltip disabled (we use external HTML)
+                        tooltip: { enabled: false }
+                    },
+
+                    // Click event
+                    onClick: (evt, elements) => {
+                        if (elements.length > 0) {
+                            const index = elements[0].index;
+                            const plantName = labels[index];
+                            showPlantDetails(plantName);
+                        }
+                    }
+                },
+
+                plugins: [ChartDataLabels]
+            });
+
+            // ---- Custom HTML Tooltip ----
+            const chart = Chart.getChart("plantChart");
+            chart.options.plugins.tooltip.external = function(context) {
+
+                const tooltipModel = context.tooltip;
+
+                let tooltipEl = document.getElementById('chartjs-html-tooltip');
+                if (!tooltipEl) {
+                    tooltipEl = document.createElement('div');
+                    tooltipEl.id = 'chartjs-html-tooltip';
+                    tooltipEl.style.position = 'absolute';
+                    tooltipEl.style.background = '#fff';
+                    tooltipEl.style.border = '1px solid #ccc';
+                    tooltipEl.style.padding = '8px 10px';
+                    tooltipEl.style.borderRadius = '6px';
+                    tooltipEl.style.boxShadow = '0px 2px 6px rgba(0,0,0,0.2)';
+                    tooltipEl.style.pointerEvents = 'none';
+                    tooltipEl.style.maxWidth = '400px'; // wider for long content
+                    tooltipEl.style.fontSize = '12px';
+                    document.body.appendChild(tooltipEl);
+                }
+
+                if (tooltipModel.opacity === 0) {
+                    tooltipEl.style.opacity = 0;
+                    return;
+                }
+
+                const dataIndex = tooltipModel.dataPoints[0].dataIndex;
+                const label = tooltipModel.dataPoints[0].label;
+                const value = tooltipModel.dataPoints[0].parsed.y;
+                const color = tooltipModel.labelColors[0].backgroundColor;
+                const summary = summaries[dataIndex];
+
+                tooltipEl.innerHTML = `
+                    <b>${label}</b><br>
+                    <span style="color:${color}">●</span> <b>${value}%</b><br>
+                    <hr style="margin:4px 0">
+                    ${summary}
+                `;
+
+
+                tooltipEl.style.opacity = 1;
+
+                // Get canvas position relative to viewport
+                const canvasRect = context.chart.canvas.getBoundingClientRect();
+
+                // Include page scroll offset so tooltip follows chart during scroll
+                tooltipEl.style.left = window.scrollX + canvasRect.left + tooltipModel.caretX + 'px';
+                tooltipEl.style.top = window.scrollY + canvasRect.top + tooltipModel.caretY + 'px';
+
+            };
+        },
+
+        error: function (err) {
+            console.error("Error fetching chart data:", err);
+        }
+    });
+}
+
+
+
+
+    @*function get_dashboard_first_plant_wiese() {
+        plant = [];
+
+
+        for (var option of document.getElementById("dbplant").options) {
+            if (option.selected) {
+                plant.push(option.value);
+            }
+        }
+
+
+    $.ajax({
+        url: '@Url.Action("GetChartDataPlant", "Emp_profile_completation_")',
+        type: 'GET',
+        data: {plants: plant.toString().trim() },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            const chartData = data.series[0].data;
+            const grandOverall = data.grand_Overall_Completion_Percent || 0; // ✅ Add this
+
+            Highcharts.chart('containerplant', {
+                chart: {
+                    type: 'column',
+                    scrollablePlotArea: {
+                        minWidth: Math.max(chartData.length * 60, $('#containerplant').width()),
+                        scrollPositionX: 0
+                    },
+                    spacingRight: 0,
+                    marginRight: 20
+                },
+                title: {
+                    text: 'Plant-wise Employee Profile Completion (%)',
+                    style: { fontSize: '16px', fontWeight: 'bold' }
+                },
+                subtitle: {
+                    useHTML: true,
+                    text: `
+        <div style="text-align:center; font-size:13px; font-weight:bold; color:#000;">
+            <span style="font-size:14px; color:#333;">Grand Overall Completion:</span><br>
+<span style="color:#4CAF50;">Total Employee: ${data.totalemp}</span> |
+            <span style="color:#007bff;">Basic: ${data.grand_Basic.toFixed(2)}%</span> |
+            <span style="color:#28a745;">Education: ${data.grand_Education.toFixed(2)}%</span> |
+            <span style="color:#ffc107;">Work: ${data.grand_Work.toFixed(2)}%</span> |
+            <span style="color:#d32f2f;">Overall: ${data.grand_Overall.toFixed(2)}%</span>
+        </div>
+    `,
+                    align: 'center'
+                },
+                xAxis: {
+                    categories: chartData.map(d => d.name),
+                    labels: {
+                        style: { fontSize: '10px', fontWeight: 'bold', color: '#000' },
+                        rotation: -45
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    max: 100,
+                    title: {
+                        text: 'Completion %',
+                        style: { fontSize: '14px', fontWeight: 'bold' }
+                    },
+                    labels: { format: '{value}%' },
+                    gridLineDashStyle: 'Dash'
+                },
+                tooltip: {
+                    useHTML: true,
+                    hideDelay: 500,
+                    formatter: function () {
+                        return `<b>${this.key}</b><br>
+                                <span style="color:${this.color}">●</span>
+                                <b>${this.y}%</b><br>
+                                <hr style="margin:4px 0">
+                                ${this.point.summary}`;
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        colorByPoint: true,
+                        pointPadding: 0.1,
+                        borderWidth: 0,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function () {
+                                return this.y.toFixed(2) + '%';
+                            },
+                            style: { fontSize: '9px', fontWeight: 'bold', color: '#000' }
+                        },
+                        point: {
+                            events: {
+                                click: function () {
+                                    showPlantDetails(this.name);
+                                }
+                            }
+                        }
+                    }
+                },
+                legend: { enabled: false },
+                credits: { enabled: false },
+                series: [{
+                    name: "Overall Profile Completion (%)",
+                    data: chartData.map(p => ({
+                        name: p.name,
+                        y: p.y,
+                        color: p.y >= 100 ? '#28A745' : '#D32F2F',
+
+                        color:
+                            p.y >= 100 ? '#4CAF50' :       // Green
+                                p.y >= 90 ? '#F4A300' :       // Orange
+                                    '#C00000',        // Red
+
+                        summary: p.summary
+                    }))
+                }]
+            });
+        },
+        error: function (err) {
+            console.error('Error fetching chart data:', err);
+        }
+    });
+}*@
+
+
+// Escape unsafe HTML
+function escapeHtml(json) {
+    return json.replace(/&/g, "&amp;")
+               .replace(/</g, "&lt;")
+               .replace(/>/g, "&gt;")
+               .replace(/"/g, "&quot;")
+               .replace(/'/g, "&#39;")
+               .replace(/\n/g, " ");
+}
+
+/* =========================
+Global Modal Instances
+========================= */
+let plantModalInstance = null;
+let empDetailsModalInstance = null;
+
+/* =========================
+Show Plant Details Modal
+========================= */
+function showPlantDetails(plantName) {
+
+    $('#plantDetailsLabel').text('Plant Details - ' + plantName);
+    $('#plantDetailsBody').html('<div class="text-center"><i class="fal fa-spinner fa-spin fs-xxl"></i> Loading...</div>');
+
+    const modalEl = document.getElementById('plantDetailsModal');
+    plantModalInstance = new bootstrap.Modal(modalEl, {
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    plantModalInstance.show();
+
+    $.ajax({
+        url: '@Url.Action("GetPlantWiseDetails", "Emp_profile_completation_")',
+        type: 'GET',
+        data: { plant: plantName },
+        success: function (data) {
+
+            if (!data || data.length === 0) {
+                $('#plantDetailsBody').html('<p class="text-danger text-center">No data available for this plant.</p>');
+                return;
+            }
+
+            let html = `
+                <div style="overflow-x:auto; max-height:70vh;">
+                <table id="plantDetailsTable" class="table table-bordered table-striped table-hover text-center" style="width: 100%;">
+                    <thead class="bg-primary text-white fw-bold">
+                        <tr>
+                            <th>Employee Name</th>
+                            <th>Group Company</th>
+                            <th>Business Unit</th>
+                            <th>Basic %</th>
+                            <th>Education %</th>
+                            <th>Work %</th>
+                            <th>Overall %</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            data.forEach(emp => {
+                html += `
+                    <tr>
+                        <td>${emp.employeeName}</td>
+                        <td>${emp.groupCompany}</td>
+                        <td>${emp.businessUnit}</td>
+                        <td>${emp.basicPercent}%</td>
+                        <td>${emp.educationPercent}%</td>
+                        <td>${emp.workPercent}%</td>
+                        <td><b>${emp.overall}%</b></td>
+                        <td>
+                            <button class="btn btn-info btn-sm view-emp-details"
+                                data-emp='${escapeHtml(JSON.stringify(emp))}'>
+                                View
+                            </button>
+                        </td>
+                    </tr>`;
+            });
+
+            html += `</tbody></table></div>`;
+            $('#plantDetailsBody').html(html);
+
+            // ⭐ Delay initialization so columns are calculated correctly
+            setTimeout(function () {
+                $('#plantDetailsTable').DataTable({
+                    paging: true,
+                    searching: true,
+                    info: true,
+                    scrollY: '50vh',
+                    scrollX: true,
+                    scrollCollapse: true,
+                    fixedHeader: true,
+
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            className: 'btn btn-success btn-sm',
+                            text: 'Export All to Excel',
+                            action: function () {
+                                exportEmployeeExcel(plantName);
+                            }
+                        }
+                    ]
+                });
+            }, 150);
+
+            // ⭐ Adjust columns when modal is visible
+            modalEl.addEventListener('shown.bs.modal', function () {
+                let table = $('#plantDetailsTable').DataTable();
+                table.columns.adjust().draw();
+            });
+        },
+
+        error: function (err) {
+            console.error('Error fetching plant details:', err);
+            $('#plantDetailsBody').html('<p class="text-danger">Error loading plant details.</p>');
+        }
+    });
+}
+
+
+
+
+/* =========================
+Close Plant Modal
+========================= */
+document.getElementById('closeModalBtn').addEventListener('click', function () {
+    if (plantModalInstance) plantModalInstance.hide();
+});
+
+/* =========================
+View Employee Details
+========================= */
+    $(document).on('click', '.view-emp-details', function () {
+
+        const emp = JSON.parse($(this).attr('data-emp'));
+
+        /* EDUCATION SINGLE ROW */
+        const eduTable = `
+        <tr>
+            <td>${emp.institutionName ?? '-'}</td>
+            <td>${emp.levelOfStudy ?? '-'}</td>
+            <td>${emp.fieldOfStudy ?? '-'}</td>
+            <td>${emp.university ?? '-'}</td>
+            <td>${emp.gpaPercentage ?? '-'}</td>
+        </tr>
+    `;
+
+        /* WORK SINGLE ROW */
+        const workTable = `
+        <tr>
+            <td>${emp.workCompany ?? '-'}</td>
+            <td>${emp.workTitle ?? '-'}</td>
+            <td>${emp.workLocation ?? '-'}</td>
+            <td>${emp.workFromDate ?? '-'}</td>
+            <td>${emp.workToDate ?? '-'}</td>
+        </tr>
+    `;
+
+        /* ============================
+           BUILD COMPLETE POPUP HTML
+           ============================ */
+        const html = `
+    <!-- BASIC INFORMATION -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <h4 class="fw-bold text-primary mb-3">Basic Information</h4>
+            <div class="row g-3">
+
+                <div class="col-md-4"><strong>Name</strong><div>${emp.employeeName}</div></div>
+                <div class="col-md-4"><strong>Employee ID</strong><div>${emp.employeeId}</div></div>
+                <div class="col-md-4"><strong>Gender</strong><div>${emp.gender}</div></div>
+
+                <div class="col-md-4"><strong>Group Company</strong><div>${emp.groupCompany}</div></div>
+                <div class="col-md-4"><strong>Business Unit</strong><div>${emp.businessUnit}</div></div>
+                <div class="col-md-4"><strong>Department</strong><div>${emp.departmentName}</div></div>
+
+                <div class="col-md-4"><strong>Job Level</strong><div>${emp.jobLevel}</div></div>
+                <div class="col-md-4"><strong>Grade</strong><div>${emp.levelGrade}</div></div>
+                <div class="col-md-4"><strong>Employee Type</strong><div>${emp.employeeType}</div></div>
+
+                <div class="col-md-4"><strong>Date of Joining</strong><div>${emp.dateOfJoining}</div></div>
+                <div class="col-md-4"><strong>Group DOJ</strong><div>${emp.groupDateOfJoining}</div></div>
+
+                <div class="col-md-4"><strong>Manager</strong><div>${emp.directManagerName}</div></div>
+                <div class="col-md-4"><strong>HOD</strong><div>${emp.hodName}</div></div>
+
+                <div class="col-md-4"><strong>Father Name</strong><div>${emp.fatherName}</div></div>
+                <div class="col-md-4"><strong>Marital Status</strong><div>${emp.maritalStatus}</div></div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT DETAILS -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <h4 class="fw-bold text-primary mb-3">Contact Information</h4>
+            <div class="row g-3">
+
+                <div class="col-md-4"><strong>Company Email</strong><div>${emp.companyEmail}</div></div>
+                <div class="col-md-4"><strong>Personal Email</strong><div>${emp.personalEmail}</div></div>
+                <div class="col-md-4"><strong>Office Mobile</strong><div>${emp.officeMobile}</div></div>
+
+                <div class="col-md-4"><strong>Personal Mobile</strong><div>${emp.personalMobile}</div></div>
+                <div class="col-md-4"><strong>Emergency Contact</strong><div>${emp.emergencyContact}</div></div>
+                <div class="col-md-4"><strong>Emergency Person</strong><div>${emp.emergencyPerson}</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADDRESS -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <h4 class="fw-bold text-primary mb-3">Address Details</h4>
+            <div class="row g-3">
+                <div class="col-md-6"><strong>Current Address</strong><div>${emp.currentAddress ?? '-'}</div></div>
+                <div class="col-md-6"><strong>Permanent Address</strong><div>${emp.permanentAddress ?? '-'}</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BANK DETAILS -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <h4 class="fw-bold text-primary mb-3">Bank & PF Information</h4>
+            <div class="row g-3">
+                <div class="col-md-4"><strong>Bank Name</strong><div>${emp.bankName}</div></div>
+                <div class="col-md-4"><strong>IFSC</strong><div>${emp.bankIFSC}</div></div>
+                <div class="col-md-4"><strong>Account No</strong><div>${emp.bankAccount}</div></div>
+
+                <div class="col-md-4"><strong>PF Number</strong><div>${emp.pfNumber}</div></div>
+                <div class="col-md-4"><strong>UAN</strong><div>${emp.uanNumber}</div></div>
+                <div class="col-md-4"><strong>Blood Group</strong><div>${emp.bloodGroup}</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <h4 class="fw-bold text-primary mb-3">Education Details</h4>
+            <table class="table table-bordered table-striped">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Institution</th>
+                        <th>Level</th>
+                        <th>Field</th>
+                        <th>University</th>
+                        <th>GPA %</th>
+                    </tr>
+                </thead>
+                <tbody>${eduTable}</tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- WORK EXPERIENCE -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <h4 class="fw-bold text-primary mb-3">Work Experience</h4>
+            <table class="table table-bordered table-striped">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Company</th>
+                        <th>Title</th>
+                        <th>Location</th>
+                        <th>From</th>
+                        <th>To</th>
+                    </tr>
+                </thead>
+                <tbody>${workTable}</tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-body text-center">
+            <h4 class="fw-bold text-primary mb-3">Profile Completion</h4>
+            <div class="row">
+                <div class="col-md-4"><strong>Basic</strong><div>${emp.basicPercent}%</div></div>
+                <div class="col-md-4"><strong>Education</strong><div>${emp.educationPercent}%</div></div>
+                <div class="col-md-4"><strong>Work</strong><div>${emp.workPercent}%</div></div>
+            </div>
+            <h2 class="text-success mt-3 fw-bold">Overall: ${emp.overall}%</h2>
+        </div>
+    </div>
+    `;
+
+        $("#empDetailsBody").html(html);
+        $("#empDetailsTitle").text(emp.employeeName + " - Full Details");
+
+        const modalEl = document.getElementById("empDetailsModal");
+        empDetailsModalInstance = new bootstrap.Modal(modalEl);
+        empDetailsModalInstance.show();
+    });
+
+
+
+
+/* =========================
+Close Employee Modal
+========================= */
+document.getElementById('closeModalBtndetails').addEventListener('click', function () {
+    if (empDetailsModalInstance) empDetailsModalInstance.hide();
+});
+
+
+
+
+
+
+
+
+
+
+    //-----------------------------------------------end plant wise --------------------------------
+
+</script>
+

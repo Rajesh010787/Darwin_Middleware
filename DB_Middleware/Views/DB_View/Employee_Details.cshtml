@@ -1,0 +1,244 @@
+﻿
+@{
+    ViewData["Title"] = "Total_Employee_Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="js-page-content" role="main" class="page-content">
+
+
+
+
+
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div id="panel-2" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        Bind Active Employee<span class="fw-300"><i>Details</i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                    </div>
+                </div>
+
+
+
+
+                <div class="panel-container show">
+                    <div class="panel-content">
+
+                        <div class="tab-pane" id="tab-events" role="tabpanel">
+                            <div class="d-flex flex-column h-100">
+                                <div class="h-auto">
+                                    <table id="example1" class="table table-bordered table-hover table-striped w-100">
+                                        <thead>
+                                            <tr>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    
+
+
+
+
+
+    <script src="~/js/jquery.min.js"></script>
+
+    <script src="~/js/Action_JS/JS.js"></script>
+
+    <script type='text/javascript'>
+        var totalList = [];
+        var iterms = "";
+        $(document).ready(function () {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            var cid = params['id'];
+            
+            BindEmpdetails(cid);
+
+        });
+
+        function AddEmailiupdatein_Darwinbox1() {
+            // Ensure this function runs when the DOM is fully loaded
+
+            $('#js-updateemailid').validate({
+                rules: {
+                    txtemailid: {
+                        required: true,
+                        email: true // Optional: Validate the email format
+                    }
+                },
+                messages: {
+                    txtemailid: "Please enter a valid email address" // Example message
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    error.addClass("invalid-feedback");
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element.next(".pmd-textfield-focused"));
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                },
+                submitHandler: function (form) {
+                    // Optionally show a spinner or loading indicator
+                    // $('.spinner').css('display', 'block').fadeIn();
+
+                    $.ajax({
+                        url: "/DB_View/Update_EmailIDAsync",
+                        type: 'POST',
+                        dataType: 'json', // Expecting JSON response
+                        contentType: 'application/json; charset=utf-8', // Sending JSON data
+                        data: JSON.stringify({
+                            UniqueID: $("#txtuniqueid").val(),
+                            EmailId: $("#txtemailid").val()
+                        }),
+                        success: function (data) {
+                            if (data.Flag === 'SUCCESS') {
+                                // Handle success scenario
+                                // e.g., display a success message or redirect
+                            } else {
+                                // Handle failure scenario
+                                createRoleSuccess(data.Flag, data.sql_message);
+                                // $('.spinner').css('display', 'block').fadeOut();
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle AJAX error
+                            console.error('AJAX Error:', status, error);
+                            // Optionally hide the spinner
+                            // $('.spinner').css('display', 'block').fadeOut();
+                        }
+                    });
+
+                }
+            });
+
+        }
+        function BindDataForEmailupdate(Eid) {
+
+
+            $('#modal-Tracking').modal('show');
+
+            //Bind control data bind data for email update in DB---------------------------
+            $.ajax({
+                type: "GET",
+                url: "/DB_View/get_active_emp_records",
+
+                data: { UniqueID: "" + Eid + "" },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                crossDomain: true,
+                success: function (Data) {
+
+
+                    var build_table = '';
+                    for (var index = 0; index < Data.length; index++) {
+
+
+                        $("#Firstname").val(Data[index].fullname);
+                        $("#middlename").val(Data[index].fullname);
+                        $("#lastname").val(Data[index].fullname);
+                        $("#txtgroupname").val(Data[index].group_company);
+                        $("#txtfunctionalareadept").val(Data[index].functional_area_dept);
+                        $("#txtfunctionalareasubdept").val(Data[index].functional_area_subdept);
+                        $("#txtgrade").val(Data[index].level_Grade);
+                        $("#txtuniqueid").text(Data[index].userUniqueID);
+
+                    }
+                }
+            });
+
+            //End email id  function update--------------------------------------------
+
+        }
+        function BindEmpdetails(paageCid) {
+            $.ajax({
+                url: "/DB_View/get_active_emp_records",
+                type: "GET",
+                data: {
+                    UniqueID:paageCid
+                },
+           
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    /*     console.log(data); // Log the data to inspect*/
+
+                    if (Array.isArray(data) && data.length > 0) {
+                        // Destroy the existing DataTable instance if it exists
+                        if ($.fn.DataTable.isDataTable('#example1')) {
+                            $('#example1').DataTable().clear().destroy();
+                        }
+                        // Initialize DataTable with new data
+                        $('#example1').DataTable({
+                            responsive: true,
+                            processing: true,
+                            data: data,
+                            columns: [
+
+                                
+                                { data: 'fullname', title: 'Full Name' },
+                                { data: 'group_company', title: 'Group Company' },
+                                { data: 'functional_area_dept', title: 'Functional Area(Dept)' },
+                                { data: 'level_Grade', title: 'Grade' },
+                                { data: 'employee_id', title: 'Employee ID' },
+                                { data: 'office_mobile_no', title: 'Mobile Number' },
+                                { data: 'company_email_id', title: 'Email' },
+                                { data: 'direct_manager_name', title: 'RM' },
+                                { data: 'hrbp_name', title: 'HRBP Name' },
+                                { data: 'office_location', title: 'Office Location' },
+                            ]
+                        });
+
+                        // Handle click event on "Edit" link
+                        $('#example1').on('click', '.edit-link', function (e) {
+                            e.preventDefault();
+                            var id = $(this).data('id'); // Correct data attribute name
+                         
+                            // Replace the following line with your edit logic, e.g., opening a modal or redirecting
+                            /* console.log('Edit button clicked for ID: ' + id);*/
+                        });
+                    } else {
+                        console.error("No data found or data is not an array");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                }
+            });
+        }
+
+
+
+    </script>
+
+</main>
+

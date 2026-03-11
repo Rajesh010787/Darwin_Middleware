@@ -1,0 +1,590 @@
+﻿
+@{
+    ViewData["Title"] = "Bind_Email_Block_on_Infra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /* Custom CSS to add space between the page size dropdown and the table */
+
+    /* Add margin to the page size selector dropdown */
+    .dataTables_length {
+        margin-bottom: 10px; /* Adjust space between the dropdown and table */
+    }
+
+    /* Optional: Adjust the margin between other controls like search box and buttons */
+    .dataTables_filter {
+        margin-left: 20px; /* Adjust space between search box and page size dropdown */
+    }
+
+    /* You can also adjust the space between the export buttons */
+    .dt-buttons {
+        margin-left: 5px;
+        margin-bottom: 10px;
+    }
+
+    /* Add space between pagination controls and table */
+    .dataTables_paginate {
+        margin-top: 20px; /* Adjust space between table and pagination */
+    }
+</style>
+<main id="js-page-content" role="main" class="page-content">
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div id="panel-2" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        Bind Email Block Request<span class="fw-300"><i>Details</i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                    </div>
+                </div>
+
+
+
+
+                <div class="panel-container show">
+                    <div class="panel-content">
+
+                        <div class="tab-pane" id="tab-events" role="tabpanel">
+                            <div class="d-flex flex-column h-100">
+                                <div class="h-auto">
+                                    <table id="example1" class="table table-bordered table-hover table-striped w-100">
+                                        <thead>
+                                            <tr>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    @*//-------------------------------------------------Model Popup-----------------------for Infra Team=-----------------*@
+
+
+    <div class="modal fade" id="modal-Tracking_infrateam">
+        <div class="modal-dialog modal-lg modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Employee Block Email ID Request(<strong><span id="txtuniqueid" name="txtuniqueid"></span></strong>)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="js-emailblock_updatebyinfra">
+                        <div class="frame-wrap">
+                            <div class="panel-content">
+
+
+
+                                <!-- /.box-header -->
+                                <!-- form start -->
+
+                                <div class="box-body">
+                                    <div class="form-row">
+
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">First Name</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="Firstname" autocomplete="off" name="Firstname" readonly="readonly">
+
+                                        </div>
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Middle Name</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="middlename" autocomplete="off" name="middlename" readonly="readonly">
+
+                                        </div>
+
+
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Last Name</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="lastname" autocomplete="off" name="lastname" readonly="readonly">
+
+                                        </div>
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Group Company</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="txtgroupname" autocomplete="off" name="txtgroupname" readonly="readonly">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Functional Area(Dept)</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="txtfunctionalareadept" autocomplete="off" name="txtfunctionalareadept" readonly="readonly">
+
+                                        </div>
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Functional Area(SubDept)</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="txtfunctionalareasubdept" autocomplete="off" name="txtfunctionalareasubdept" readonly="readonly">
+
+                                        </div>
+
+
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Designation</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="txtdesignation" autocomplete="off" name="txtdesignation" readonly="readonly">
+
+                                        </div>
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Grade</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="txtgrade" autocomplete="off" name="txtgrade" readonly="readonly">
+
+                                        </div>
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Email ID</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="txtemailid" autocomplete="off" name="txtemailid" readonly="readonly">
+
+                                        </div>
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Date of exit</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="txtdate_of_exit" autocomplete="off" name="txtdate_of_exit" readonly="readonly">
+
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+
+                                            <label for="validationCustom02">Office Location</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="txtofficelocation" autocomplete="off" name="txtofficelocation" readonly="readonly">
+
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+
+                                        <div class="col-md-6 mb-2">
+
+                                            <label for="validationCustom02">If Required Mail forwarding</label><span class="text-danger">*</span>
+
+
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="customRadio3" name="customRadio1" disabled="disabled" class="custom-control-input" readonly="readonly">
+                                                            <label class="custom-control-label" for="customRadio3">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group-text">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="customRadio4" name="customRadio1" disabled="disabled" class="custom-control-input" readonly="readonly">
+                                                            <label class="custom-control-label" for="customRadio4">No</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" aria-label="Text input with radio button" id="txtmailfowarderemailid" autocomplete="off" name="txtmailfowarderemailid" readonly="readonly">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-2">
+
+                                            <label for="validationCustom02">Whome to be given Email / Onedrive Backup</label><span class="text-danger">*</span>
+
+
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="customRadio6" name="customRadio2" disabled="disabled" class="custom-control-input" readonly="readonly">
+                                                            <label class="custom-control-label" for="customRadio6">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group-text">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="customRadio7" name="customRadio2" disabled="disabled" class="custom-control-input" readonly="readonly">
+                                                            <label class="custom-control-label" for="customRadio7">No</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" aria-label="Text input with radio button" id="txtmailfowarderemailidonedrive" autocomplete="off" name="txtmailfowarderemailidonedrive" readonly="readonly">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    <div class="form-row">
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Status</label><span class="text-danger">*</span>
+                                            <select class="form-control input-sm" id="dbstatus" name="dbstatus">
+
+                                                <option value="">Select</option>
+                                                <option value="Approved">Approved</option>
+                                                <option value="Reconsidered">Reconsidered</option>
+                                                <option value="Put On Hold">Put On Hold</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label for="email">
+                                                Remark
+                                            </label>
+
+
+                                            <textarea type="text" class="form-control input-sm" id="txtremark" rows="1" name="txtremark" placeholder="Remark" autocomplete="off"></textarea>
+
+
+
+                                        </div>
+                                        <div class="spinner" style="display:none">
+                                            <div class="center-div">
+
+                                                <img src="~/img/1amw (1).gif" width="200">
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-md-3 mb-3">
+
+
+                                            <label for="submit">
+
+                                            </label>
+
+                                            <br />
+                                            <button type="submit" class="btn btn-primary" onclick="Validate_By_Infrateam_ForBlock_EmailID()" id="btnsubmitblockinfra" name="btnsubmitblockinfra">Submit</button>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*----------------------------------------------------End Popap Infra Team Details ------------------------------------------------------*@
+
+    @*//-------------------------------------------------Model Popup-----------------------for Tracking History=-----------------*@
+
+
+    <div class="modal fade" id="modal-Tracking_history">
+        <div class="modal-dialog modal-lg modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tracking History(<strong><span id="txtuniqueidhistoty" name="txtuniqueidhistoty"></span></strong>)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="js-emailremove_updatebyinfra">
+                        <div class="frame-wrap">
+                            <div class="panel-container show">
+                                <div class="panel-content">
+
+                                    <div class="tab-pane" id="tab-events" role="tabpanel">
+                                        <div class="d-flex flex-column h-100">
+                                            <div class="h-auto">
+                                                <table id="example2" class="table table-bordered table-hover table-striped w-100">
+                                                    <thead>
+                                                        <tr>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*----------------------------------------------------End Popap Infra Team Details ------------------------------------------------------*@
+    <script src="~/js/jquery.min.js"></script>
+
+    <script src="~/js/Action_JS/JS.js"></script>
+
+    <script type='text/javascript'>
+        var totalList = [];
+        var iterms = "";
+        $(document).ready(function () {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            var cid = params['id'];
+
+            BindInactive_Empdetails();
+
+        });
+        function BindDataForremoveemailid(Eid) {
+
+
+
+            $('#modal-Tracking_infrateam').modal('show');
+            //Bind control data bind data for email update in DB---------------------------
+            $.ajax({
+                type: "GET",
+                url: "/Block_Email_Request/get_active_empldetial_for_block",
+
+                data: { UniqueID: "" + Eid + "" },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                crossDomain: true,
+                success: function (Data) {
+
+
+                    var build_table = '';
+                    for (var index = 0; index < Data.length; index++) {
+
+                        $("#Firstname").val(Data[index].fname);
+                        $("#middlename").val(Data[index].mname);
+                        $("#lastname").val(Data[index].lname);
+                        $("#txtgroupname").val(Data[index].group_company);
+                        $("#txtfunctionalareadept").val(Data[index].functional_area_dept);
+                        $("#txtfunctionalareasubdept").val(Data[index].functional_area_subdept);
+                        $("#txtgrade").val(Data[index].level_Grade);
+                        $("#txtuniqueid").text(Data[index].userUniqueID);
+
+                        $("#txtdate_of_exit").val(Data[index].date_of_exit);
+                        $("#txtemailid").val(Data[index].company_email_id);
+                        $("#txtofficelocation").val(Data[index].office_location);
+                        $("#txtdesignation").val(Data[index].job_level);
+
+
+                        if (Data[index].fwdr_Email_Status == "Y") {
+                            $("#txtmailfowarderemailid").val(Data[index].fwdr_Email_Description);
+                            $("#customRadio3").prop('checked', true);
+
+                        } else {
+                            $("#txtmailfowarderemailid").val("");
+                            $("#customRadio4").prop('checked', true);
+                        }
+                        if (Data[index].givenEmail_Onedrive == "Y") {
+
+                            $("#txtmailfowarderemailidonedrive").val(Data[index].givenEmail_Onedrive_des);
+                            $("#customRadio6").prop('checked', true);
+                        } else {
+                            $("#txtmailfowarderemailidonedrive").val("");
+                            $("#customRadio7").prop('checked', true);
+                        }
+
+
+                    }
+                }
+            });
+
+            //End email id  function update--------------------------------------------
+
+        }
+
+        //------------------Bind Tracking History ---------------------------------------------
+
+
+        function BindEmptrackinghistory(Eid, fullname) {
+            $("#txtuniqueidhistoty").text(fullname);
+            $('#modal-Tracking_history').modal('show');
+            $.ajax({
+                url: "/DB_View/get_tracking_emp_records_history",
+                type: "GET",
+                data: { UniqueID: "" + Eid + "", Requesttype: 'Block Email ID' },
+
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    /*     console.log(data); // Log the data to inspect*/
+
+                    if (Array.isArray(data) && data.length > 0) {
+                        // Destroy the existing DataTable instance if it exists
+                        if ($.fn.DataTable.isDataTable('#example2')) {
+                            $('#example2').DataTable().clear().destroy();
+                        }
+                        // Initialize DataTable with new data
+                        $('#example2').DataTable({
+                            responsive: true,
+                            processing: true,
+                            async: true,
+                            data: data,
+                            order: [[4, 'desc']],
+
+                            columns: [
+
+                                { data: 'actionby', title: 'Action By', width: '20%' },
+                                { data: 'peningon', title: 'Pending On', width: '20%' },
+                                { data: 'cstatus', title: 'Action Status', width: '10%' },
+                                { data: 'requestfor', title: 'Request For', width: '10%' },
+                                { data: 'actiondate', title: 'Action Date', width: '10%', type: 'date' },
+                                { data: 'remark', title: 'Remark', width: '20%' }
+
+                            ]
+
+                        });
+
+                        // Handle click event on "Edit" link
+                        $('#example2').on('click', '.edit-link', function (e) {
+                            e.preventDefault();
+
+                            // Replace the following line with your edit logic, e.g., opening a modal or redirecting
+                            /* console.log('Edit button clicked for ID: ' + id);*/
+                        });
+                    } else {
+                        console.error("No data found or data is not an array");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                }
+            });
+        }
+
+        //----------------------------------Bind Tracking History -------------------------------------------------
+        function BindInactive_Empdetails() {
+            $.ajax({
+                url: "/Block_Email_Request/get_email_block_email_details",
+                type: "GET",
+                data: {
+
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (Array.isArray(data) && data.length > 0) {
+                        // Destroy the existing DataTable instance if it exists
+                        if ($.fn.DataTable.isDataTable('#example1')) {
+                            $('#example1').DataTable().clear().destroy();
+                        }
+                        // Initialize DataTable with new data
+                        $('#example1').DataTable({
+                            responsive: true,
+                            processing: true,
+                            data: data,
+                            order: [[4, 'desc']],
+                            columns: [
+                                {
+                                    data: null,
+                                    title: 'Action',
+                                    render: function (data, type, row) {
+                                        // Ensure UserUniqueID exists in the row data
+                                        if (row.userUniqueID) {
+                                            return '<a style="text-decoration: none; color:black;" href="#"  onclick=\'javascript:BindDataForremoveemailid("' + row.userUniqueID + '"); \'><span class="badge badge-pill badge-success">Update</span></a>';
+                                        } else {
+                                            return '<span></span>'; // Fallback if UserUniqueID is not present
+                                        }
+                                    }
+                                },
+                                { data: 'fname', title: 'Employee Name' },
+
+                                { data: 'date_of_joining', title: 'Date of Joining', type: 'date' },
+
+                                { data: 'group_company', title: 'Group Company' },
+                                { data: 'department_cost_center_name', title: 'Cost Center' },
+                                { data: 'functional_area_dept', title: 'Functional Area(Dept)' },
+                                { data: 'level_Grade', title: 'Grade' },
+                                { data: 'direct_manager_name', title: 'RM' },
+                                { data: 'employee_status', title: 'Employee Status' },
+                                { data: 'office_location', title: 'Office Location' },
+                                {
+                                    data: null,
+                                    title: 'Tracking',
+
+                                    render: function (data, type, row) {
+                                        // Ensure UserUniqueID exists in the row data
+                                        if (row.userUniqueID) {
+                                            return `
+                                           <a style="text-decoration: none; color:black;"
+                                               href="#"
+                                               onclick='BindEmptrackinghistory("${row.user_id}", "${row.fname}");'>
+                                                <span class="badge badge-pill badge-warning ">View</span>
+                                            </a>`;
+                                        } else {
+                                            return '<span></span>'; // Fallback if UserUniqueID is not present
+                                        }
+
+
+                                    }
+                                },
+                            ],
+                            dom: 'Blfrtip',  // 'l' is kept to show the page size dropdown, 'p' is for pagination
+
+                            buttons: [
+                                {
+                                    extend: 'excelHtml5',
+                                    className: 'btn-outline-success btn-sm',  // Add custom classes to the Excel button
+                                    text: 'Export to Excel'
+                                },
+                                {
+                                    extend: 'csvHtml5',
+                                    className: 'btn-outline-primary btn-sm',  // Add custom classes to the CSV button
+                                    text: 'Export to CSV'
+                                },
+                                {
+                                    extend: 'copyHtml5',
+                                    className: 'btn-outline-success btn-sm',  // Add custom classes to the Copy button
+                                    text: 'Copy to Clipboard'
+                                }
+                            ],
+
+                        });
+
+                        // Handle click event on "Edit" link
+                        $('#example1').on('click', '.edit-link', function (e) {
+                            e.preventDefault();
+                            var id = $(this).data('id'); // Correct data attribute name
+
+                            // Redirect to the new URL with the unique ID
+
+                        });
+                    } else {
+                        console.error("No data found or data is not an array");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                }
+            });
+        }
+
+
+
+
+    </script>
+
+</main>

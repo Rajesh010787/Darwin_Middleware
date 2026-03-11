@@ -1,0 +1,439 @@
+﻿
+@{
+    ViewData["Title"] = "HR_Head_Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Custom CSS to add space between the page size dropdown and the table */
+
+    /* Add margin to the page size selector dropdown */
+    .dataTables_length {
+        margin-bottom: 10px; /* Adjust space between the dropdown and table */
+    }
+
+    /* Optional: Adjust the margin between other controls like search box and buttons */
+    .dataTables_filter {
+        margin-left: 20px; /* Adjust space between search box and page size dropdown */
+    }
+
+    /* You can also adjust the space between the export buttons */
+    .dt-buttons {
+        margin-left: 5px;
+        margin-bottom: 10px;
+    }
+
+    /* Add space between pagination controls and table */
+    .dataTables_paginate {
+        margin-top: 20px; /* Adjust space between table and pagination */
+    }
+</style>
+<main id="js-page-content" role="main" class="page-content">
+
+
+
+
+
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div id="panel-2" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        HR Head  Report-<span class="fw-300"><i></i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+
+                    </div>
+                </div>
+                
+                <div class="panel-container show">
+                    <div class="panel-content">
+
+                        <div class="tab-pane" id="tab-events" role="tabpanel">
+                            <div class="d-flex flex-column h-100">
+                                <div class="h-auto">
+                                    <table id="ehsTable" class="display nowrap" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Requisition Id</th>
+                                                <th>Group Company</th>
+                                                <th>Department Name</th>
+                                                <th>Business Unit Name</th>
+                                                <th>Requisition Raised By - Employee Id</th>
+                                                <th>Requisition Raised By - Employee Name</th>
+                                                <th>Requisition Status</th>
+                                                <th>Requisition Archived By</th>
+                                                <th>Requisition Archived On</th>
+                                                <th>Requisition Initiated On</th>
+                                                <th>Requisition Activated On</th>
+                                                <th>Requisition Activated By</th>
+                                                <th>Requisition Hiring Manager</th>
+                                                <th>Level 1 Assignees</th>
+                                                <th>Level 1 Status</th>
+                                                <th>Level 1 Action Taken By</th>
+                                                <th>Level 1 Action Taken On</th>
+                                                <th>Level 2 Assignees</th>
+                                                <th>Level 2 Status</th>
+                                                <th>Level 2 Action Taken By</th>
+                                                <th>Level 2 Action Taken On</th>
+                                                <th>Level 3 Assignees</th>
+                                                <th>Level 3 Status</th>
+                                                <th>Level 3 Action Taken By</th>
+                                                <th>Level 3 Action Taken On</th>
+                                                <th>Level 4 Assignees</th>
+                                                <th>Level 4 Status</th>
+                                                <th>Level 4 Action Taken By</th>
+                                                <th>Level 4 Action Taken On</th>
+                                                <th>Level 5 Assignees</th>
+                                                <th>Level 5 Status</th>
+                                                <th>Level 5 Action Taken By</th>
+                                                <th>Level 5 Action Taken On</th>
+                                                <th>Level 6 Assignees</th>
+                                                <th>Level 6 Status</th>
+                                                <th>Level 6 Action Taken By</th>
+                                                <th>Level 6 Action Taken On</th>
+                                                <th>Requisition Last Approved / Rejected On</th>
+                                                <th>Requisition Last Approved / Rejected By</th>
+                                                <th>Replacement Employees</th>
+                                                <th>Budgeted / Non Budgeted</th>
+                                                <th>Vacancy Due To</th>
+                                                <th>Internal Talent: Can Anyone From Existing Team Take Up This Role? If Yes Then Who ?</th>
+                                                <th>Headcount Of Department - Budget</th>
+                                                <th>Headcount Of Department - Actual</th>
+                                                <th>If Un-Budgeted – Reason</th>
+                                                <th>Level And Designation</th>
+                                                <th>Experience Range (From – To)</th>
+                                                <th>Justification For Hiring (Why Not Internally - Associate To Staff, Or Clubbing Of Roles)</th>
+
+                                            
+                                                <th>Offer Section </th>
+
+                                                <th>Candidate Name</th>
+                                                <th>Date Of Application</th>
+                                                <th>Candidate Source Id</th>
+                                                <th>Offer Employee Type</th>
+                                                <th>Generated By</th>
+                                                <th>Generated On</th>
+                                                <th>Offer Salary Structure Name</th>
+                                                <th>Date Of Joining As Per Offer</th>
+                                                <th>Date Of Joining As Per Profile</th>
+                                                <th>Employee Id</th>
+                                                <th>Offer Sent On</th>
+                                                <th>Offer Sent By</th>
+                                                <th>Offer Accepted On</th>
+                                                <th>Offer Accepted By</th>
+                                                <th>Candidate Comments In Offer Letter</th>
+                                                <th>Offer Rejected On</th>
+                                                <th>Offer Rejected By</th>
+                                                <th>Offer Status</th>
+                                                <th>Offer Withdrawn On</th>
+                                                <th>Offer Withdrawn By</th>
+                                                <th>Existing Level And Designation</th>
+                                                <th>Revised Level And Designation</th>
+                                                <th>Existing Cost Centre</th>
+                                                <th>Revised Cost Centre</th>
+                                                <th>Level 1 Assignees</th>
+                                                <th>Level 1 Status</th>
+                                                <th>Level 1 Action Taken By</th>
+                                                <th>Level 1 Action Taken On</th>
+                                                <th>Level 2 Assignees</th>
+                                                <th>Level 2 Status</th>
+                                                <th>Level 2 Action Taken By</th>
+                                                <th>Level 2 Action Taken On</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="loader" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script src="~/js/jquery.min.js"></script>
+  
+    <script src="~/js/Action_JS/xlsx.full.min.js"></script>
+    <script src="~/js/Action_JS/JS.js"></script>
+    <script src="~/js/Action_JS/Bind_Droup_Down_Master.js"></script>
+
+
+
+    <script type='text/javascript'>
+        var totalList = [];
+        var financialyear = "";
+        var month = [];
+        var unit = [];
+        var plant = [];
+
+        $(document).ready(function () {
+            get_report_details();
+        });
+        //function exportAllToExcel() {
+        //    var table = document.getElementById("ehsTable");
+        //    var wb = XLSX.utils.table_to_book(table, { sheet: "HR Report" });
+        //    XLSX.writeFile(wb, 'HR_Report.xlsx');
+        //}
+       
+        function get_report_details() {
+            // Destroy existing DataTable if exists
+            //if ($.fn.dataTable.isDataTable('#ehsTable')) {
+            //    $('#ehsTable').DataTable().clear().destroy();
+            //}
+
+            $('#loader').show();
+
+            var ehsTableInstance = $('#ehsTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+           // "paging": false,
+                "pageLength": 10,
+                scrollX: true,              // Enable horizontal scroll
+                scrollY: '400px',           // Optional: enable vertical scroll with set height
+                scrollCollapse: true,       // Collapse the table height when fewer records
+            "ajax": {
+                "url": '@Url.Action("GetAjaySirReport", "HR_Head_Report")',
+                "type": "POST",
+                "data": function (d) {
+                    d.SearchText = $('input[type="search"]').val();
+                }
+
+                //"data": function (d) {
+                //    // Adding custom filter values to the request
+                //    //d.nameFilter = $('#nameFilter').val();
+                //    //d.categoryFilter = $('#categoryFilter').val();
+                //    //d.priceFilter = $('#priceFilter').val();
+                //}
+            },
+
+              
+                columns: [
+                    { data: 'RequisitionId', title: 'Requisition Id' },
+                    { data: 'GroupCompany', title: 'Group Company' },
+                    { data: 'DepartmentName', title: 'Department Name' },
+                    { data: 'BusinessUnitName', title: 'Business Unit Name' },
+                    { data: 'RequisitionRaisedByEmployeeId', title: 'Requisition Raised By - Employee Id' },
+                    { data: 'RequisitionRaisedByEmployeeName', title: 'Requisition Raised By - Employee Name' },
+                    { data: 'RequisitionStatus', title: 'Requisition Status' },
+                    { data: 'RequisitionArchivedBy', title: 'Requisition Archived By' },
+                    { data: 'RequisitionArchivedOn', title: 'Requisition Archived On' },
+                    { data: 'RequisitionInitiatedOn', title: 'Requisition Initiated On' },
+                    { data: 'RequisitionActivatedOn', title: 'Requisition Activated On' },
+                    { data: 'RequisitionActivatedBy', title: 'Requisition Activated By' },
+                    { data: 'RequisitionHiringManager', title: 'Requisition Hiring Manager' },
+                    { data: 'Level1Assignees', title: 'Level 1 Assignees' },
+                    { data: 'Level1Status', title: 'Level 1 Status' },
+                    { data: 'Level1ActionTakenBy', title: 'Level 1 Action Taken By' },
+                    { data: 'Level1ActionTakenOn', title: 'Level 1 Action Taken On' },
+                    { data: 'Level2Assignees', title: 'Level 2 Assignees' },
+                    { data: 'Level2Status', title: 'Level 2 Status' },
+                    { data: 'Level2ActionTakenBy', title: 'Level 2 Action Taken By' },
+                    { data: 'Level2ActionTakenOn', title: 'Level 2 Action Taken On' },
+                    { data: 'Level3Assignees', title: 'Level 3 Assignees' },
+                    { data: 'Level3Status', title: 'Level 3 Status' },
+                    { data: 'Level3ActionTakenBy', title: 'Level 3 Action Taken By' },
+                    { data: 'Level3ActionTakenOn', title: 'Level 3 Action Taken On' },
+                    { data: 'Level4Assignees', title: 'Level 4 Assignees' },
+                    { data: 'Level4Status', title: 'Level 4 Status' },
+                    { data: 'Level4ActionTakenBy', title: 'Level 4 Action Taken By' },
+                    { data: 'Level4ActionTakenOn', title: 'Level 4 Action Taken On' },
+                    { data: 'Level5Assignees', title: 'Level 5 Assignees' },
+                    { data: 'Level5Status', title: 'Level 5 Status' },
+                    { data: 'Level5ActionTakenBy', title: 'Level 5 Action Taken By' },
+                    { data: 'Level5ActionTakenOn', title: 'Level 5 Action Taken On' },
+                    { data: 'Level6Assignees', title: 'Level 6 Assignees' },
+                    { data: 'Level6Status', title: 'Level 6 Status' },
+                    { data: 'Level6ActionTakenBy', title: 'Level 6 Action Taken By' },
+                    { data: 'Level6ActionTakenOn', title: 'Level 6 Action Taken On' },
+                    { data: 'RequisitionLastApprovedRejectedOn', title: 'Requisition Last Approved / Rejected On' },
+                    { data: 'RequisitionLastApprovedRejectedBy', title: 'Requisition Last Approved / Rejected By' },
+                    { data: 'ReplacementEmployees', title: 'Replacement Employees' },
+                    { data: 'BudgetedNonBudgeted', title: 'Budgeted / Non Budgeted' },
+                    { data: 'VacancyDueTo', title: 'Vacancy Due To' },
+                    { data: 'InternalTalent', title: 'Internal Talent: Can Anyone From Existing Team Take Up This Role? If Yes Then Who ?' },
+                    { data: 'HeadcountOfDepartmentBudget', title: 'Headcount Of Department - Budget' },
+                    { data: 'HeadcountOfDepartmentActual', title: 'Headcount Of Department - Actual' },
+                    { data: 'IfUnBudgetedReason', title: 'If Un-Budgeted – Reason' },
+                    { data: 'LevelAndDesignation', title: 'Level And Designation' },
+                    { data: 'ExperienceRange', title: 'Experience Range (From – To)' },
+                    { data: 'JustificationForHiring', title: 'Justification For Hiring (Why Not Internally - Associate To Staff, Or Clubbing Of Roles)' },
+                    { data: 'OfferSection', title: 'Offer Section' },
+                    { data: 'CandidateName', title: 'Candidate Name' },
+                    { data: 'DateOfApplication', title: 'Date Of Application' },
+                    { data: 'CandidateSourceId', title: 'Candidate Source Id' },
+                    { data: 'OfferEmployeeType', title: 'Offer Employee Type' },
+                    { data: 'GeneratedBy', title: 'Generated By' },
+                    { data: 'GeneratedOn', title: 'Generated On' },
+                    { data: 'OfferSalaryStructureName', title: 'Offer Salary Structure Name' },
+                    { data: 'DateOfJoiningAsPerOffer', title: 'Date Of Joining As Per Offer' },
+                    { data: 'DateOfJoiningAsPerProfile', title: 'Date Of Joining As Per Profile' },
+                    { data: 'EmployeeId', title: 'Employee Id' },
+                    { data: 'OfferSentOn', title: 'Offer Sent On' },
+                    { data: 'OfferSentBy', title: 'Offer Sent By' },
+                    { data: 'OfferAcceptedOn', title: 'Offer Accepted On' },
+                    { data: 'OfferAcceptedBy', title: 'Offer Accepted By' },
+                    { data: 'CandidateCommentsInOfferLetter', title: 'Candidate Comments In Offer Letter' },
+                    { data: 'OfferRejectedOn', title: 'Offer Rejected On' },
+                    { data: 'OfferRejectedBy', title: 'Offer Rejected By' },
+                    { data: 'OfferStatus', title: 'Offer Status' },
+                    { data: 'OfferWithdrawnOn', title: 'Offer Withdrawn On' },
+                    { data: 'OfferWithdrawnBy', title: 'Offer Withdrawn By' },
+                    { data: 'ExistingLevelAndDesignation', title: 'Existing Level And Designation' },
+                    { data: 'RevisedLevelAndDesignation', title: 'Revised Level And Designation' },
+                    { data: 'ExistingCostCentre', title: 'Existing Cost Centre' },
+                    { data: 'RevisedCostCentre', title: 'Revised Cost Centre' },
+                    { data: 'Level1AssigneesRepeat', title: 'Level 1 Assignees' },
+                    { data: 'Level1StatusRepeat', title: 'Level 1 Status' },
+                    { data: 'Level1ActionTakenByRepeat', title: 'Level 1 Action Taken By' },
+                    { data: 'Level1ActionTakenOnRepeat', title: 'Level 1 Action Taken On' },
+                    { data: 'Level2AssigneesRepeat', title: 'Level 2 Assignees' },
+                    { data: 'Level2StatusRepeat', title: 'Level 2 Status' },
+                    { data: 'Level2ActionTakenByRepeat', title: 'Level 2 Action Taken By' },
+                    { data: 'Level2ActionTakenOnRepeat', title: 'Level 2 Action Taken On' }
+                ],
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        className: 'btn-outline-success btn-sm',
+                        text: 'Export All to Excel',
+                        action: function () {
+                            exportToExcel();
+                        }
+                    }
+                ],
+
+            });
+            $('#loader').hide();
+            // Bind searchBox event only once
+            //$('#searchBox').off('keyup').on('keyup', function () {
+            //    ehsTableInstance.search(this.value).page(0).draw(false);
+            //});
+        }
+
+      
+
+
+        function exportToExcel() {
+            $('#loader').show();
+                $.ajax({
+                    url: '/HR_Head_Report/GetAjaySirReport',
+                    type: 'POST',
+                    data: {
+                        length: 1000000, // Request large data
+                        start: 0
+                    },
+                    success: function (response) {
+                        $('#loader').hide();
+
+                        var allData = response.data;
+
+                        if (!allData || allData.length === 0) {
+                            alert("No data available for export.");
+                            return;
+                        }
+
+                        // These should match your JSON field names (not user-friendly headers)
+                        var fields = [
+                            'RequisitionId', 'GroupCompany', 'DepartmentName', 'BusinessUnitName',
+                            'RequisitionRaisedByEmployeeId', 'RequisitionRaisedByEmployeeName',
+                            'RequisitionStatus', 'RequisitionArchivedBy', 'RequisitionArchivedOn',
+                            'RequisitionInitiatedOn', 'RequisitionActivatedOn', 'RequisitionActivatedBy',
+                            'RequisitionHiringManager', 'Level1Assignees', 'Level1Status',
+                            'Level1ActionTakenBy', 'Level1ActionTakenOn', 'Level2Assignees',
+                            'Level2Status', 'Level2ActionTakenBy', 'Level2ActionTakenOn',
+                            'Level3Assignees', 'Level3Status', 'Level3ActionTakenBy', 'Level3ActionTakenOn',
+                            'Level4Assignees', 'Level4Status', 'Level4ActionTakenBy', 'Level4ActionTakenOn',
+                            'Level5Assignees', 'Level5Status', 'Level5ActionTakenBy', 'Level5ActionTakenOn',
+                            'Level6Assignees', 'Level6Status', 'Level6ActionTakenBy', 'Level6ActionTakenOn',
+                            'RequisitionLastApprovedRejectedOn', 'RequisitionLastApprovedRejectedBy',
+                            'ReplacementEmployees', 'BudgetedNonBudgeted', 'VacancyDueTo',
+                            'InternalTalent', 'HeadcountOfDepartmentBudget', 'HeadcountOfDepartmentActual',
+                            'IfUnBudgetedReason', 'LevelAndDesignation', 'ExperienceRange',
+                            'JustificationForHiring', 'OfferSection', 'CandidateName', 'DateOfApplication',
+                            'CandidateSourceId', 'OfferEmployeeType', 'GeneratedBy', 'GeneratedOn',
+                            'OfferSalaryStructureName', 'DateOfJoiningAsPerOffer', 'DateOfJoiningAsPerProfile',
+                            'EmployeeId', 'OfferSentOn', 'OfferSentBy', 'OfferAcceptedOn', 'OfferAcceptedBy',
+                            'CandidateCommentsInOfferLetter', 'OfferRejectedOn', 'OfferRejectedBy',
+                            'OfferStatus', 'OfferWithdrawnOn', 'OfferWithdrawnBy', 'ExistingLevelAndDesignation',
+                            'RevisedLevelAndDesignation', 'ExistingCostCentre', 'RevisedCostCentre',
+                            'Level1AssigneesRepeat', 'Level1StatusRepeat', 'Level1ActionTakenByRepeat', 'Level1ActionTakenOnRepeat',
+                            'Level2AssigneesRepeat', 'Level2StatusRepeat', 'Level2ActionTakenByRepeat', 'Level2ActionTakenOnRepeat'
+                        ];
+
+                        // Headers for Excel (user-friendly names)
+                        var headers = [
+                            'Requisition Id', 'Group Company', 'Department Name', 'Business Unit Name',
+                            'Requisition Raised By - Employee Id', 'Requisition Raised By - Employee Name',
+                            'Requisition Status', 'Requisition Archived By', 'Requisition Archived On',
+                            'Requisition Initiated On', 'Requisition Activated On', 'Requisition Activated By',
+                            'Requisition Hiring Manager', 'Level 1 Assignees', 'Level 1 Status',
+                            'Level 1 Action Taken By', 'Level 1 Action Taken On', 'Level 2 Assignees',
+                            'Level 2 Status', 'Level 2 Action Taken By', 'Level 2 Action Taken On',
+                            'Level 3 Assignees', 'Level 3 Status', 'Level 3 Action Taken By', 'Level 3 Action Taken On',
+                            'Level 4 Assignees', 'Level 4 Status', 'Level 4 Action Taken By', 'Level 4 Action Taken On',
+                            'Level 5 Assignees', 'Level 5 Status', 'Level 5 Action Taken By', 'Level 5 Action Taken On',
+                            'Level 6 Assignees', 'Level 6 Status', 'Level 6 Action Taken By', 'Level 6 Action Taken On',
+                            'Requisition Last Approved / Rejected On', 'Requisition Last Approved / Rejected By',
+                            'Replacement Employees', 'Budgeted / Non Budgeted', 'Vacancy Due To',
+                            'Internal Talent: Can Anyone From Existing Team Take Up This Role? If Yes Then Who ?',
+                            'Headcount Of Department - Budget', 'Headcount Of Department - Actual',
+                            'If Un-Budgeted – Reason', 'Level And Designation', 'Experience Range (From – To)',
+                            'Justification For Hiring (Why Not Internally - Associate To Staff, Or Clubbing Of Roles)',
+                            'Offer Section', 'Candidate Name', 'Date Of Application', 'Candidate Source Id',
+                            'Offer Employee Type', 'Generated By', 'Generated On', 'Offer Salary Structure Name',
+                            'Date Of Joining As Per Offer', 'Date Of Joining As Per Profile', 'Employee Id',
+                            'Offer Sent On', 'Offer Sent By', 'Offer Accepted On', 'Offer Accepted By',
+                            'Candidate Comments In Offer Letter', 'Offer Rejected On', 'Offer Rejected By',
+                            'Offer Status', 'Offer Withdrawn On', 'Offer Withdrawn By',
+                            'Existing Level And Designation', 'Revised Level And Designation',
+                            'Existing Cost Centre', 'Revised Cost Centre',
+                            'Level 1 Assignees', 'Level 1 Status', 'Level 1 Action Taken By', 'Level 1 Action Taken On',
+                            'Level 2 Assignees', 'Level 2 Status', 'Level 2 Action Taken By', 'Level 2 Action Taken On'
+                        ];
+
+                        // Map data using field names
+                        var tableData = allData.map(function (item) {
+                            return fields.map(function (field) {
+                                return item[field] !== undefined ? item[field] : '';
+                            });
+                        });
+
+                        var worksheetData = [headers, ...tableData];
+                        var worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+                        var workbook = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(workbook, worksheet, "Full Report");
+
+                        XLSX.writeFile(workbook, 'HR_Head_Report.xlsx');
+                    },
+                    error: function () {
+                        $('#loader').hide();
+                        alert("Error exporting data.");
+                    }
+                });
+            }
+
+
+
+
+    </script>
+
+
+</main>
+

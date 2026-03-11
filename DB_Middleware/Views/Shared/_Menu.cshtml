@@ -1,0 +1,35 @@
+﻿@using DB_Middleware.DAO
+@inject IMenuService leftmenuService
+
+
+<ul id='js-nav-menu' class='nav-menu'>
+
+
+    @{ var mdata = leftmenuService.GetMenuItemsAsync();}
+    @foreach (var item in mdata)
+    {
+
+        <li>
+            <a href="#" title="@Html.DisplayFor(modelItem => item.ModuleName)" data-filter-tags="nav.@item.LCModuleName">
+                <i class="@Html.DisplayFor(modelItem => item.Icon)"></i>
+                <span class="nav-link-text" data-i18n="nav.@item.LCModuleName">@Html.DisplayFor(modelItem => item.ModuleName)</span>
+            </a>
+            <ul class="treeview-menu">
+                @foreach (var item1 in item.MenuList)
+                {
+                    
+                    <li>
+                        <a href="@Html.DisplayFor(modelItem => item1.PageUrl)" title="@Html.DisplayFor(modelItem => item1.ListLOCModuleName)" data-filter-tags="@item1.ListLOCModuleName">
+                            <span class="nav-link-text" data-i18n="nav.@item1.ListLOCModuleName">@Html.DisplayFor(modelItem => item1.ModuleName)</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+
+
+    }
+
+
+</ul>

@@ -1,0 +1,256 @@
+﻿
+@{
+    ViewData["Title"] = "Bind_Jobposting_On_VAAVE";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Custom CSS to add space between the page size dropdown and the table */
+
+    /* Add margin to the page size selector dropdown */
+    .dataTables_length {
+        margin-bottom: 10px; /* Adjust space between the dropdown and table */
+    }
+
+    /* Optional: Adjust the margin between other controls like search box and buttons */
+    .dataTables_filter {
+        margin-left: 20px; /* Adjust space between search box and page size dropdown */
+    }
+
+    /* You can also adjust the space between the export buttons */
+    .dt-buttons {
+        margin-left: 5px;
+        margin-bottom: 10px;
+    }
+
+    /* Add space between pagination controls and table */
+    .dataTables_paginate {
+        margin-top: 20px; /* Adjust space between table and pagination */
+    }
+</style>
+<main id="js-page-content" role="main" class="page-content">
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div id="panel-2" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        Bind Job Details For Post on  VAAVE <span class="fw-300"><i>Details</i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                    </div>
+                </div>
+
+
+
+
+                <div class="panel-container show">
+                    <div class="panel-content">
+
+                        <div class="tab-pane" id="tab-events" role="tabpanel">
+                            <div class="d-flex flex-column h-100">
+                                <div class="h-auto">
+                                    <table id="example1" class="table table-bordered table-hover table-striped w-100">
+                                        <thead>
+                                            <tr>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+    <script src="~/js/jquery.min.js"></script>
+
+    <script src="~/js/Action_JS/JS.js"></script>
+
+    <script type='text/javascript'>
+        var totalList = [];
+        var iterms = "";
+        $(document).ready(function () {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            var cid = params['id'];
+
+            BindEmpdetailsforemail();
+
+        });
+        function Redirect(id) {
+
+                window.location.href = '/Email_Request/HR_Validate_New_Request?id=' + id;
+
+        }
+        function Bind_Records_For_NotJoined(id) {
+
+            $('#modal-Tracking').modal('show');
+            $.ajax({
+
+                url: "/Email_Request/HR_Validate",
+                type: "GET",
+                data: { UniqueID: "" + id + "" },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+
+                    var build_table = '';
+                    for (var index = 0; index < data.length; index++) {
+
+
+                        $("#Firstname").val(data[index].fname);
+                        $("#middlename").val(data[index].mname);
+                        $("#lastname").val(data[index].lname);
+                        $("#txtdeprtment").val(data[index].department);
+                        $("#txtdesignation").val(data[index].deisgnation);
+                        $("#txtgrade").val(data[index].level_Grade);
+
+                        $("#txtuniqueid").text(data[index].userUniqueID);
+                        $("#txtgroupname").val(data[index].group_company);
+                        $("#txtfunctionalareadept").val(data[index].department_cost_center_name);
+
+
+
+                    }
+                }
+            });
+
+        }
+
+        function BindEmpdetailsforemail() {
+            $.ajax({
+                url: "/VAAW_Job_Posting/get_job_details",
+                type: "GET",
+                data: {
+                  
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (Array.isArray(data) && data.length > 0) {
+                        // Destroy existing DataTable instance if it exists
+                        if ($.fn.DataTable.isDataTable('#example1')) {
+                            $('#example1').DataTable().clear().destroy();
+                        }
+
+                        // Initialize DataTable with new data
+                        $('#example1').DataTable({
+                            responsive: true,
+                            processing: true,
+                            data: data,
+                            order: [[4, 'desc']],
+                            columns: [
+                                {
+                                    data: null,
+                                    title: 'Action',
+                                    render: function (data, type, row) {
+                                       
+                                        const isChecked = row.status === 1 ? "checked" : "";
+                                        return `
+                                    <input type="checkbox" class="employee-checkbox" id="${row.job_id}"
+                                           data-uniqueid="${row.job_id}"
+                                           onclick='handleCheckboxClick(this, "${row.job_id}");'
+                                           ${isChecked} />`;
+
+                                       
+                                    }
+                                },
+                                { data: 'job_id', title: 'Job ID' },
+                                { data: 'group_company', title: 'Group Company' },
+                                { data: 'business_unit', title: 'Business Unit' },
+                                { data: 'joblocation', title: 'Job location'},
+                                { data: 'department', title: 'Department' },
+                                { data: 'job_title', title: 'Job Title' },
+                                { data: 'job_created_timestamp', title:'job Created' },
+                                { data: 'url', title: 'Link URL' },
+                                
+                            ],
+                            dom: 'Blfrtip',  // 'l' is kept to show the page size dropdown, 'p' is for pagination
+
+                            buttons: [
+                                {
+                                    extend: 'excelHtml5',
+                                    className: 'btn-outline-success btn-sm',  // Add custom classes to the Excel button
+                                    text: 'Export to Excel'
+                                },
+                                {
+                                    extend: 'csvHtml5',
+                                    className: 'btn-outline-primary btn-sm',  // Add custom classes to the CSV button
+                                    text: 'Export to CSV'
+                                },
+                                {
+                                    extend: 'copyHtml5',
+                                    className: 'btn-outline-success btn-sm',  // Add custom classes to the Copy button
+                                    text: 'Copy to Clipboard'
+                                }
+                            ],
+                        });
+                    } else {
+                        console.error("No data found or data is not an array");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                }
+            });
+        }
+
+        // Function to handle checkbox clicks
+        function handleCheckboxClick(checkbox, userUniqueID) {
+            var result = confirm("Are you sure wants to update this records?");
+            if (result == true) {
+
+    // Get the checked state as a boolean
+    const isChecked = checkbox.checked;
+
+    // AJAX request
+    $.ajax({
+        url: '@Url.Action("Saveandchangestatus", "VAAW_Job_Posting")',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ userUniqueID: userUniqueID, isChecked: isChecked }), // Send the boolean state
+
+        success: function (response) {
+            alert(response.message); // Optional: Feedback to user
+        },
+        error: function (xhr, status, error) {
+            console.error("Error saving status:", status, error);
+            alert("An error occurred while saving employee status.");
+        }
+    });
+            } else {
+                document.getElementById(userUniqueID).checked = false;
+                return false;
+            }
+}
+
+
+        // Example function for the Edit button action
+        function EditEmployee(userID) {
+            // Implement the edit logic here, e.g., redirect to an edit page or open a modal
+            console.log("Edit employee with ID:", userID);
+        }
+
+
+
+
+
+    </script>
+
+</main>
+
+

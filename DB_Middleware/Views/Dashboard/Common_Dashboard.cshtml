@@ -1,0 +1,534 @@
+﻿
+@{ ViewData["Title"] = "Common_Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+@model DB_Middleware.Models.Dashboarddata
+<!-- END Page Header -->
+<!-- BEGIN Page Content -->
+<!-- the #js-page-content id is needed for some plugins to initialize -->
+<link rel="stylesheet" media="screen, print" href="../css/statistics/c3/c3.css">
+<main id="js-page-content" role="main" class="page-content">
+    <ol class="breadcrumb page-breadcrumb">
+        <li class="breadcrumb-item"><a href="javascript:void(0);">Admin</a></li>
+        <li class="breadcrumb-item">Application</li>
+        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
+    </ol>
+    <div class="subheader">
+        <h1 class="subheader-title">
+            <i class='subheader-icon fal fa-chart-area'></i><span class='fw-300'>Dashboard</span>
+        </h1>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-6 col-xl-3">
+            <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
+                <div class="">
+                    <h3 class="display-4 d-block l-h-n m-0 fw-500">
+                        <small id="txtpeningemailcreation" name="txtpeningemailcreation">Pending For Email Creation:-(@Model.PendingEmailCreation)</small>
+                        <small class="m-0 l-h-n" onclick="">
+                            <a style="color: white;" href="@Model.EmailCreationpageurl">
+
+                                @if (@Model.EmailCreationpageurl == "#")
+                                {
+                    <span>N/A</span> }
+                                else
+                                { @* This will render View / Update in the else block *@
+                                                <span>View / Update</span>}
+
+
+
+                            </a>
+                        </small>
+
+
+                    </h3>
+                </div>
+                <i class="fal fa-user position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size:6rem"></i>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="p-3 bg-info-300 rounded overflow-hidden position-relative text-white mb-g">
+                <div class="">
+                    <h3 class="display-4 d-block l-h-n m-0 fw-500">
+                        <small id="txtemailblock" name="txtemailblock">Pending For Email Block-(@Model.PendingEmailBlock)</small>
+
+                        <small class="m-0 l-h-n" onclick="">
+                            <a style="color: white;" href="@Model.EmailBlockpageurl">
+
+                                @if (@Model.EmailBlockpageurl == "#")
+                                {
+                    <span>N/A</span> }
+                                else
+                                { @* This will render View / Update in the else block *@
+                                                <span>View / Update</span>}
+
+
+
+
+                            </a>
+                        </small>
+                    </h3>
+                </div>
+                <i class="fal fa-globe position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4" style="font-size: 6rem;"></i>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="p-3 bg-warning-300 rounded overflow-hidden position-relative text-white mb-g">
+                <div class="">
+                    <h3 class="display-4 d-block l-h-n m-0 fw-500">
+                        <small id="txtremove" name="txtremove">Pending For Email Remove-(@Model.PendingEmailDelete)</small>
+
+                        <small class="m-0 l-h-n" onclick="">
+                            <a style="color: white;" href="@Model.EmailRemovepageurl">
+                                <strong>
+                                    @if (@Model.EmailRemovepageurl == "#")
+                                    {
+                        <span>N/A</span> }
+                                    else
+                                    { @* This will render View / Update in the else block *@
+                                                    <span>View / Update</span>}
+
+
+                                </strong>
+                            </a>
+                        </small>
+                    </h3>
+                </div>
+                <i class="fal fa-gem position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="p-3 bg-danger-300 rounded overflow-hidden position-relative text-white mb-g">
+                <div class="">
+                    <h3 class="display-4 d-block l-h-n m-0 fw-500">
+                        <small id="txtremove" name="txtremove">Pending For Transfer-(@Model.Pendingtransfer)</small>
+
+                        <small class="m-0 l-h-n" onclick="">
+                            <a style="color: white;" href="@Model.Intertranferpegurl">
+
+
+                                @if (@Model.Intertranferpegurl == "#")
+                                {
+
+                    <span>N/A</span> }
+                                else
+                                { @* This will render View / Update in the else block *@
+                                                <span>View / Update</span>}
+
+
+                            </a>
+                        </small>
+                    </h3>
+                </div>
+                <i class="fal fa-gem position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
+            </div>
+        </div>
+        @*<div class="col-sm-6 col-xl-3">
+                <div class="p-3 bg-success-300 rounded overflow-hidden position-relative text-white mb-g">
+                    <div class="">
+                        <h3 class="display-4 d-block l-h-n m-0 fw-500">
+                            <small id="txttotalhistory" name="txttotalhistory">All Action History-(@Model.TotalAction)</small>
+
+                            <small class="m-0 l-h-n" onclick=""><a style="color: white;" href="#"><strong> View / Update </strong></a></small>
+                        </h3>
+                    </div>
+                    <i class="fal fa-lightbulb position-absolute pos-right pos-bottom opacity-15 mb-n5 mr-n6" style="font-size: 8rem;"></i>
+                </div>
+            </div>*@
+
+
+
+
+
+
+    </div>
+    <div class="form-row">
+
+        <div class="col-md-6 mb-2">
+
+            <table id="datatable" class="table table-bordered table-hover table-striped w-100">
+                <thead>
+                    <tr>
+                        <th width: "10%"></th>
+                        <th width: "10%">Email Created</th>
+                        <th width: "10%">Email Blocked</th>
+                        <th width: "10%">Email Deleted</th>
+                        <th width: "10%">Emp. Transferred</th>
+                        <th width: "10%">Total Action</th>
+                    </tr>
+                </thead>
+                <tbody id="data">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6 mb-2">
+            <div id="container"></div>
+            <div id="containerplant_wrapper" style="width:100%; overflow-x:auto; overflow-y:hidden;">
+                <canvas id="chartContainer" height="250" min-width:1200px;></canvas>
+                </div>
+            </div>
+
+        </div>
+</main>
+@*<script src="~/High_Chart/highcharts.js"></script>
+<script src="~/High_Chart/data.js"></script>*@
+
+<script src="~/js/Chart_JS/chart.js"></script>
+<script src="~/js/Chart_JS/chartjs-plugin-datalabels.js"></script>
+<script src="~/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+    /* Activate smart panels */
+    $('#js-page-content').smartPanel();
+
+</script>
+
+<script type='text/javascript'>
+    var totalList = [];
+    var iterms = "";
+    $(document).ready(function () {
+        /* BindEmpdetails();*/
+        get_requests();
+
+        /*Bind_Dashbaord_Data();*/
+
+
+
+
+    });
+    var chartInstance;
+
+    function get_requests() {
+        $.ajax({
+            url: "/Dashboard/get_dasbhaord_emp_records_ongraph",
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+
+                // Destroy DataTable if exists
+                if ($.fn.DataTable.isDataTable("#datatable")) {
+                    $("#datatable").DataTable().destroy();
+                }
+
+                $("#data").empty();
+
+                var list = data;
+                var binddata = "";
+
+                for (var index = 0; index < list.length; index++) {
+                    binddata +=
+                        '<tr>' +
+                        '<td>' + list[index].months + '</td>' +
+                        '<td>' + list[index].pendingEmailCreation + '</td>' +
+                        '<td>' + list[index].pendingEmailBlock + '</td>' +
+                        '<td>' + list[index].pendingEmailDelete + '</td>' +
+                        '<td>' + list[index].pendingtransfer + '</td>' +
+                        '<td>' + list[index].totalRequest + '</td>' +
+                        '</tr>';
+                }
+
+                $("#data").append(binddata);
+
+                // DATATABLE
+                $("#datatable").DataTable({
+                    paging: false,
+                    ordering: true,
+                    info: false,
+                    searching: false
+                });
+
+                // CHART.js DATA PREP
+                let labels = list.map(x => x.months);
+                let pendingEmailCreation = list.map(x => x.pendingEmailCreation);
+                let pendingEmailBlock = list.map(x => x.pendingEmailBlock);
+                let pendingEmailDelete = list.map(x => x.pendingEmailDelete);
+                let pendingTransfer = list.map(x => x.pendingtransfer);
+                let totalRequests = list.map(x => x.totalRequest);
+
+                // Destroy previous chart if exists
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+
+                var ctx = document.getElementById("chartContainer").getContext("2d");
+
+                chartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Email Created',
+                                data: pendingEmailCreation,
+                                backgroundColor: '#a38cc6'
+                            },
+                            {
+                                label: 'Email Blocked',
+                                data: pendingEmailBlock,
+                                backgroundColor: '#51adf6'
+                            },
+                            {
+                                label: 'Email Deleted',
+                                data: pendingEmailDelete,
+                                backgroundColor: '#ffd274'
+                            },
+                            {
+                                label: 'Emp. Transfered',
+                                data: pendingTransfer,
+                                backgroundColor: '#fd3995'
+                            },
+                            {
+                                label: 'Total Requests',
+                                data: totalRequests,
+                                backgroundColor: '#37e2d0'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'     // footer legend
+                            },
+                            title: {
+                                display: true,
+                                text: "Month Wise Requests",
+                                font: { size: 20 }
+                            },
+                            datalabels: {
+                                anchor: 'end',         // ✔ show on top of the bar
+                                align: 'top',          // ✔ align above bar
+                                color: '#000',
+                                font: { weight: 'bold' },
+                                formatter: function (value) {
+                                    return (value === null || isNaN(value)) ? "Dada" : value;
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: "Request Count"
+                                }
+                            }
+                        }
+                    },
+                    plugins: [ChartDataLabels]
+                });
+
+
+            },
+            failure: function (response) {
+                alert(response.d);
+            }
+        });
+    }
+
+
+    //function get_requests() {
+    //    $.ajax({
+    //        url: "/Dashboard/get_dasbhaord_emp_records_ongraph", // Your endpoint here
+    //        type: 'GET',
+    //        data: {},
+    //        contentType: "application/json; charset=utf-8",
+    //        success: function (data) {
+    //            $("#datatable").dataTable().fnDestroy();
+    //            $("#data").empty();
+    //            var list = data;
+    //            var binddata = "";
+
+    //            for (var index = 0; index < list.length; index++) {
+    //                binddata += '<tr>' +
+    //                    '<td style="width: 12%;">' + list[index].months + '</td>' +
+    //                    '<td style="width: 20%;">' + list[index].pendingEmailCreation + '</td>' +
+    //                    '<td style="width: 18%;">' + list[index].pendingEmailBlock + '</td>' +
+    //                    '<td style="width: 20%;">' + list[index].pendingEmailDelete + '</td>' +
+    //                    '<td style="width: 20%;">' + list[index].pendingtransfer + '</td>' +
+    //                    '<td style="width: 15%;">' + list[index].totalRequest + '</td>' +
+    //                    '</tr>';
+    //            }
+
+    //            $("#data").append(binddata);
+
+    //            // Initialize DataTable with column widths
+    //            $("#datatable").DataTable({
+    //                columnDefs: [
+    //                    { width: "20%", targets: 0 }, // Months
+    //                    { width: "20%", targets: 1 }, // Pending Email Creation
+    //                    { width: "20%", targets: 2 }, // Pending Email Block
+    //                    { width: "20%", targets: 3 }, // Pending Email Delete
+    //                    { width: "20%", targets: 4 }, // Tranfer Email Delete
+    //                    { width: "20%", targets: 5 }  // Total Requests
+    //                ],
+    //                paging: false, // Adjust as necessary
+    //                ordering: true, // Adjust as necessary
+    //                info: false, // Adjust as necessary
+    //                searching: false // Enable searching
+    //            });
+
+    //            Highcharts.chart('container', {
+    //                colors: ['#a38cc6', '#51adf6', '#ffd274', '#fd3995', '#37e2d0'],
+    //                data: {
+    //                    table: 'datatable'
+    //                },
+    //                chart: {
+    //                    type: 'column'
+    //                },
+    //                title: {
+    //                    text: 'Month Wise Request'
+    //                },
+    //                subtitle: {
+    //                    text: '<a href="#" target="_blank"></a>'
+    //                },
+    //                xAxis: {
+    //                    type: 'category'
+    //                },
+    //                yAxis: {
+    //                    allowDecimals: false,
+    //                    title: {
+    //                        text: 'Request Count'
+    //                    }
+    //                },
+    //                plotOptions: {
+    //                    column: {
+    //                        dataLabels: {
+    //                            enabled: true,
+    //                            formatter: function () {
+    //                                // Check if the value is NaN or null
+    //                                if (isNaN(this.y) || this.y === null) {
+    //                                    return 'Dada'; // Replace NaN or null with 'Dada'
+    //                                }
+    //                                return this.y /*+ ' Dada'*/; // Display the actual value if it's valid
+    //                            }
+    //                        }
+    //                    }
+    //                }
+    //            });
+
+    //        },
+    //        failure: function (response) {
+    //            alert(response.d);
+    //        }
+    //    });
+    //}
+
+
+    function Bind_Dashbaord_Data() {
+        $.ajax({
+            type: "GET",
+            url: "/Dashboard/get_dasbhaord_common",
+
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            crossDomain: true,
+            success: function (Data) {
+
+
+
+                $("#txtpeningemailcreation").text('Pending For Email Creation-(' + Data.pendingEmailCreation + ')');
+                $("#txtemailblock").text('Pending For Email Block-(' + Data.pendingEmailBlock + ')');
+                $("#txtremove").text('Pending For Email Remove-(' + Data.pendingEmailDelete + ')');
+                $("#txttotalhistory").text('All Action History-(' + Data.totalAction + ')');
+
+            }
+        });
+
+    }
+    function BindDataForEmailupdate(Eid) {
+
+
+        $('#modal-Tracking').modal('show');
+
+        //Bind control data bind data for email update in DB---------------------------
+        $.ajax({
+            type: "GET",
+            url: "/DB_View/get_active_emp_records",
+
+            data: { UniqueID: "" + Eid + "" },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            crossDomain: true,
+            success: function (Data) {
+
+
+                var build_table = '';
+                for (var index = 0; index < Data.length; index++) {
+
+
+                    $("#Firstname").val(Data[index].fullname);
+                    $("#middlename").val(Data[index].fullname);
+                    $("#lastname").val(Data[index].fullname);
+                    $("#txtgroupname").val(Data[index].group_company);
+                    $("#txtfunctionalareadept").val(Data[index].functional_area_dept);
+                    $("#txtfunctionalareasubdept").val(Data[index].functional_area_subdept);
+                    $("#txtgrade").val(Data[index].level_Grade);
+                    $("#txtuniqueid").text(Data[index].userUniqueID);
+
+                }
+            }
+        });
+
+        //End email id  function update--------------------------------------------
+
+    }
+    function BindEmpdetails() {
+        $.ajax({
+            url: "/DB_View/get_active_emp_records",
+            type: "GET",
+            data: {
+                UniqueID: "52XiXUD6+s45Y2o+i7OWzo7qLXma2Rui3buSWJ56A7Q="
+            },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                /*     console.log(data); // Log the data to inspect*/
+
+                if (Array.isArray(data) && data.length > 0) {
+                    // Destroy the existing DataTable instance if it exists
+                    if ($.fn.DataTable.isDataTable('#example1')) {
+                        $('#example1').DataTable().clear().destroy();
+                    }
+                    // Initialize DataTable with new data
+                    $('#example1').DataTable({
+                        responsive: true,
+                        processing: true,
+
+                        data: data,
+                        columns: [
+
+
+                            { data: 'fullname', title: 'Full Name' },
+                            { data: 'group_company', title: 'Group Company' },
+                            { data: 'functional_area_dept', title: 'Functional Area(Dept)' },
+                            { data: 'level_Grade', title: 'Grade' },
+                            { data: 'employee_id', title: 'Employee ID' },
+                            { data: 'office_mobile_no', title: 'Mobile Number' },
+                            { data: 'company_email_id', title: 'Email' },
+                            { data: 'direct_manager_name', title: 'RM' },
+                            { data: 'hrbp_name', title: 'HRBP Name' },
+                            { data: 'office_location', title: 'Office Location' },
+                        ]
+                    });
+
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error: ", status, error);
+            }
+        });
+    }
+
+
+
+</script>
+

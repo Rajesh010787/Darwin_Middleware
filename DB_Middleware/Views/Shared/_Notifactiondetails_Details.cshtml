@@ -1,0 +1,67 @@
+﻿
+@using DB_Middleware.DAO
+@inject INotification leftnotificationService 
+
+
+<div>
+    @{ var mdata = leftnotificationService.GetNotoficaltionmAsync();}
+    <a href="#" class="header-icon" data-toggle="dropdown" title="You got @(Model.CountNotification != null ? Model.CountNotification : "0") notifications">
+        <i class="fal fa-bell"></i>
+        <span class="badge badge-icon">  @(Model.CountNotification != null ? Model.CountNotification : "0")</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-animated dropdown-xl">
+        <div class="dropdown-header bg-trans-gradient d-flex justify-content-center align-items-center rounded-top mb-2">
+            <h4 class="m-0 text-center color-white">
+                @(Model.CountNotification != null ? Model.CountNotification : "") New
+                <small class="mb-0 opacity-80">Action Notifications</small>
+            </h4>
+        </div>
+        <ul class="nav nav-tabs nav-tabs-clean" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link px-4 fs-md js-waves-on fw-500" data-toggle="tab" href="#tab-messages" data-i18n="drpdwn.messages">Messages</a>
+            </li>
+
+        </ul>
+        <div class="tab-content tab-notification">
+
+            <div class="tab-pane active" id="tab-messages" role="tabpanel">
+                <div class="custom-scroll h-100">
+                    <ul class="notification">
+
+                        @if (Model.CountNotification != null && Model.CountNotification != "")
+                        {
+                            foreach (var item in Model.Notodetails)
+                            {
+                                <li class="unread">
+                                    <a href="#" class="d-flex align-items-center">
+
+                                        <span class="d-flex flex-column flex-1 ml-1">
+                                            <span class="name"> @(item.CustomerName != null ? item.CustomerName : "")</span>
+
+                                        </span>
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="unread">
+                                <a href="#" class="d-flex align-items-center">
+
+                                    <span class="d-flex flex-column flex-1 ml-1">
+                                        <span class="name"></span>
+
+                                    </span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="py-2 px-3 bg-faded d-block rounded-bottom text-right border-faded border-bottom-0 border-right-0 border-left-0">
+
+        </div>
+    </div>
+</div>

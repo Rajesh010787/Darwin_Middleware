@@ -1,0 +1,779 @@
+﻿
+@{
+    ViewData["Title"] = "Validate_By_Deviation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/formplugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet" />
+<main id="js-page-content" role="main" class="page-content">
+
+
+
+    <div class="row">
+
+        <div class="col-xl-12">
+
+
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        Validate Employee Loan Process Details<span class="fw-300">
+                        </span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        @*<button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>*@
+                    </div>
+                </div>
+                <form id="Validate_Loan_Request">
+                    <div class="panel-container show">
+
+                        <div class="frame-wrap">
+                            <div class="panel-content">
+
+
+
+                                <!-- /.box-header -->
+                                <!-- form start -->
+
+                                <div class="box-body">
+
+                                    <fieldset class="form-group border p-2">
+                                        <legend class="w-auto px-1" style="font-size: 13px;"><strong>Employee Information</strong></legend>
+                                        <div class="form-row">
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Name</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtname" autocomplete="off" name="txtname" disabled="disabled">
+
+                                            </div>
+
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Employee Code</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtempcode" autocomplete="off" name="txtempcode" disabled="disabled">
+
+                                            </div>
+
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Department</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtdepartment" autocomplete="off" name="txtdepartment" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Group Company</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtbusinessvertical" autocomplete="off" name="txtbusinessvertical" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Business Unit</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtdivision" autocomplete="off" name="txtdivision" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Dept. Cost Center</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtplant" autocomplete="off" name="txtplant" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Date Of Joining</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtdatejoin" autocomplete="off" name="txtdatejoin" disabled="disabled">
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row">
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Salary Drawn to Basic + HRA</label><span class="text-danger">*</span>
+                                                @*<input type="text" class="form-control input-sm" id="txtsalarydown" autocomplete="off" name="txtsalarydown">*@
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txtsalarydown"
+                                                       name="txtsalarydown"
+                                                       autocomplete="off"
+                                                       inputmode="numeric"
+                                                       pattern="^[0-9]+$"
+                                                       placeholder="Enter salary"
+                                                       title="Please enter numbers only"
+                                                       disabled="disabled">
+
+                                            </div>
+
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Rupess (<b>Please enter numbers only</b>)</label><span class="text-danger">*</span>
+                                                @*<input type="text" class="form-control input-sm" id="txtrupess" autocomplete="off" name="txtrupess">*@
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txtrupess"
+                                                       name="txtrupess"
+                                                       autocomplete="off"
+                                                       inputmode="numeric"
+                                                       pattern="^[0-9]+$"
+                                                       placeholder="Enter amount"
+                                                       title="Please enter numbers only"
+                                                       disabled="disabled">
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Deviation</label><span class="text-danger">*</span>
+                                                <select class="form-control input-sm" id="dbdeviation" name="dbdeviation" disabled="disabled">
+
+                                                    <option value="">Select</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Number of installments for Repayment</label><span class="text-danger">*</span>
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txtinstallment"
+                                                       name="txtinstallment"
+                                                      
+                                                       min="10"
+                                                       max="20"
+                                                       required
+                                                       autocomplete="off" disabled="disabled">
+                                            </div>
+                                            <div class="col-md-4 mb-2">
+
+                                                <label for="validationCustom02">Purpose</label><span class="text-danger">*</span>
+                                                <textarea type="text" class="form-control input-sm" rows="1" id="tatpurpose" autocomplete="off" name="tatpurpose" disabled="disabled"></textarea>
+
+                                            </div>
+
+                                            <div class="col-md-4 mb-2">
+
+                                                <label for="validationCustom02">Purpose Description</label><span class="text-danger">*</span>
+                                                <textarea type="text" class="form-control input-sm" rows="1" id="txtpurposedes" autocomplete="off" name="txtpurposedes" disabled="disabled"></textarea>
+
+                                            </div>
+
+                                            <div class="col-md-2 mb-2">
+
+                                                <label for="validationCustom02">Attachment </label><span class="text-danger">*</span><br />
+                                                <a href='#' class='badge badge-info' id="donloaddoc" name="donloaddoc">
+                                                    <i class='typcn typcn-eye'></i>Doc. Download
+                                                </a>
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Guarantor 1</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtgarantee1" autocomplete="off" name="txtgarantee1" disabled="disabled">
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Guarantor 2</label><span class="text-danger">*</span>
+
+                                                <input type="text" class="form-control input-sm" id="txtgarantee2" autocomplete="off" name="txtgarantee2" disabled="disabled">
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+
+
+                                    <fieldset class="form-group border p-2">
+                                        <legend class="w-auto px-1" style="font-size: 13px;"><strong>Validate By HR/P&A Deptt</strong></legend>
+                                        <div class="form-row">
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Salary or Basic+VDA+HRA</label><span class="text-danger">*</span>
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txtsalarybasicvdahra"
+                                                       name="txtsalarybasicvdahra"
+                                                       autocomplete="off"
+                                                       inputmode="numeric"
+                                                       pattern="^[0-9]+$"
+                                                       placeholder="Enter salary"
+                                                       title="Please enter numbers only" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Whether confirmed or not</label><span class="text-danger">*</span>
+
+                                                <select class="form-control input-sm" id="dbwhetherconfirmedornot" name="dbwhetherconfirmedornot" disabled="disabled">
+
+                                                    <option value="">Select</option>
+                                                    <option value="Confirmed">Confirmed</option>
+                                                    <option value="No Confirmed">No Confirmed</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Eligibility amount as per Policy</label><span class="text-danger">*</span>
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txteligibilityamount"
+                                                       name="txteligibilityamount"
+                                                       autocomplete="off"
+                                                       inputmode="numeric"
+                                                       pattern="^[0-9]+$"
+                                                       placeholder="Enter salary"
+                                                       title="Please enter numbers only"
+                                                       disabled="disabled">
+
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">No. of Installment for Repayment as per policy</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtnoofinstallmentforreppayment" disabled="disabled" autocomplete="off" name="txtnoofinstallmentforreppayment">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">SAP Employee Code</label><span class="text-danger">*</span>
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txtsapemployeeocde"
+                                                       name="txtsapemployeeocde"
+                                                       autocomplete="off" disabled="disabled" />
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Status of Last Loan Repayment.</label><span class="text-danger">*</span>
+
+                                                <select class="form-control input-sm" id="dbloanclosedstatus" name="dbloanclosedstatus" disabled="disabled">
+
+                                                    <option value="">Select</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">If Yes, Date</label><span class="text-danger">*</span>
+
+                                                <div class="input-group">
+
+                                                    <input type="text" class="form-control" placeholder="If Yes, Date" disabled="disabled" name="txtloancloseddate" id="txtloancloseddate">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text fs-xl">
+                                                            <i class="fal fa-calendar-exclamation"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="form-group border p-2">
+                                        <legend class="w-auto px-1" style="font-size: 13px;"><strong>Validate By Plant/BV HR Head</strong></legend>
+                                        <div class="form-row">
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Amount Applied For</label><span class="text-danger">*</span>
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txtfinalanctionedamount"
+                                                       name="txtfinalanctionedamount"
+                                                       autocomplete="off"
+                                                       inputmode="numeric"
+                                                       pattern="^[0-9]+$"
+                                                       placeholder="Sanctioned Amount" 
+                                                       title="Please enter numbers only" disabled="disabled">
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Final  Amount</label><span class="text-danger">*</span>
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txtfinalamount"
+                                                       name="txtfinalamount"
+                                                       autocomplete="off"
+                                                       inputmode="numeric"
+                                                       pattern="^[0-9]+$"
+                                                       placeholder="Final Amount" 
+                                                       title="Please enter numbers only" disabled="disabled">
+                                                <small id="finalamount" style="font-weight:600;color:#555;"></small>
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">No. of Installments for Repayment</label><span class="text-danger">*</span>
+                                                <input type="number" class="form-control input-sm" id="txtfinalnoofinstallmentforreppayment" name="txtfinalnoofinstallmentforreppayment" autocomplete="off" min="10"
+                                                       max="20" disabled="disabled"
+                                                       required>
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </fieldset>
+                                    <fieldset class="form-group border p-2" id="divdiavation">
+                                        <legend class="w-auto px-1" style="font-size: 13px;"><strong>Validate By BV HR Head</strong></legend>
+                                        <div class="form-row">
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Amount Applied For</label><span class="text-danger">*</span>
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txtdeviationsanctionedamount"
+                                                       name="txtdeviationsanctionedamount"
+                                                       autocomplete="off"
+                                                       inputmode="numeric"
+                                                       pattern="^[0-9]+$"
+                                                       placeholder="Sanctioned Amount" oninput="convertToWords(this.value)"
+                                                       title="Please enter numbers only" disabled="disabled">
+                                                <small id="deviationsanctionedamoun" style="font-weight:600;color:#555;"></small>
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Final Amount</label><span class="text-danger">*</span>
+                                                <input type="text"
+                                                       class="form-control input-sm"
+                                                       id="txtdeviationfinalamount"
+                                                       name="txtdeviationfinalamount"
+                                                       autocomplete="off"
+                                                       inputmode="numeric"
+                                                       pattern="^[0-9]+$"
+                                                       placeholder="Sanctioned Amount" oninput="finalconvertToWords(this.value)"
+                                                       title="Please enter numbers only">
+                                                <small id="deviationfinalamoun" style="font-weight:600;color:#555;"></small>
+                                            </div>
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">No. of Installments for Repayment</label><span class="text-danger">*</span>
+                                                <input type="number" class="form-control input-sm" id="txtdeviationnoofinstallmentforreppayment" autocomplete="off" name="txtdeviationnoofinstallmentforreppayment" min="10"
+                                                       max="20"
+                                                       required>
+
+                                            </div>
+                                        </div>
+
+
+                                    </fieldset>
+                                    <fieldset class="form-group border p-3">
+                                        <legend class="w-auto px-2" style="font-size:13px;">
+                                            <strong>Tracking History</strong>
+                                        </legend>
+
+
+
+                                        <table id="example2" class="table table-bordered table-hover table-striped w-100">
+                                            <thead>
+                                                <tr>
+                                                </tr>
+                                            </thead>
+
+                                        </table>
+
+
+
+                                    </fieldset>
+
+                                    <fieldset class="form-group border p-3">
+                                        <legend class="w-auto px-2" style="font-size:13px;">
+                                            <strong>Action</strong>
+                                        </legend>
+
+                                        <div class="form-row align-items-center">
+
+                                            <!-- Action Selection -->
+                                            <!-- Remark -->
+                                            <div class="col-md-6 mb-2">
+                                                <label>Remark</label>
+                                                <textarea id="txtremark" name="txtremark" class="form-control"></textarea>
+                                            </div>
+
+
+
+                                            <div class="mt-3">
+                                                <button type="button" class="btn btn-outline-success"
+                                                        onclick="Loan_Validate_Approve_HR_Deviation('Approved')">
+                                                    Approve
+                                                </button>
+
+                                                @*<button type="button" id="btnsentback" class="btn btn-outline-warning"
+                            onclick="Loan_Validate_Approve('SentBack')">
+                        Sent Back
+                    </button>*@
+
+                                                <button type="button" class="btn btn-outline-danger"
+                                                        onclick="Loan_Validate_Approve('Rejected')">
+                                                    Reject
+                                                </button>
+
+                                            </div>
+                                            <input type="hidden" id="txtuniqueid" name="txtuniqueid" />
+                                        </div>
+
+
+                                    </fieldset>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script src="~/js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+
+    <script src="~/js/Action_JS/loanjs.js"></script>
+
+    <script type='text/javascript'>
+
+
+        var totalList = [];
+        var iterms = "";
+        $(document).ready(function () {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            var cid = params['id'];
+            $('.select2').select2();
+
+
+            Bindloanhistory(cid);
+            bindLoanDetails(cid);
+
+            $("#txtuniqueid").val(cid);
+            $(document).on(
+                'input change',
+                '#txtsalarybasicvdahra, #dbwhetherconfirmedornot, #txteligibilityamount, #txtnoofinstallmentforreppayment, #txtremark',
+                function () {
+
+                    if ($(this).val().trim() === '') {
+                        $(this).addClass('is-invalid');
+                    } else {
+                        $(this).removeClass('is-invalid');
+                    }
+
+                }
+            );
+        });
+
+
+        const installments = document.getElementById("txtdeviationnoofinstallmentforreppayment");
+
+        // Validate only when user leaves the input (blur)
+        installments.addEventListener("blur", function () {
+            let val = parseInt(this.value, 10);
+
+            if (isNaN(val)) {
+                this.value = "";
+                return;
+            }
+
+            // enforce min/max only here
+            if ($("#dbdeviation").val() === "Yes") {
+                if (val < 10) this.value = 10;
+                if (val > 24) this.value = 24;
+            }
+            else {
+
+                if (val < 10) this.value = 10;
+                if (val > 10) this.value = 10;
+            }
+        });
+        // Optional: prevent typing non-numeric characters
+        installments.addEventListener("keypress", function (e) {
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+
+     
+        document.getElementById('donloaddoc')
+            .addEventListener('click', function (e) {
+
+                e.preventDefault();
+
+                const imageName = this.getAttribute('data-imagename');
+
+                if (!imageName) {
+                    alert("No file available");
+                    return;
+                }
+
+                // Direct download URL (simplest & best way)
+                window.location.href = '/Loan/DownloadFile?ImageName=' + encodeURIComponent(imageName);
+            });
+        function Bindloanhistory(Eid) {
+            /* $("#txtuniqueidhistoty").text(fullname);*/
+            $('#modal-Tracking_history').modal('show');
+            $.ajax({
+                url: "/Loan/get_tracking_loan_records_history",
+                type: "GET",
+                data: { uniqueid: "" + Eid + "" },
+                async: false,
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    /*     console.log(data); // Log the data to inspect*/
+
+
+
+
+
+                    if (Array.isArray(data) && data.length > 0) {
+
+                        var latestStatus = data[0].cstatus; // because sorted desc
+
+                        // 🔹 Show / Hide Sent Back button
+                        //if (["Revert Back By Guarantor 1", "Loan Request Initiated"].includes(latestStatus)) {
+                        //    $("#btnsentback").show();
+                        //} else {
+                        //    $("#btnsentback").hide();
+                        //}
+                        // Destroy the existing DataTable instance if it exists
+                        if ($.fn.DataTable.isDataTable('#example2')) {
+                            $('#example2').DataTable().clear().destroy();
+                        }
+                        // Initialize DataTable with new data
+                        $('#example2').DataTable({
+                            responsive: true,
+                            processing: true,
+                            async: true,
+                            data: data,
+                            order: [[4, 'desc']],
+
+                            columns: [
+                                { data: 'actionid', title: 'ID', width: '5%' },
+                                { data: 'actionby', title: 'Action By', width: '20%' },
+                                { data: 'peningon', title: 'Pending On', width: '20%' },
+                                { data: 'cstatus', title: 'Action Status', width: '30%' },
+
+                                { data: 'actiondate', title: 'Action Date', width: '30%', type: 'date' },
+                                { data: 'remark', title: 'Remark', width: '40%' }
+
+                            ]
+
+                        });
+
+                        // Handle click event on "Edit" link
+                        $('#example2').on('click', '.edit-link', function (e) {
+                            e.preventDefault();
+
+                            // Replace the following line with your edit logic, e.g., opening a modal or redirecting
+                            /* console.log('Edit button clicked for ID: ' + id);*/
+                        });
+                    } else {
+                        console.error("No data found or data is not an array");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                }
+            });
+        }
+
+        function bindLoanDetails(uniqueId) {
+            $.ajax({
+
+                url: "/Loan/get_loandetails_details_for_validate",
+                type: 'GET',
+                data: { uniqueid: uniqueId },
+                dataType: 'json',
+                async: false,
+                success: function (response) {
+
+                    if (response.length > 0) {
+                        var data = response[0];
+
+                        $('#txtempcode').val(data.ecode);
+                        $('#txtsalarydown').val(data.salarydown);
+
+
+                        $('#txtdepartment').val(data.department);
+                        $('#txtdatejoin').val(data.doj);
+
+                        $('#txtrupess').val(data.rupess);
+                        $('#txtinstallment').val(data.installments);
+                        $('#txtgarantee1').val(data.garantees1);
+                        $('#txtgarantee2').val(data.garantees2);
+                        $('#tatpurpose').val(data.purpose);
+                        $('#dbdeviation').val(data.deviation);
+
+                        $('#txtname').val(data.fullname);
+
+                        $('#txtsalarybasicvdahra').val(data.salarybasicvdahra);
+                        $('#txtnoofinstallmentforreppayment').val(data.noofinstallmentforreppayment);
+                        $('#dbwhetherconfirmedornot').val(data.whetherconfirmedornot);
+                        $('#txteligibilityamount').val(data.eligibilityamount);
+
+                        $('#dbloanclosedstatus').val(data.loanstatus);
+                        $('#txtloancloseddate').val(data.closeddate);
+                        $('#txtsapemployeeocde').val(data.sapecode);
+                        $('#txtfinalamount').val(data.finalamount);
+                        
+                        $('#txtfinalanctionedamount').val(data.finalsanctionedamount);
+
+
+                        
+                        $('#txtfinalnoofinstallmentforreppayment').val(data.finalnoofinstallmentforreppayment);
+
+                        $('#txtbusinessvertical').val(data.businessvertical);
+                        $('#txtdivision').val(data.division);
+                        $('#txtplant').val(data.plant);
+
+
+                        $('#txtpurposedes').val(data.purposedesc);
+                        if (data.deviationfinalamount != "") {
+
+                            $('#txtdeviationfinalamount').val(data.deviationfinalamount);
+                        } else {
+                            
+                            $('#txtdeviationfinalamount').val(data.finalamount);
+                        }
+                        if (data.deviationsanctionedamount != "") {
+
+                            $('#txtdeviationsanctionedamount').val(data.deviationsanctionedamount);
+                        } else {
+
+                            $('#txtdeviationsanctionedamount').val(data.finalamount);
+                        }
+                        if (data.deviationnoofinstallmentforreppayment != "") {
+
+                            $('#txtdeviationnoofinstallmentforreppayment').val(data.deviationnoofinstallmentforreppayment);
+                        } else {
+
+                            $('#txtdeviationnoofinstallmentforreppayment').val(data.finalnoofinstallmentforreppayment);
+                        }
+                  
+                        
+
+                        document.getElementById('donloaddoc')
+                            .setAttribute('data-imagename', data.attcahement);
+                    }
+                    else {
+                        alert('No loan details found.');
+                    }
+                },
+                error: function () {
+                    alert('Error while fetching loan details.');
+                }
+            });
+        }
+
+        /* -------------------- VICE VERSA FILTER LOGIC -------------------- */
+        function filterDropdowns() {
+
+            var val1 = $("#dbgarantee1").val();
+            var val2 = $("#dbgarantee2").val();
+
+            // Reset all options
+            $("#dbgarantee1 option, #dbgarantee2 option")
+                .show()
+                .prop("disabled", false);
+
+            // Hide dbgarantee1 selection from dbgarantee2
+            if (val1 !== "") {
+                $("#dbgarantee2 option[value='" + val1 + "']")
+                    .hide()
+                    .prop("disabled", true);
+            }
+
+            // Hide dbgarantee2 selection from dbgarantee1
+            if (val2 !== "") {
+                $("#dbgarantee1 option[value='" + val2 + "']")
+                    .hide()
+                    .prop("disabled", true);
+            }
+
+            // Prevent same value selected in both
+            if (val1 !== "" && val1 === val2) {
+                $("#dbgarantee2").val("");
+            }
+        }
+
+        function convertToWords(num) {
+            num = num.replace(/[^0-9]/g, '');
+            document.getElementById("txtdeviationsanctionedamount").value = num;
+
+            if (num === "") {
+                document.getElementById("deviationsanctionedamoun").innerHTML = "";
+                return;
+            }
+
+            document.getElementById("deviationsanctionedamoun").innerHTML = numberToWordsIndian(num);
+        }
+
+
+
+        function finalconvertToWords(num) {
+            num = num.replace(/[^0-9]/g, '');
+            document.getElementById("txtdeviationfinalamount").value = num;
+
+            if (num === "") {
+                document.getElementById("deviationfinalamoun").innerHTML = "";
+                return;
+            }
+
+            document.getElementById("deviationfinalamoun").innerHTML = numberToWordsIndian(num);
+        }
+
+        function numberToWordsIndian(num) {
+            const a = [
+                '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+                'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
+                'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'
+            ];
+            const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+            if ((num = num.toString()).length > 9) return 'Overflow';
+
+            let n = ('000000000' + num).slice(-9).match(/(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})/);
+            if (!n) return '';
+
+            let str = '';
+            str += (n[1] != 0) ? (a[n[1]] || b[n[1][0]] + ' ' + a[n[1][1]]) + ' Crore ' : '';
+            str += (n[2] != 0) ? (a[n[2]] || b[n[2][0]] + ' ' + a[n[2][1]]) + ' Lakh ' : '';
+            str += (n[3] != 0) ? (a[n[3]] || b[n[3][0]] + ' ' + a[n[3][1]]) + ' Thousand ' : '';
+            str += (n[4] != 0) ? (a[n[4]] || b[n[4][0]] + ' ' + a[n[4][1]]) + ' Hundred ' : '';
+            str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[n[5]] || b[n[5][0]] + ' ' + a[n[5][1]]) + ' ' : '';
+
+            return str.trim();
+        }
+    </script>
+
+
+
+
+</main>
+

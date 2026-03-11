@@ -1,0 +1,280 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var userFullName = Context.Session.GetString("Sessionusername");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <title>
+        DB Middleware App.
+    </title>
+    <meta name="description" content="List">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
+    <!-- Call App Mode on ios devices -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <style>
+        .center-div {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -150px;
+            margin-top: -150px;
+        }
+
+        .spinner {
+            position: fixed;
+            z-index: 999;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background-color: Black;
+            filter: alpha(opacity=60);
+            opacity: 0.6;
+            -moz-opacity: 0.8;
+        }
+
+        .loader {
+            margin: auto;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #15a0ec;
+            border-bottom: 16px solid #15a0ec;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        .inner-div {
+        }
+
+        @@-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <link href="~/css/vendors.bundle.css" rel="stylesheet" />
+    <link href="~/css/app.bundle.css" rel="stylesheet" />
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="apple-touch-icon" sizes="180x180" href="@Url.Content("~/img/favicon/apple-touch-icon.png")">
+    <link rel="icon" type="image/png" sizes="32x32" href="@Url.Content("~/img/favicon/favicon-32x32.png")">
+    <link rel="mask-icon" href="@Url.Content("~/img/favicon/safari-pinned-tab.svg")" color="#5bbad5">
+    <link rel="stylesheet" media="screen, print" href="@Url.Content("~/css/formplugins/select2/select2.bundle.css")">
+    <link href="@Url.Content("~/css/notifications/sweetalert2/sweetalert2.bundle.css")" rel="stylesheet" />
+    <link rel="stylesheet" media="screen, print" href="@Url.Content("~/css/datagrid/datatables/datatables.bundle.css")">
+    <link rel="stylesheet" href="@Url.Content("~/css/datatables/jquery.dataTables.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/css/datatables/dataTables.responsive.css")" />
+    <link href="@Url.Content("~/css/fa-brands.css")" rel="stylesheet" />
+    <link rel="stylesheet" media="screen, print" href="@Url.Content("~/css/formplugins/bootstrap-daterangepicker/bootstrap-daterangepicker.css")">
+
+
+</head>
+<!-- BEGIN Body -->
+
+<body class="mod-bg-1 mod-nav-link ">
+    <!-- DOC: script to save and load page settings -->
+    <!-- BEGIN Page Wrapper -->
+    <div class="page-wrapper">
+        <div class="page-inner">
+            <!-- BEGIN Left Aside -->
+            <aside class="page-sidebar list-filter-active">
+                <div class="page-logo">
+                    <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
+                        <img src="@Url.Content("~/img/mindalogo.png")" alt="RFQ WebApp" aria-roledescription="logo">
+                        @*<span class="page-logo-text mr-1"></span>
+                            <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
+                            <i class="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>*@
+                    </a>
+                </div>
+                <!-- BEGIN PRIMARY NAVIGATION -->
+                <nav id="js-primary-nav" class="primary-nav" role="navigation">
+                    <div class="nav-filter">
+                        <div class="position-relative">
+                            <input type="text" id="nav_filter_input" placeholder="Filter menu" class="form-control" tabindex="0">
+                            @*<a href="#" onclick="return false;" class="btn-primary btn-search-close js-waves-off" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar">
+                                    <i class="fal fa-chevron-up"></i>
+                                </a>*@
+                        </div>
+                    </div>
+
+
+                    @Html.Partial("_Menu")
+
+                    <div class="filter-message js-filter-message bg-success-600"></div>
+                </nav>
+
+            </aside>
+            <!-- END Left Aside -->
+            <div class="page-content-wrapper">
+                <!-- BEGIN Page Header -->
+                <header class="page-header" role="banner">
+                    <!-- we need this logo when user switches to nav-function-top -->
+                    <div class="page-logo">
+                        <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
+                            <img src="@Url.Content("img/logo.png")" alt="SmartAdmin WebApp" aria-roledescription="logo">
+                            <span class="page-logo-text mr-1">SmartAdmin WebApp</span>
+                            <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
+                            <i class="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
+                        </a>
+                    </div>
+                    <!-- DOC: nav menu layout change shortcut -->
+                    <div class="hidden-md-down dropdown-icon-menu position-relative">
+                        <a href="#" class="header-btn btn js-waves-off" data-action="toggle" data-class="nav-function-hidden" title="Hide Navigation">
+                            <i class="ni ni-menu"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#" class="btn js-waves-off" data-action="toggle" data-class="nav-function-minify" title="Minify Navigation">
+                                    <i class="ni ni-minify-nav"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn js-waves-off" data-action="toggle" data-class="nav-function-fixed" title="Lock Navigation">
+                                    <i class="ni ni-lock-nav"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- DOC: mobile button appears during mobile width -->
+                    <div class="hidden-lg-up">
+                        <a href="#" class="header-btn btn press-scale-down" data-action="toggle" data-class="mobile-nav-on">
+                            <i class="ni ni-menu"></i>
+                        </a>
+                    </div>
+
+                    <div class="ml-auto d-flex">
+                        <!-- activate app search icon (mobile) -->
+                        <div class="hidden-sm-up">
+                            <a href="#" class="header-icon" data-action="toggle" data-class="mobile-search-on" data-focus="search-field" title="Search">
+                                <i class="fal fa-search"></i>
+                            </a>
+                        </div>
+
+                        @*@Html.Action("_Notifactiondetails_Details", "Customer")*@
+
+
+                        <!-- app user menu -->
+                        <div>
+                            <a href="#" data-toggle="dropdown" title="drlantern@gotbootstrap.com" class="header-icon d-flex align-items-center justify-content-center ml-2">
+                                <img src="~/img/demo/avatars/avatar-m.png" class="profile-image rounded-circle" alt="@userFullName">
+
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-animated dropdown-lg">
+                                <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
+                                    <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
+                                        <span class="mr-2">
+                                            <img src="~/img/demo/avatars/avatar-m.png" class="rounded-circle profile-image" alt="@userFullName">
+                                        </span>
+                                        <div class="info-card-text">
+                                            <div class="fs-lg text-truncate text-truncate-lg">@userFullName</div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-divider m-0"></div>
+                             
+                                <div class="dropdown-divider m-0"></div>
+                                <a href="#" class="dropdown-item" data-action="app-fullscreen">
+                                    <span data-i18n="drpdwn.fullscreen">Fullscreen</span>
+                                    <i class="float-right text-muted fw-n">F11</i>
+                                </a>
+                                <a href="#" class="dropdown-item" data-action="app-print">
+                                    <span data-i18n="drpdwn.print">Print</span>
+                                    <i class="float-right text-muted fw-n">Ctrl + P</i>
+                                </a>
+
+                                <div class="dropdown-divider m-0"></div>
+                                <a class="dropdown-item fw-500 pt-3 pb-3" href="#">
+
+                                    <span data-i18n="drpdwn.page-logout" onclick="logoutInitial()">Logout</span>
+
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div> <!-- END Page Content -->
+
+                @RenderBody()
+                <!-- BEGIN Page Footer -->
+                <footer class="page-footer" role="contentinfo">
+                    <div class="d-flex align-items-center flex-1 text-muted">
+                        <span class="hidden-md-down fw-700">© Copy Right 2024 - Spark Minda. All Rights Reserved &nbsp;<a href='https://sparkminda.in/' class='text-primary fw-500' title='gotbootstrap.com' target='_blank'></a></span>
+                    </div>
+
+                </footer>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="@Url.Content("~/js/datagrid/datatables/datatables.bundle.js")"></script>
+    <script src="@Url.Content("~/css/datatables/jquery-1.11.1.min.js")"></script>
+    <script src="@Url.Content("~/js/jquery.min.js")"></script>
+    <script src="@Url.Content("~/js/vendors.bundle.js")"></script>
+    <script src="@Url.Content("~/js/app.bundle.js")"></script>
+
+    <script src="@Url.Content("~/css/datatables/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/js/formplugins/select2/select2.bundle.js")"></script>
+
+    <script src="@Url.Content("~/js/notifications/sweetalert2/sweetalert2.bundle.js")"></script>
+
+    <script src="@Url.Content("~/css/datatables/dataTables.responsive.js" )"></script>
+    <script type='text/javascript' src="@Url.Content("~/js/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js")"></script>
+    <script src="~/js/datagrid/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/js/datagrid/datatables/datatables.export.js"></script>
+    @*<script src="~/js/datagrid/datatables/pdfmake.min.js"></script>*@
+    <script src="~/js/datagrid/datatables/buttons.html5.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            var url = window.location;
+            /*  alert(url);*/
+            // for sidebar menu entirely but not cover treeview
+            $('ul.nav-menu a').filter(function () {
+                return this.href == url;
+            }).parent().addClass('active');
+
+            // for treeview
+            $('ul.treeview-menu a').filter(function () {
+                return this.href == url;
+            }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
+
+        })
+
+
+    </script>
+</body>
+<!-- END Body -->
+</html>
+

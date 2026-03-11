@@ -1,0 +1,370 @@
+﻿
+@{
+    ViewData["Title"] = "Approved_Loan_Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Custom CSS to add space between the page size dropdown and the table */
+
+    /* Add margin to the page size selector dropdown */
+    .dataTables_length {
+        margin-bottom: 10px; /* Adjust space between the dropdown and table */
+    }
+
+    /* Optional: Adjust the margin between other controls like search box and buttons */
+    .dataTables_filter {
+        margin-left: 20px; /* Adjust space between search box and page size dropdown */
+    }
+
+    /* You can also adjust the space between the export buttons */
+    .dt-buttons {
+        margin-left: 5px;
+        margin-bottom: 10px;
+    }
+
+    /* Add space between pagination controls and table */
+    .dataTables_paginate {
+        margin-top: 20px; /* Adjust space between table and pagination */
+    }
+</style>
+<link href="~/css/formplugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet" />
+<main id="js-page-content" role="main" class="page-content">
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div id="panel-2" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        Pending Loan <span class="fw-300"><i>Request</i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                    </div>
+                </div>
+
+
+
+
+                <div class="panel-container show">
+                    <div class="panel-content">
+
+                        <div class="tab-pane" id="tab-events" role="tabpanel">
+                            <div class="d-flex flex-column h-100">
+                                <div class="h-auto">
+                                    <table id="example1" class="table table-bordered table-hover table-striped w-100">
+                                        <thead>
+                                            <tr>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+
+            @*//-------------------------------------------------Model Popup-----------------------for Tracking History=-----------------*@
+
+
+            <div class="modal fade" id="modal-Tracking_history">
+                <div class="modal-dialog modal-xl modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Tracking History</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="js-emailremove_updatebyinfra">
+                                <div class="frame-wrap">
+                                    <div class="panel-container show">
+                                        <div class="panel-content">
+
+                                            <div class="tab-pane" id="tab-events" role="tabpanel">
+                                                <div class="d-flex flex-column h-100">
+                                                    <div class="h-auto">
+                                                        <table id="example2" class="table table-bordered table-hover table-striped w-100">
+                                                            <thead>
+                                                                <tr>
+                                                                </tr>
+                                                            </thead>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*----------------------------------------------------End Popap Infra Team Details ------------------------------------------------------*@
+
+        </div>
+    </div>
+    <script src="~/js/jquery.min.js"></script>
+
+    <script src="~/js/Action_JS/JS.js"></script>
+
+    <script type='text/javascript'>
+        var date = new Date();
+        var year = date.getFullYear(); //get year
+        var month = date.getMonth(); //get month
+        var controls = {
+            leftArrow: '<i class="fal fa-angle-left" style="font-size: 1.25rem"></i>',
+            rightArrow: '<i class="fal fa-angle-right" style="font-size: 1.25rem"></i>'
+        }
+        var runDatePicker = function () {
+
+
+            $("#txtconfrimjoiningdate").datepicker({
+                dateFormat: 'dd-mm-yy' // Correct format for jQuery UI datepicker
+
+            });
+
+        }
+
+        var totalList = [];
+        var iterms = "";
+        $(document).ready(function () {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            var cid = params['id'];
+
+            BindEmpdetailsforapprovelloandetails();
+
+
+        });
+        //------------------Bind Tracking History ---------------------------------------------
+
+
+        function BindEmpdetailsforapprovelloandetails() {
+            $.ajax({
+                url: "/Loan/Get_Loan_Pending_Approval",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    console.log("AJAX Data:", data); // Debug
+                    console.log("Is Array?", Array.isArray(data));
+                    console.log("Array Length:", data.length);
+
+                    // Destroy existing DataTable if exists
+                    if ($.fn.DataTable.isDataTable('#example1')) {
+                        $('#example1').DataTable().clear().destroy();
+                    }
+
+                    // Handle empty or non-array data
+                    if (!Array.isArray(data) || data.length === 0) {
+                        $('#example1').html(
+                            '<tr><td colspan="10" style="text-align:center;">No pending loans found</td></tr>'
+                        );
+                        return; // Stop execution, don't initialize DataTable
+                    }
+
+                    // Initialize DataTable with actual data
+                    $('#example1').DataTable({
+                        responsive: true,
+                        processing: true,
+                        data: data,
+                        order: [[4, 'desc']],
+                        autoWidth: false,
+                        columns: [
+                            {
+                                data: null,
+                                title: 'Action',
+                                render: function (data, type, row) {
+                                    if (row.id) {
+                                        return `<a style="text-decoration: none; color:black;"
+                                            href="#"
+                                            onclick='Redirect("${row.id}", "${row.cStatus}","${row.deviation}");'>
+                                            <span class="badge badge-pill badge-success">Validate</span>
+                                        </a>`;
+                                    } else {
+                                        return '<span></span>';
+                                    }
+                                }
+                            },
+                            { data: 'gid', title: 'ID', width: '90px' },
+                            { data: 'cStatus', title: 'Status', width: '90px' },
+                            { data: 'deviation', title: 'Deviation', width: '30px' },
+                          /*  { data: 'salarydown', title: 'Salary Drawn', width: '60px' },*/
+                            { data: 'rupess', title: 'Rupees', width: '40px' },
+                            { data: 'installments', title: 'Installments', width: '20px' },
+                            { data: 'purpose', title: 'Purpose', width: '180px' },
+                            { data: 'pending', title: 'Pending', width: '110px' },
+                            { data: 'fullname', title: 'Created By', width: '110px' },
+                            {
+                                data: null,
+                                title: 'Tracking',
+                                width: '10px',
+                                render: function (data, type, row) {
+                                    return `<a style="text-decoration: none; color:black;"
+                                        href="#"
+                                        onclick='Bindloanhistory("${row.id}", "");'>
+                                        <span class="badge badge-pill badge-success">View</span>
+                                    </a>`;
+                                }
+                            },
+                        ],
+                        dom: 'Blfrtip',
+                        buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                className: 'btn-outline-success btn-sm',
+                                text: 'Export to Excel'
+                            },
+                            {
+                                extend: 'csvHtml5',
+                                className: 'btn-outline-primary btn-sm',
+                                text: 'Export to CSV'
+                            },
+                            {
+                                extend: 'copyHtml5',
+                                className: 'btn-outline-success btn-sm',
+                                text: 'Copy to Clipboard'
+                            }
+                        ],
+                        language: {
+                            emptyTable: "No pending loans to display"
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                    $('#example1').html(
+                        '<tr><td colspan="10" style="text-align:center; color:red;">Error loading data</td></tr>'
+                    );
+                }
+            });
+        }
+
+
+        // Example function for the Edit button action
+        function EditEmployee(userID) {
+            // Implement the edit logic here, e.g., redirect to an edit page or open a modal
+            console.log("Edit employee with ID:", userID);
+        }
+
+
+        //------------------Bind Tracking History ---------------------------------------------
+
+        function Redirect(id, Ctatus, deviation) {
+
+            if (Ctatus == "Approved By Guarantor 2") {
+
+                window.location.href = '/Loan/Validate_By_HR_PADepart?id=' + id;
+            }
+            else if ((Ctatus == "Approved By Plant HR Spoc")) {
+
+                window.location.href = '/Loan/Validate_Final_Approval?id=' + id;
+            }
+            else if ((Ctatus == "Approved By Plant HR Head") && (deviation == "Yes")) {
+
+                window.location.href = '/Loan/Validate_By_Deviation?id=' + id;
+            }
+            else if (Ctatus == "Approved By Deviation BV HR Head") {
+
+                window.location.href = '/Loan/Validate_By_GCO_HR?id=' + id;
+            }
+            else if (Ctatus == "Approved By Plant HR Head") {
+
+                window.location.href = '/Loan/Validate_By_GCO_HR?id=' + id;
+            }
+            else if (Ctatus == "Approved By GCO HR") {
+
+                window.location.href = '/Loan/Finance_Release?id=' + id;
+            }
+            else if (Ctatus == "Amount Release By Finance") {
+
+                window.location.href = '/Loan/Ack_Loan?id=' + id;
+            }
+            else {
+            window.location.href = '/Loan/Validate_By_Approver?id=' + id;
+            }
+        }
+        function Bindloanhistory(Eid) {
+           /* $("#txtuniqueidhistoty").text(fullname);*/
+            $('#modal-Tracking_history').modal('show');
+            $.ajax({
+                url: "/Loan/get_tracking_loan_records_history",
+                type: "GET",
+                data: { uniqueid: "" + Eid + ""},
+
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    /*     console.log(data); // Log the data to inspect*/
+
+                    if (Array.isArray(data) && data.length > 0) {
+                        // Destroy the existing DataTable instance if it exists
+                        if ($.fn.DataTable.isDataTable('#example2')) {
+                            $('#example2').DataTable().clear().destroy();
+                        }
+                        // Initialize DataTable with new data
+                        $('#example2').DataTable({
+                            responsive: true,
+                            processing: true,
+                            async: true,
+                            data: data,
+                            order: [[4, 'desc']],
+
+                            columns: [
+                                { data: 'actionid', title: 'ID', width: '5%' },
+                                { data: 'actionby', title: 'Action By', width: '20%' },
+                                { data: 'peningon', title: 'Pending On', width: '20%' },
+                                { data: 'cstatus', title: 'Action Status', width: '10%' },
+
+                                { data: 'actiondate', title: 'Action Date', width: '10%', type: 'date' },
+                                { data: 'remark', title: 'Remark', width: '40%' }
+
+                            ]
+
+                        });
+
+                        // Handle click event on "Edit" link
+                        $('#example2').on('click', '.edit-link', function (e) {
+                            e.preventDefault();
+
+                            // Replace the following line with your edit logic, e.g., opening a modal or redirecting
+                            /* console.log('Edit button clicked for ID: ' + id);*/
+                        });
+                    } else {
+                        console.error("No data found or data is not an array");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                }
+            });
+        }
+
+
+    </script>
+
+</main>

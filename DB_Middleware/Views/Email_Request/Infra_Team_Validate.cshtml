@@ -1,0 +1,718 @@
+﻿
+@{
+    ViewData["Title"] = "Infra_Team_Validate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/formplugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet" />
+<main id="js-page-content" role="main" class="page-content">
+
+
+
+    <div class="row">
+
+        <div class="col-xl-12">
+
+
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        Employee Details<span class="fw-300">
+                        </span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        @*<button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>*@
+                    </div>
+                </div>
+              
+                    <div class="panel-container show">
+
+                        <div class="frame-wrap">
+                            <div class="panel-content">
+
+
+
+                                <!-- /.box-header -->
+                                <!-- form start -->
+
+                                <div class="box-body">
+
+                                    <fieldset class="form-group border p-2">
+                                        <legend class="w-auto px-1" style="font-size: 13px;"><strong>Employee Information</strong></legend>
+                                        <div class="form-row">
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">First Name</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="fname" autocomplete="off" name="fname" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Middle Name</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="Mname" autocomplete="off" name="Mname" disabled="disabled">
+
+                                            </div>
+
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Last Name</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="Lname" autocomplete="off" name="Lname" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Department</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtdepartment" autocomplete="off" name="txtdepartment" disabled="disabled">
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row">
+
+
+
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Designation</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtdesignation" autocomplete="off" name="txtdesignation" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Grade/Level</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtgrade" autocomplete="off" name="txtgrade" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Mobile No</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtmobilenumber" autocomplete="off" name="txtmobilenumber" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Reporting Manager</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtrm" autocomplete="off" name="txtrm" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Reporting Manager Mail</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtrmemail" autocomplete="off" name="txtrmemail" disabled="disabled">
+
+                                            </div>
+                                            <div class="col-md-2 mb-2">
+
+                                                <label for="validationCustom02">Company Group</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtbusinessvertical" autocomplete="off" name="txtbusinessvertical" readonly="readonly">
+
+                                            </div>
+
+                                            <div class="col-md-2 mb-2">
+
+                                                <label for="validationCustom02">Cost Center</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtdivision" autocomplete="off" name="txtdivision" readonly="readonly">
+
+                                            </div>
+                                            <div class="col-md-2 mb-2">
+
+                                                <label for="validationCustom02">Joining Date</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtjoiningdate" autocomplete="off" name="txtjoiningdate" readonly="readonly">
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Location</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtlocation" autocomplete="off" name="txtlocation" disabled="disabled">
+
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+
+                                    <fieldset class="form-group border p-2">
+                                        <legend class="w-auto px-1" style="font-size: 13px;"><strong>Filled By HR</strong></legend>
+                                        <div class="form-row">
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Position Type</label><span class="text-danger">*</span>
+                                                                                                     <select class="custom-select" id="dbpositiontype" disabled="disabled" name="dbpositiontype" onchange="hideDiverepemployee(this.value)">
+
+                                                                                                         <option value="">Select</option>
+                                                                                                         <option value="For New Position">For New position</option>
+                                                                                                         <option value="Against Replacement Of Left Employee (OLD position)">Against Replacement Of Left Employee (OLD position)</option>
+                                                                                                         <option value="Rehiring">Rehiring</option>
+                                                                                                     </select>
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Type of Access Required.</label><span class="text-danger">*</span>
+                                                <div class="frame-wrap">
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" class="custom-control-input" id="defaultInline1Radio" name="inlineDefaultRadiosExample" checked="" disabled="disabled">
+                                                        <label class="custom-control-label" for="defaultInline1Radio">For Darwin Box access only</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" class="custom-control-input" id="defaultInline2Radio" name="inlineDefaultRadiosExample" disabled="disabled">
+                                                        <label class="custom-control-label" for="defaultInline2Radio">For Internal Communication</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" class="custom-control-input" id="defaultInline4Radio" name="inlineDefaultRadiosExample" disabled="disabled">
+                                                        <label class="custom-control-label" for="defaultInline4Radio">For Internal / External Communication</label>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Employee Type</label><span class="text-danger">*</span>
+                                                <select class="form-control input-sm" id="dbchooseemptype" disabled="disabled" name="dbchooseemptype" onchange="hidetilldate(this.value)">
+
+                                                    <option value="">Select</option>
+                                                    <option value="Permanent">Permanent</option>
+                                                    <option value="Temprarory">Temprarory</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Choose domain</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control" placeholder="Domain Name" id="txtdomainname" name="txtdomainname" disabled="disabled">
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-row">
+
+
+
+
+                                            <div class="col-md-3 mb-2" id="div1">
+
+                                                <label for="validationCustom02">Employee being replaced</label><span class="text-danger">*</span>
+
+                                                <div class="input-group input-group-bg bg-white shadow-inset-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent border-right-0 py-1 px-3 text-success">
+                                                            <i class="fal fa-search"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control border-left-0 bg-transparent pl-0" placeholder="Ecode" id="txtreplaceecode" name="txtreplaceecode" disabled="disabled">
+                                                    @*<div class="input-group-append">
+                            <button class="btn btn-default waves-effect waves-themed" type="button" onclick="BindreplacementEmpdetails()">Search</button>
+                        </div>*@
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2 mb-2" id="div2">
+
+                                                <label for="validationCustom02">Employee Name</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" readonly="readonly" id="txtrepemployeename" autocomplete="off" name="txtrepemployeename">
+
+
+                                            </div>
+                                            <div class="col-md-2 mb-2" id="div3">
+
+                                                <label for="validationCustom02">Designation</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" readonly="readonly" id="txtrepdesignation" autocomplete="off" name="txtrepdesignation">
+
+
+                                            </div>
+                                            <div class="col-md-2 mb-2" id="div4">
+
+                                                <label for="validationCustom02">Grade/Level</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" readonly="readonly" id="txtrepgradelevel" autocomplete="off" name="txtrepgradelevel">
+
+
+                                            </div>
+                                            <div class="col-md-3 mb-2" id="div5">
+
+                                                <label for="validationCustom02">Email ID</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" readonly="readonly" id="txtexicitingemail" autocomplete="off" name="txtexicitingemail">
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <div class="col-md-3 mb-2">
+
+                                                <label for="validationCustom02">Proposed Email ID</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control input-sm" id="txtproposedemail" autocomplete="off" name="txtproposedemail" disabled="disabled">
+
+                                            </div>
+
+
+                                            <div class="col-md-4 mb-2">
+
+                                                <label for="validationCustom02">Access requested for the following group</label><span class="text-danger">*</span>
+                                                <select data-placeholder="Select Email Group..." class="select2" disabled="disabled" id="dbchoosegroup" name="dbchoosegroup" multiple="" data-select1-id="multiple-icons" tabindex="-1" aria-hidden="true" style="width: 180.4px;">
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 mb-2" id="txtconfirmjoiningdate">
+
+                                                <label for="validationCustom02">Confirm Joining Date</label><span class="text-danger">*</span>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Confirm Joining Date" readonly="readonly" name="txtconfrimjoiningdate" id="txtconfrimjoiningdate">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text fs-xl">
+                                                            <i class="fal fa-calendar-exclamation"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 mb-2" id="tilldate">
+
+                                                <label for="validationCustom02">Till What Date</label><span class="text-danger">*</span>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Till What Date" name="txttilldate" id="txttilldate" disabled="disabled">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text fs-xl">
+                                                            <i class="fal fa-calendar-exclamation"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 mb-2" id="divsmitengin">
+
+                                                <label for="validationCustom02">SMIT(Sub Department)</label><span class="text-danger">*</span>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm" id="txtsmitsubdepart" autocomplete="off" name="txtsmitsubdepart" disabled="disabled">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+
+
+
+                                                <label for="email">
+                                                   HR  Remark
+                                                </label>
+
+
+                                                <textarea type="text" disabled="disabled" class="form-control input-sm" id="txthrremark" rows="2" name="txthrremark" placeholder="Remark" autocomplete="off"></textarea>
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+
+                                    <form id="EmailID_Request_BYIT">
+                                        <fieldset class="form-group border p-2">
+                                            <legend class="w-auto px-1" style="font-size: 13px;"><strong>Filled By IT</strong></legend>
+                                            <div class="form-row">
+
+                                                <div class="col-md-3 mb-2">
+
+                                                    <label for="validationCustom02">Email ID Created </label><span class="text-danger">*</span>
+                                                    <input type="text" class="form-control input-sm" id="txtemailbyinfra" autocomplete="off" name="txtemailbyinfra">
+
+                                                </div>
+                                                <div class="col-md-2 mb-2">
+
+                                                    <label for="validationCustom02">Password</label><span class="text-danger">*</span>
+                                                    <input type="text" class="form-control input-sm" id="txtpassword" autocomplete="off" name="txtpassword">
+
+                                                </div>
+                                                <div class="col-md-2 mb-2">
+
+                                                    <label for="validationCustom02">MS Licence Allocated</label><span class="text-danger">*</span>
+
+                                                    <select class="form-control input-sm" id="dbmslicenceallocated" name="dbmslicenceallocated">
+
+                                                        <option value="">Select</option>
+                                                        <option value="EOP1 (W/O TEAMs)">EOP1 (W/O TEAMs)</option>
+                                                        <option value="E1">E1</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2 mb-2">
+
+                                                    <label for="validationCustom02">MS Teams Lincense</label><span class="text-danger">*</span>
+
+                                                    <select class="form-control input-sm" id="dbteamslicenseallocated" name="dbteamslicenseallocated">
+
+                                                        <option value="">Select</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3 mb-2">
+
+                                                    <label for="validationCustom02">New Licence Procurement Request Generated</label><span class="text-danger">*</span>
+                                                    <select class="form-control input-sm" id="dbnewlicencerequestgeneradted" name="dbnewlicencerequestgeneradted">
+
+                                                        <option value="">Select</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+
+
+
+
+                                            <div class="form-row">
+
+
+                                                <div class="col-md-6 mb-4">
+
+
+
+                                                    <label for="email">
+                                                        Remark
+                                                    </label>
+
+
+                                                    <textarea type="text" class="form-control input-sm" id="txtremark" rows="2" name="txtremark" placeholder="Remark" autocomplete="off"></textarea>
+
+
+
+                                                </div>
+
+
+                                                <div class="spinner" style="display:none">
+                                                    <div class="center-div">
+
+                                                        <img src="~/img/1amw (1).gif" width="200">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3 mb-2">
+
+                                                    <label for="validationCustom02">Status</label><span class="text-danger">*</span>
+                                                                                                  <select class="form-control input-sm" id="dbstatus" name="dbstatus">
+
+                                                                                                      <option value="">Select</option>
+                                                                                                      <option value="Approved">Approved</option>
+                                                                                                      <option value="Reconsidered">Reconsidered</option>
+                                                                                                      <option value="Put On Hold">Put On Hold</option>
+                                                                                                  </select>
+                                                </div>
+
+                                                <div class="col-md-3 mb-6">
+
+
+                                                    <label for="submit">
+
+                                                    </label>
+
+                                                    <br />
+                                                    <button type="submit" class="btn btn-primary" onclick="Save_EmailID_Request_By_Infrateam()" id="btnsubmitemailinfra" name="btnsubmitemailinfra">Submit</button>
+
+
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                
+            </div>
+
+
+        </div>
+    </div>
+    
+    <script src="~/js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+
+    <script src="~/js/Action_JS/JS.js"></script>
+
+    <script type='text/javascript'>
+
+        var date = new Date();
+        var year = date.getFullYear(); //get year
+        var month = date.getMonth(); //get month
+        var controls = {
+            leftArrow: '<i class="fal fa-angle-left" style="font-size: 1.25rem"></i>',
+            rightArrow: '<i class="fal fa-angle-right" style="font-size: 1.25rem"></i>'
+        }
+        var runDatePicker = function () {
+
+            $("#txttilldate").datepicker({
+                startDate: new Date(year, month, '01'), //set it here
+
+                autoclose: true
+
+            });
+        }
+        var totalList = [];
+        var iterms = "";
+        $(document).ready(function () {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            var cid = params['id'];
+            $('.select2').select2();
+            BindpendingempEmpdetails(cid);
+            
+            document.getElementById("txtconfirmjoiningdate").style.display = "none";
+            //Binddomainname();
+            //runDatePicker();
+            //Bindgroupemail();
+            BindMSLicense();
+
+        });
+        function Bindeditgroupemail(groupemails) {
+            var groupemail = new Array();
+            // This will return an array with strings "1", "2", etc.
+            groupemail = groupemails.split(",");
+            $.ajax({
+
+                url: "/Bind_Master/Bind_GEmail",
+                type: "GET",
+                async: false,
+                data: { Groupcompanyname: $("#txtbusinessvertical").val(), Cost_Center_Name: $("#txtdivision").val() },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].groupemailids + '" >' + JsData[index].groupemailids + '</option>';
+                    }
+                    $("#dbchoosegroup").html(binddata);
+                   
+                    $("#dbchoosegroup").val(groupemail);
+                }
+            });
+        }
+
+        function hideDiverepemployee(getvalue) {
+
+            if (getvalue == "Against Replacement Of Left Employee (OLD position)") {
+
+                document.getElementById("div3").style.display = "block";
+                document.getElementById("div1").style.display = "block";
+                document.getElementById("div2").style.display = "block";
+                document.getElementById("div4").style.display = "block";
+                document.getElementById("div5").style.display = "block";
+
+            } else {
+                $("#txtreplaceecode").val('');
+                $("#txtrepemployeename").val('');
+                $("#txtrepdesignation").val('');
+                $("#txtrepgradelevel").val('');
+                $("#txtexicitingemail").val('');
+                document.getElementById("div3").style.display = "none";
+                document.getElementById("div1").style.display = "none";
+                document.getElementById("div2").style.display = "none";
+                document.getElementById("div4").style.display = "none";
+                document.getElementById("div5").style.display = "none";
+
+            }
+        }
+        function hidetilldate(getvalue) {
+
+            if (getvalue == "Temprarory") {
+
+                document.getElementById("tilldate").style.display = "block";
+
+            } else {
+
+                document.getElementById("tilldate").style.display = "none";
+
+            }
+        }
+        function BindpendingempEmpdetails(paageCid) {
+
+            $.ajax({
+
+                url: "/Email_Request/HR_Validate",
+                type: "GET",
+                data: { UniqueID: "" + paageCid + "" },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+
+                    var build_table = '';
+                    for (var index = 0; index < data.length; index++) {
+
+
+                        $("#fname").val(data[index].fname);
+                        $("#Mname").val(data[index].mname);
+                        $("#Lname").val(data[index].lname);
+                        $("#txtdepartment").val(data[index].department);
+                        $("#txtdesignation").val(data[index].deisgnation);
+                        $("#txtgrade").val(data[index].level_Grade);
+                        $("#txtrm").val(data[index].direct_manager_name);
+                        $("#txtrmemail").val(data[index].direct_manager_email);
+                        $("#txtlocation").val(data[index].office_location);
+                        $("#txtbusinessvertical").val(data[index].group_company);
+                        $("#txtdivision").val(data[index].department_cost_center_name);
+                        $("#txtmobilenumber").val(data[index].personal_mobile_no);
+
+                        $("#dbpositiontype").val(data[index].hR_Position_Type);
+                        if (data[index].hR_Access_Domain_Email == "Only Domain ID") { $("#defaultInline1Radio").prop('checked', true); }
+                        if (data[index].hR_Access_Domain_Email == "For Internal Communication") { $("#defaultInline2Radio").prop('checked', true); }
+                        if (data[index].hR_Access_Domain_Email == "For Internal / External Communication") { $("#defaultInline4Radio").prop('checked', true); }
+
+                        $("#txtproposedemail").val(data[index].hR_Proposed_Emailid);
+                        
+                        $("#txthrremark").val(data[index].hrremark);
+                        $("#txtdomainname").val(data[index].hR_Chosse_Domain);
+                        $("#txtreplaceecode").val(data[index].hR_Emp_Being_Replace_Ecode);
+                        $("#txtrepemployeename").val(data[index].hR_Replace_Name);
+                        $("#txtexicitingemail").val(data[index].hR_Replace_Email);
+
+                        $("#txtrepdesignation").val(data[index].hR_Replace_Designation);
+                        $("#txtrepgradelevel").val(data[index].hR_Replace_Grade);
+                        $("#txtjoiningdate").val(data[index].date_of_joining);
+                        
+                        if ((data[index].group_company == "SMIT") && (data[index].department_cost_center_name == "SMIT Pune")) {
+                       
+                            document.getElementById("divsmitengin").style.display = "block";
+                            $("#txtsmitsubdepart").val(data[index].smitsubdepart);
+                            
+                        } else {
+
+                            document.getElementById("divsmitengin").style.display = "none";
+                            $("#txtsmitsubdepart").val(data[index].smitsubdepart);
+                        }
+                        $("#txtconfrimjoiningdate").val(data[index].confrimJoiningdate);
+                       
+                        hideDiverepemployee(data[index].hR_Position_Type);
+                       
+                        Bindeditgroupemail(data[index].hR_Access_Required_Group);
+                        $("#dbchooseemptype").val(data[index].hR_Employee_Type);
+                        hidetilldate(data[index].hR_Employee_Type);
+                        $("#txttilldate").val(data[index].hR_Till_Date);
+           
+                        Binddomainname(data[index].hR_Chosse_Domain);
+
+                    }
+                }
+            });
+        }
+
+
+        //-------------------------------get replace employeedetails------------------------
+
+        function BindreplacementEmpdetails() {
+            alert();
+            $.ajax({
+
+                url: "/Email_Request/Bind_Repempdetails",
+                type: "GET",
+                data: { empid: "" + $("#txtreplaceecode").val() + "" },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+
+
+                    for (var index = 0; index < data.length; index++) {
+
+
+                        $("#txtrepemployeename").val(data[index].fname);
+
+                        $("#txtrepgradelevel").val(data[index].level_Grade);
+                        $("#txtrepdesignation").val(data[index].job_level);
+                        $("#txtexicitingemail").val(data[index].company_email_id);
+
+
+
+
+                    }
+                }
+            });
+        }
+
+        //---------------------------------------------End Replacement employee details-----------------------------------------------------
+        function Binddomainname() {
+
+            $.ajax({
+
+                url: "/Bind_Master/Bind_Domain",
+                type: "GET",
+                async: false,
+                data: { Groupcompanyname: $("#txtbusinessvertical").val(), Cost_Center_Name: $("#txtdivision").val() },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].domainname + '" >' + JsData[index].domainname + '</option>';
+                    }
+                    $("#dbchoosedomain").html(binddata);
+                    $("#dbchoosedomain").val(domainname);
+                }
+            });
+        }
+        function BindMSLicense() {
+
+            $.ajax({
+
+                url: "/Bind_Master/Bind_MSLicense",
+                type: "GET",
+                async: false,
+                data: {},
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].mslicense + '" >' + JsData[index].mslicense + '</option>';
+                    }
+                    $("#dbmslicenceallocated").html(binddata);
+
+                }
+            });
+        }
+        function Bindgroupemail() {
+
+            $.ajax({
+
+                url: "/Bind_Master/Bind_GEmail",
+                type: "GET",
+                async: false,
+                data: { Groupcompanyname: $("#txtbusinessvertical").val(), Cost_Center_Name: $("#txtdivision").val() },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var JsData = data;
+                    var binddata = '<option value="">Select</option>';
+                    for (var index = 0; index < JsData.length; index++) {
+                        binddata = binddata + '<option value="' + JsData[index].groupemailids + '" >' + JsData[index].groupemailids + '</option>';
+                    }
+                    $("#dbchoosegroup").html(binddata);
+
+                }
+            });
+        }
+
+    </script>
+
+
+
+
+</main>
+

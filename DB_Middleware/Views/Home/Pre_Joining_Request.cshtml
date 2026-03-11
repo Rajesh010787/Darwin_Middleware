@@ -1,0 +1,739 @@
+﻿
+@{
+    ViewData["Title"] = "Pre_Joining_Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="js-page-content" role="main" class="page-content">
+
+
+
+    <div class="row">
+
+        <div class="col-xl-12">
+
+
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                      Prejoining Details<span class="fw-300">
+                        </span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        @*<button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>*@
+                    </div>
+                </div>
+                <form id="customer_Save_Basic_Details">
+                    <div class="panel-container show">
+
+                        <div class="frame-wrap">
+                            <div class="panel-content">
+
+
+
+                                <!-- /.box-header -->
+                                <!-- form start -->
+
+                                <div class="box-body">
+                                    <div class="form-row">
+
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">First Name</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="cname" autocomplete="off" name="cname" onchange="Chekc_Duplicate_Record('Name')">
+
+                                        </div>
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Middle Name</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="cname" autocomplete="off" name="cname" onchange="Chekc_Duplicate_Record('Name')">
+
+                                        </div>
+
+
+                                        <div class="col-md-3 mb-2">
+
+                                            <label for="validationCustom02">Last Name</label><span class="text-danger">*</span>
+                                            <input type="text" class="form-control input-sm" id="cname" autocomplete="off" name="cname" onchange="Chekc_Duplicate_Record('Name')">
+
+                                        </div>
+                                    </div>
+                                  
+                                
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-6">
+                            <button type="submit" class="btn btn-success btn-sm mr-1 waves-effect waves-themed" onclick="return Save_Draft_Customer_Records()" id="rollicd">Update Email ID At Darwin Box</button>
+
+                          
+
+                        </div>
+                        <div class="spinner" style="display:none">
+                            <div class="center-div">
+
+                                <img src="~/img/1amw (1).gif" width="200">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <script src="~/js/jquery.min.js"></script>
+
+
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            var cid = params['iid'];
+           
+            if (cid != "" && cid != null) {
+              
+                $("#rollicd").text("Update");
+            }
+            $('.select2').select2();
+
+
+
+        });
+
+        function validinput() {
+
+            if ($('#Odbcity').val() == '') {
+
+                $("#Odbcity").focus();
+                $('#select2-Odbcity-container').parent().css('border-color', '#fd3995');
+                validationcheck = "N";
+            }
+            else { $('#select2-Odbcity-container').parent().css('border-color', '#1dc9b7'); validationcheck = "OK"; }
+
+
+
+
+            if ($('#dbpurcity').val() == '') {
+
+                $("#dbpurcity").focus();
+                $('#select2-dbpurcity-container').parent().css('border-color', '#fd3995');
+                validationcheck = "N";
+            }
+            else { $('#select2-dbpurcity-container').parent().css('border-color', '#1dc9b7'); validationcheck = "OK"; }
+            if ($('#dbcustgroup').val() == '' || $('#dbcustgroup').val() == null) {
+
+                $("#dbcustgroup").focus();
+                $('#select2-dbcustgroup-container').parent().css('border-color', '#fd3995');
+                validationcheck = "N";
+            }
+            else { $('#select2-dbcustgroup-container').parent().css('border-color', '#1dc9b7'); }
+        }
+
+        function Start_Up_Selection(Status) {
+
+            if (Status == 'Yes') {
+
+                document.getElementById("defaultInline1Radio15").disabled = false;
+                document.getElementById("defaultInline1Radio16").disabled = false;
+                $("#defaultInline1Radio15").prop('checked', true);
+
+                document.getElementById("textpersonname").disabled = false;
+                $("#textpersonname").val("");
+            }
+            else {
+
+                document.getElementById("defaultInline1Radio15").disabled = true;
+                document.getElementById("defaultInline1Radio16").disabled = true;
+                $("#defaultInline1Radio15").prop('checked', false);
+                $("#defaultInline1Radio16").prop('checked', false);
+
+                document.getElementById("textpersonname").disabled = true;
+
+            }
+        }
+        function Sameofficeaddress() {
+
+
+
+            var ckbox = $('#customSwitch1');
+            if (ckbox.is(':checked')) {
+                Bind_dbpurchaseeditCountry($("#dbocountry").val());
+                Bind_Ldbstate($("#dbocountry").val(), $("#odbstate").val())
+                Bind_Editpurdbcity($("#dbocountry").val(), $("#odbstate").val(), $("#Odbcity").val())
+                $("#txtpremark").val($("#txtoaddress").val());
+
+                if ($('#Ldbstate').val() == '') {
+
+                    $("#Ldbstate").focus();
+                    $("#select2-Ldbstate-container").parent().css('border-color', '#fd3995');
+                    validationcheck = "N";
+                }
+                else { $('#select2-Ldbstate-container').parent().css('border-color', '#1dc9b7'); validationcheck = "OK"; }
+
+                if ($('#txtpremark').val() == '') {
+                    alert($('#txtpremark').val());
+                    $("#txtpremark").focus();
+                    $("#txtpremark").addClass("is-invalid").removeClass("is-valid");
+                    validationcheck = "N";
+                }
+                else {  $("#txtpremark").addClass("is-valid").removeClass("is-invalid"); validationcheck = "OK"; }
+
+               /* document.getElementById("dbpurcountry").disabled = true;*/
+            } else {
+               /* document.getElementById("dbpurcountry").disabled = false;*/
+                Bind_dbpurchaseeditCountry('');
+                Bind_Ldbstate('', '')
+                Bind_Editpurdbcity('', '', '')
+                $("#txtpremark").val('');
+            }
+
+
+        }
+        function Bind_dbEditSegmentsdetails(Edit) {
+    $.ajax({
+
+        url: host + 'BindMaster/Bind_Segments',
+        type: 'GET',
+        data: {},
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+
+
+            var JsData = data;
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+                binddata = binddata + '<option value="' + JsData[index].Segmentsname + '" >' + JsData[index].Segmentsname + '</option>';
+            }
+            $("#dbsegments").html(binddata);
+            $("#dbsegments").val(Edit);
+
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+        function checkLength(value) {
+
+
+            if ($("#" + value).val() <= 100) {
+                return true;
+            }
+            else {
+                var str = $("#" + value).val();
+                str = str.substring(0, str.length - 1);
+                $("#" + value).val(str);
+            }
+
+
+        }
+          function get_requests_byid() {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+
+            var rid = params['iid'];
+              $('.spinner').css('display', 'block').fadeIn();
+            $.ajax({
+                    type: "GET",
+                     url: '@Url.Action("Get_request_byid", "Customer")',
+
+                data: { id: "" + rid + ""},
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    crossDomain: true,
+                    success: function (Data) {
+
+
+                        var build_table = '';
+                        for (var index = 0; index < Data.length; index++) {
+
+
+                            $("#dbcustgroup").val(Data[index].CustomerGroup);
+                            $("#cname").val(Data[index].Customer_name);
+                            $("#cshortname").val(Data[index].cshortname);
+                            $("#dbcusttype").val(Data[index].Customer_Type);
+                            $("#dbcustuse").val(Data[index].Customer_Use);
+                            $("#dbsaletype").val(Data[index].Business_Sale_type);
+
+                            Bind_dbZone(Data[index].Business_Sale_type, Data[index].Zone)
+                            $("#dbcustintrest").val(Data[index].Customer_Intrest);
+
+                            Bind_dbofficeeditCountry(Data[index].OCountry);
+                            Bind_dbstate(Data[index].OCountry, Data[index].OState)
+                            Bind_dbOEditcity(Data[index].OCountry,Data[index].OState,Data[index].OCity)
+                            $("#txtoaddress").val(Data[index].OAddress);
+                            Bind_dbpurchaseeditCountry(Data[index].PCountry);
+                            Bind_Ldbstate(Data[index].PCountry, Data[index].PState)
+                            Bind_Editpurdbcity(Data[index].PCountry, Data[index].PState, Data[index].PCity)
+                            $("#txtpremark").val(Data[index].PAddress);
+                            Bind_dbProduct(Data[index].Product_Name);
+                            Bind_dbEditSegmentsdetails(Data[index].Segment);
+
+                            $("#txtprogramname").val(Data[index].Program_Name);
+                            $("#txtwinningcofidence").val(Data[index].Winning_Confidence_Level);
+
+                            $("#txtsam").val(Data[index].SAM_CR);
+                            $("#txtexpliferevenue").val(Data[index].Expected_Lifetime_Revenue);
+
+                            $("#txtexpannualrevenue").val(Data[index].Expected_Annual_Revenue);
+                            $("#hdnfiledoc").val(Data[index].FIle_Name);
+
+                            if(Data[index].Start_Up == "Yes") {
+
+                                $("#defaultInline1Radio13").prop('checked', true);
+                                $("#defaultInline1Radio14").prop('checked', false);
+                            }
+                            else {
+                                $("#defaultInline1Radio13").prop('checked', false);
+                                $("#defaultInline1Radio14").prop('checked', true);
+                            }
+
+                            if (Data[index].Business_In_LTS == "Yes") {
+
+                                $("#defaultInline1Radio11").prop('checked', true);
+                                $("#defaultInline1Radio12").prop('checked', false);
+                            }
+                            else {
+                                $("#defaultInline1Radio11").prop('checked', false);
+                                $("#defaultInline1Radio12").prop('checked', true);
+                            }
+                            if (Data[index].Start_Up == "Yes") {
+
+                                if (Data[index].Backed_Promotor_by == "Backed") {
+
+                                    $("#defaultInline1Radio15").prop('checked', true);
+                                    $("#defaultInline1Radio16").prop('checked', false);
+                                }
+                                else {
+
+                                    $("#defaultInline1Radio15").prop('checked', false);
+                                    $("#defaultInline1Radio16").prop('checked', true);
+                                }
+
+                            }
+                            else
+                            {
+                                document.getElementById("defaultInline1Radio15").disabled = true;
+                                document.getElementById("defaultInline1Radio16").disabled = true;
+                            }
+
+                            $("#emailid").val(Data[index].Email);
+                            $("#txtmobilenumber").val(Data[index].Mobilenumber);
+
+
+                            $("#textpersonname").val(Data[index].Pname);
+                            $("#txtcontactpersonname").val(Data[index].Contactpersonname);
+
+                            $("#txtcustdepartment").val(Data[index].Contactdepartmentname);
+
+                            $("#txtcustomerdesignation").val(Data[index].Contactdesignation);
+
+                        }
+
+                    }
+                });
+              $('.spinner').css('display', 'block').fadeOut();
+        }
+        function validateDec(key) {
+            //getting key code of pressed key
+            var keycode = (key.which) ? key.which : key.keyCode;
+            //comparing pressed keycodes
+            if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+                alert("Please enter only Numbers or Decimal.");
+                return false;
+            }
+            else {
+                var parts = key.srcElement.value.split('.');
+                if (parts.length > 1 && keycode == 46)
+
+                    return false;
+                return true;
+            }
+        }
+        function onlyNumbers(event) {
+
+            if (event.type == "paste") {
+                var clipboardData = event.clipboardData || window.clipboardData;
+                var pastedData = clipboardData.getData('Text');
+                if (isNaN(pastedData)) {
+                    event.preventDefault();
+
+                } else {
+                    return;
+                }
+            }
+            var keyCode = event.keyCode || event.which;
+            if (keyCode >= 96 && keyCode <= 105) {
+                // Numpad keys
+                keyCode -= 48;
+            }
+            var charValue = String.fromCharCode(keyCode);
+            if (isNaN(parseInt(charValue)) && event.keyCode != 8) {
+                event.preventDefault();
+            }
+        }
+
+        function Bind_dbProduct(editid) {
+        $.ajax({
+        url: '@Url.Action("Bind_Product", "BindMaster")',
+        type: 'GET',
+        data: {},
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var JsData = data;
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+                binddata = binddata + '<option value="' + JsData[index].ProductName + '" >' + JsData[index].ProductName + '</option>';
+            }
+            $("#dbproductname").html(binddata);
+            $("#dbproductname").val(editid);
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+
+        //Bind country Details//
+         function Bind_dbCountry() {
+
+        $.ajax({
+        url: '@Url.Action("Bind_Country", "BindMaster")',
+        type: 'GET',
+
+            data: { },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var JsData = data;
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+                binddata = binddata + '<option value="' + JsData[index].CountryName + '" >' + JsData[index].CountryName + '</option>';
+            }
+            $("#dbocountry").html(binddata);
+            $("#dbpurcountry").html(binddata);
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+          function Bind_dbofficeeditCountry(Officeeditid) {
+
+        $.ajax({
+        url: '@Url.Action("Bind_Country", "BindMaster")',
+        type: 'GET',
+
+            data: { },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var JsData = data;
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+                binddata = binddata + '<option value="' + JsData[index].CountryName + '" >' + JsData[index].CountryName + '</option>';
+            }
+            $("#dbocountry").html(binddata);
+            $("#dbocountry").val(Officeeditid);
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+           function Bind_dbpurchaseeditCountry(purchaseewditretuirn) {
+
+        $.ajax({
+        url: '@Url.Action("Bind_Country", "BindMaster")',
+        type: 'GET',
+
+            data: { },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var JsData = data;
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+                binddata = binddata + '<option value="' + JsData[index].CountryName + '" >' + JsData[index].CountryName + '</option>';
+            }
+            $("#dbpurcountry").html(binddata);
+            $("#dbpurcountry").val(purchaseewditretuirn);
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+        //End Country Details//
+
+        function Bind_dbcity(state) {
+
+            if (state == '') {
+
+                $("#odbstate").focus();
+                $("#select2-odbstate-container").parent().css('border-color', '#fd3995');
+                validationcheck = "N";
+            }
+            else { $('#select2-odbstate-container').parent().css('border-color', '#1dc9b7'); validationcheck = "OK"; }
+
+                  $.ajax({
+        url: '@Url.Action("Bind_City", "BindMaster")',
+        type: 'GET',
+
+            data: { Country: "" + $("#dbocountry").val() + "",State:"" + state + "" },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var JsData = data;
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+                binddata = binddata + '<option value="' + JsData[index].CityName + '" >' + JsData[index].CityName + '</option>';
+            }
+            $("#Odbcity").html(binddata);
+
+            if ($("#Odbcity").val() == '') {
+
+                $("#Odbcity").focus();
+                $("#select2-Odbcity-container").parent().css('border-color', '#fd3995');
+                validationcheck = "N";
+            }
+            else { $('#select2-Odbcity-container').parent().css('border-color', '#1dc9b7'); validationcheck = "OK"; }
+
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+
+        function Bind_dbOEditcity(Country,state, Editid) {
+
+
+        $.ajax({
+        url: '@Url.Action("Bind_City", "BindMaster")',
+        type: 'GET',
+
+            data: { Country: "" + Country + "",State:"" + state + "" },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var JsData = data;
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+                binddata = binddata + '<option value="' + JsData[index].CityName + '" >' + JsData[index].CityName + '</option>';
+            }
+            $("#Odbcity").html(binddata);
+            $("#Odbcity").val(Editid);
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+
+         function Bind_dbstate(country,Editid) {
+             if ($('#dbocountry').val() == '') {
+                 $("#dbocountry").focus();
+                 $('#select2-dbocountry-container').parent().css('border-color', '#fd3995');
+             }
+             else { $('#select2-dbocountry-container').parent().css('border-color', '#1dc9b7'); validationcheck = "OK"; }
+
+
+        $.ajax({
+        url: '@Url.Action("Bind_State", "BindMaster")',
+        type: 'GET',
+
+            data: { Country: "" + country + "" },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var JsData = data;
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+                binddata = binddata + '<option value="' + JsData[index].SatateName + '" >' + JsData[index].SatateName + '</option>';
+            }
+            $("#odbstate").html(binddata);
+            $("#odbstate").val(Editid);
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+
+        function Bind_Ldbstate(country, Editid) {
+
+            if (country == '') {
+                $("#dbocountry").focus();
+                $('#select2-dbpurcountry-container').parent().css('border-color', '#fd3995');
+            }
+            else { $('#select2-dbpurcountry-container').parent().css('border-color', '#1dc9b7'); validationcheck = "OK"; }
+
+
+
+        $.ajax({
+        url: '@Url.Action("Bind_State", "BindMaster")',
+        type: 'GET',
+
+            data: { Country: "" + country + "" },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var JsData = data;
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+                binddata = binddata + '<option value="' + JsData[index].SatateName + '" >' + JsData[index].SatateName + '</option>';
+            }
+            $("#Ldbstate").html(binddata);
+            $("#Ldbstate").val(Editid);
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+
+          function Bind_purdbcity(state) {
+              if (state == '') {
+                  $("#Ldbstate").focus();
+                  $('#select2-Ldbstate-container').parent().css('border-color', '#fd3995');
+              }
+              else { $('#select2-Ldbstate-container').parent().css('border-color', '#1dc9b7'); validationcheck = "OK"; }
+        $.ajax({
+        url: '@Url.Action("Bind_City", "BindMaster")',
+        type: 'GET',
+
+            data: { Country: "" + $("#dbpurcountry").val() + "", State: "" + state + "" },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var JsData = data;
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+                binddata = binddata + '<option value="' + JsData[index].CityName + '" >' + JsData[index].CityName + '</option>';
+            }
+            $("#dbpurcity").html(binddata);
+
+            if ($("#dbpurcity").val() == '') {
+                $("#Ldbstate").focus();
+                $('#select2-Ldbstate-container').parent().css('border-color', '#fd3995');
+            }
+            else { $('#select2-Ldbstate-container').parent().css('border-color', '#1dc9b7'); validationcheck = "OK"; }
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+
+              function Bind_Editpurdbcity(Country,state,Editid) {
+                        $.ajax({
+        url: '@Url.Action("Bind_City", "BindMaster")',
+        type: 'GET',
+
+            data: { Country: "" + Country + "", State: "" + state + "" },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var JsData = data;
+            var binddata = '<option value="">Select</option>';
+            for (var index = 0; index < JsData.length; index++) {
+                binddata = binddata + '<option value="' + JsData[index].CityName + '" >' + JsData[index].CityName + '</option>';
+            }
+            $("#dbpurcity").html(binddata);
+            $("#dbpurcity").val(Editid);
+            if ($('#dbpurcity').val() == '') {
+                $("#dbpurcity").focus();
+                $('#select2-dbpurcity-container').parent().css('border-color', '#fd3995');
+            }
+            else { $('#select2-dbpurcity-container').parent().css('border-color', '#1dc9b7'); validationcheck = "OK"; }
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+        //Bind Zone Master//
+
+           function Bind_dbZone(Businesstyoe,Editid) {
+
+        $.ajax({
+        url: '@Url.Action("Bind_Zone", "BindMaster")',
+        type: 'GET',
+
+            data: { Businesstype: "" + Businesstyoe + "" },
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var JsData = data;
+
+            if (JsData.length > 1) {
+                var binddata = '<option value="">Select</option>';
+                for (var index = 0; index < JsData.length; index++) {
+                    binddata = binddata + '<option value="' + JsData[index].Zonename + '" >' + JsData[index].Zonename + '</option>';
+                }
+
+                $("#dbzone").html(binddata);
+                $("#dbzone").val(Editid);
+            }
+            if (JsData.length == 1) {
+
+                for (var index = 0; index < JsData.length; index++) {
+                    binddata = binddata + '<option value="' + JsData[index].Zonename + '" >' + JsData[index].Zonename + '</option>';
+                }
+
+                $("#dbzone").html(binddata);
+
+            }
+
+        },
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+        }
+        function isNumber(evt) {
+
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+            }
+
+    return true;
+}
+        function Checkmobilevalidation() {
+
+            if ($('#dbocountry').val() == 'India') {
+
+                var mobileNumber = document.getElementById("txtmobilenumber").value;
+
+
+                var expr = /^\d{10}$/;
+                if (!expr.test(mobileNumber)) {
+                    $("#txtmobilenumber").val('');
+                    $("#txtmobilenumber").parent().css('border-color', '#fd3995');
+                    alert("Invalid Mobile Number.");
+
+                    return true;
+                }
+
+            }
+        }
+        // End Zone Master //
+    </script>
+
+</main>
+
