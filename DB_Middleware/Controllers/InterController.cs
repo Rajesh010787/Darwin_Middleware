@@ -138,7 +138,7 @@ namespace  DB_Middleware.Controllers
                         HttpContext.Session.SetString("Empcode", reader["Empcode"].ToString());
                         HttpContext.Session.SetString("Depart", reader["Depart"].ToString());
                         HttpContext.Session.SetString("DOJ", reader["DOJ"].ToString());
-
+                        HttpContext.Session.SetString("Loanstatus", reader["Status"].ToString());
                         HttpContext.Session.SetString("BV", reader["BV"].ToString());
                         HttpContext.Session.SetString("Plant", reader["Plant"].ToString());
                         HttpContext.Session.SetString("Division", reader["Division"].ToString());

@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Notification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main id="js-page-content" role="main" class="page-content">
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Loan Not Authorized</title>
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: #f4f6f9;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+            }
+
+            .card {
+                background: #fff;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                text-align: center;
+                max-width: 450px;
+            }
+
+            .icon {
+                font-size: 60px;
+                color: #e74c3c;
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            p {
+                color: #666;
+                font-size: 16px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="card">
+            <div class="icon">⚠️</div>
+            <h2>Loan Not Authorized</h2>
+            <p>
+                You are not authorized to initiate a loan request because you have not yet completed
+                the required <strong>6 months</strong> eligibility period.
+            </p>
+        </div>
+
+    </body>
+</html>
+
+</main>

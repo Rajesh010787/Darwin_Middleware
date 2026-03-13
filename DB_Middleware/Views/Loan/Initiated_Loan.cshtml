@@ -12,6 +12,8 @@
     var BV = Context.Session.GetString("BV");
     var Plant = Context.Session.GetString("Plant");
     var Division = Context.Session.GetString("Division");
+
+var loaneligibility = Context.Session.GetString("Loanstatus");
     }
 
 
@@ -261,29 +263,40 @@
         var iterms = "";
 
         $(document).ready(function () {
-            const urlSearchParams = new URLSearchParams(window.location.search);
-            const params = Object.fromEntries(urlSearchParams.entries());
-            const cid = params.id || "";
-            Bindpurposemaster();
-            $('.select2').select2();
 
-            if (cid !== "") {
-                $("#btnsubmithrloancreation").text('Update');
-                bindLoanDetailsforedit(cid);
-                $("#hiddenuniqueid").val(cid);
+
+            if ("@loaneligibility" == "Completed 6 Months") {
+
+
+
+
+                const urlSearchParams = new URLSearchParams(window.location.search);
+                const params = Object.fromEntries(urlSearchParams.entries());
+                const cid = params.id || "";
+                Bindpurposemaster();
+                $('.select2').select2();
+
+                if (cid !== "") {
+                    $("#btnsubmithrloancreation").text('Update');
+                    bindLoanDetailsforedit(cid);
+                    $("#hiddenuniqueid").val(cid);
+                } else {
+                    Bindgaranteepeoplesname1();
+                    Bindgaranteepeoplesname2();
+                }
+
+                $("#dbgarantee1").on("change", function () {
+                    filterDropdowns();
+                });
+
+                $("#dbgarantee2").on("change", function () {
+                    filterDropdowns();
+                });
             } else {
-                Bindgaranteepeoplesname1();
-                Bindgaranteepeoplesname2();
+
+
+                window.location.href = '/Loan/Notification';
             }
-
-            $("#dbgarantee1").on("change", function () {
-                filterDropdowns();
-            });
-
-            $("#dbgarantee2").on("change", function () {
-                filterDropdowns();
-            });
-        
         });
 
         const deviation = document.getElementById("dbdeviation");

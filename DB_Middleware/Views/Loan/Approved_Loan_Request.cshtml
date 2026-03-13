@@ -36,7 +36,7 @@
             <div id="panel-2" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Pending Loan <span class="fw-300"><i>Request</i></span>
+                        Approved Loan <span class="fw-300"><i>Request</i></span>
                     </h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
@@ -165,7 +165,7 @@
 
         function BindEmpdetailsforapprovelloandetails() {
             $.ajax({
-                url: "/Loan/Get_Loan_Pending_Approval",
+                url: "/Loan/Get_Loan_Approved",
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
@@ -195,21 +195,7 @@
                         order: [[4, 'desc']],
                         autoWidth: false,
                         columns: [
-                            {
-                                data: null,
-                                title: 'Action',
-                                render: function (data, type, row) {
-                                    if (row.id) {
-                                        return `<a style="text-decoration: none; color:black;"
-                                            href="#"
-                                            onclick='Redirect("${row.id}", "${row.cStatus}","${row.deviation}");'>
-                                            <span class="badge badge-pill badge-success">Validate</span>
-                                        </a>`;
-                                    } else {
-                                        return '<span></span>';
-                                    }
-                                }
-                            },
+                        
                             { data: 'gid', title: 'ID', width: '90px' },
                             { data: 'cStatus', title: 'Status', width: '90px' },
                             { data: 'deviation', title: 'Deviation', width: '30px' },
@@ -274,40 +260,7 @@
 
         //------------------Bind Tracking History ---------------------------------------------
 
-        function Redirect(id, Ctatus, deviation) {
-
-            if (Ctatus == "Approved By Guarantor 2") {
-
-                window.location.href = '/Loan/Validate_By_HR_PADepart?id=' + id;
-            }
-            else if ((Ctatus == "Approved By Plant HR Spoc")) {
-
-                window.location.href = '/Loan/Validate_Final_Approval?id=' + id;
-            }
-            else if ((Ctatus == "Approved By Plant HR Head") && (deviation == "Yes")) {
-
-                window.location.href = '/Loan/Validate_By_Deviation?id=' + id;
-            }
-            else if (Ctatus == "Approved By Deviation BV HR Head") {
-
-                window.location.href = '/Loan/Validate_By_GCO_HR?id=' + id;
-            }
-            else if (Ctatus == "Approved By Plant HR Head") {
-
-                window.location.href = '/Loan/Validate_By_GCO_HR?id=' + id;
-            }
-            else if (Ctatus == "Approved By GCO HR") {
-
-                window.location.href = '/Loan/Finance_Release?id=' + id;
-            }
-            else if (Ctatus == "Amount Release By Finance") {
-
-                window.location.href = '/Loan/Ack_Loan?id=' + id;
-            }
-            else {
-            window.location.href = '/Loan/Validate_By_Approver?id=' + id;
-            }
-        }
+       
         function Bindloanhistory(Eid) {
            /* $("#txtuniqueidhistoty").text(fullname);*/
             $('#modal-Tracking_history').modal('show');

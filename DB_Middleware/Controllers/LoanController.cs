@@ -45,14 +45,29 @@ namespace DB_Middleware.Controllers
 
         public IActionResult PrintLoan(string loanId)
         {
-            var html = Emailtext.GetLoanApplicationHtml("1");
+            var html = Emailtext.GetLoanApplicationHtml("3");
             return Content(html, "text/html");
         }
 
         public ActionResult Initiated_Loan()
         {
+            if (HttpContext.Session.GetString("Empcode") == "Completed 6 Months")
+            {
+
+                
+            }
+            else
+            {
+                return RedirectToAction("Notification", "Loan");
+
+            }
             return View();
         }
+        public ActionResult Notification()
+        {
+            return View();
+        }
+        
         public ActionResult Validate_By_HR_PADepart()
         {
             return View();
@@ -61,6 +76,11 @@ namespace DB_Middleware.Controllers
         {
             return View();
         }
+        public ActionResult Approved_Loan_Request()
+        {
+            return View();
+        }
+        
         public ActionResult Validate_Final_Approval()
         {
             return View();
@@ -1576,6 +1596,56 @@ namespace DB_Middleware.Controllers
                     loandata litem = new loandata();
                     
                           litem.Gid = table.Rows[i]["GID"].ToString();
+                    litem.id = table.Rows[i]["id"].ToString();
+                    litem.deviation = table.Rows[i]["deviation"].ToString();
+                    litem.salarydown = EncryptionHelper.Decrypt(table.Rows[i]["salarydrown"].ToString());
+                    litem.rupess = EncryptionHelper.Decrypt(table.Rows[i]["rupess"].ToString());
+                    litem.installments = table.Rows[i]["Number_Repayment"].ToString();
+                    litem.CStatus = table.Rows[i]["cStatus"].ToString();
+                    litem.purpose = table.Rows[i]["purpose"].ToString();
+                    litem.pending = table.Rows[i]["pendingon"].ToString();
+                    litem.Remark = table.Rows[i]["remark"].ToString();
+                    litem.fullname = table.Rows[i]["createdBy"].ToString();
+
+                    loandeytailss.Add(litem);
+                }
+            }
+
+            // ✅ If no rows, return empty list
+            return Json(loandeytailss);
+        }
+
+        public ActionResult Get_Loan_Approved()
+        {
+            var sessionUser = HttpContext.Session.GetString("Sessionusername");
+            if (string.IsNullOrEmpty(sessionUser))
+            {
+                // Session has expired, redirect to login page
+                return RedirectToAction("User_Login", "Inter");
+            }
+
+            List<loandata> loandeytailss = new List<loandata>();
+
+            string query = @"Get_Loan_Approved_Details";
+            DataTable table = new DataTable();
+
+            var con = Getloan.getConnectionString();
+            using (SqlConnection connection = new SqlConnection(con))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Ecode", HttpContext.Session.GetString("Empcode"));
+                da.Fill(table);
+            }
+
+            if (table.Rows.Count > 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    loandata litem = new loandata();
+
+                    litem.Gid = table.Rows[i]["GID"].ToString();
                     litem.id = table.Rows[i]["id"].ToString();
                     litem.deviation = table.Rows[i]["deviation"].ToString();
                     litem.salarydown = EncryptionHelper.Decrypt(table.Rows[i]["salarydrown"].ToString());
