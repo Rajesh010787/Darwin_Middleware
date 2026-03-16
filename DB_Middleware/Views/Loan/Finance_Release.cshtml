@@ -238,8 +238,8 @@
                                             <div class="col-md-2 mb-2">
 
                                                 <label for="validationCustom02">No. of Installments</label><span class="text-danger">*</span>
-                                                <input type="number" class="form-control input-sm" id="txtnoofinstalgco" autocomplete="off" name="txtnoofinstalgco" min="10"
-                                                       max="20" disabled="disabled"
+                                                <input type="number" class="form-control input-sm" id="txtnoofinstalgco" autocomplete="off" name="txtnoofinstalgco"
+                                                       disabled="disabled"
                                                        required>
                                             </div>
 
@@ -307,16 +307,21 @@
                                     </fieldset>
                                  
                                   
-                                        <div class="form-row">
+                                    <div class="form-row">
+                                        
+                                        <div class="col-md-3">
+                                            <button type="button" class="btn btn-primary btn-sm"
+                                                    onclick="exportToExcel()">
+                                                <i class="fa fa-download"></i> Download Report
+                                            </button>&nbsp;&nbsp;
 
-                                            <div class="col-md-3">
-                                                <button type="button" class="btn btn-primary btn-sm"
-                                                        onclick="exportToExcel()">
-                                                    <i class="fa fa-download"></i> Download Report
-                                                </button>
-                                            </div>
-
+                                            <button type="button" class="btn btn-primary btn-sm"
+                                                    onclick="PrintLoan()">
+                                                <i class="fa fa-download"></i> Print
+                                            </button>
                                         </div>
+                                    
+                                    </div>
                                     <br />
                               
                                     <fieldset class="form-group border p-3">
@@ -429,6 +434,18 @@
                 }
             );
         });
+        PrintLoan
+
+
+        function PrintLoan() {
+
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            var cid = params['id'];
+
+            window.open('/Loan/PrintLoan?loanId=' + cid, '_blank');
+
+        }
 
         function exportToExcel() {
 

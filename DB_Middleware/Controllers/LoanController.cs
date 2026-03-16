@@ -41,17 +41,54 @@ namespace DB_Middleware.Controllers
             //_salaryProtector = salaryProtector;
         }
 
+        //public string PrintLoan(string id)
+        //{
+        //    DataTable dt = GetLoanPrintDetails(id);
 
+        //    if (dt.Rows.Count == 0)
+        //        return "";
+
+        //    return GetLoanApplicationHtml(dt.Rows[0]);
+        //}
+        public DataTable GetLoanPrintDetails(string id)
+        {
+            DataTable dt = new DataTable();
+            string conStr = Getloan.getConnectionString();
+
+            using (SqlConnection con = new SqlConnection(conStr))
+            {
+                using (SqlCommand cmd = new SqlCommand("Get_Loan_Print_Details", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+
+            return dt;
+        }
 
         public IActionResult PrintLoan(string loanId)
         {
-            var html = Emailtext.GetLoanApplicationHtml("3");
+            DataTable dt = GetLoanPrintDetails(loanId);
+
+            if (dt.Rows.Count == 0)
+            {
+                return Content("No Data Found");
+            }
+
+            string html = Emailtext.GetLoanApplicationHtml(dt.Rows[0]);
+
             return Content(html, "text/html");
         }
 
         public ActionResult Initiated_Loan()
         {
-            if (HttpContext.Session.GetString("Empcode") == "Completed 6 Months")
+            if (HttpContext.Session.GetString("Loanstatus") == "Completed 6 Months")
             {
 
                 

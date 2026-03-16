@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -689,17 +690,120 @@ $"<a href='https://darwinmware.sparkminda.in/'>Click here</a>.</p>");
             return sb.ToString();
         }
 
-
-        public static string GetLoanApplicationHtml(string isDeviation)
+        public static string NumberToWords(long number)
         {
-            isDeviation = "Y";
+            if (number == 0)
+                return "Zero";
 
+            string[] unitsMap = { "Zero", "One", "Two", "Three", "Four", "Five", "Six",
+                          "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
+                          "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+                          "Seventeen", "Eighteen", "Nineteen" };
+
+            string[] tensMap = { "Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty",
+                         "Sixty", "Seventy", "Eighty", "Ninety" };
+
+            string words = "";
+
+            if ((number / 10000000) > 0)
+            {
+                words += NumberToWords(number / 10000000) + " Crore ";
+                number %= 10000000;
+            }
+
+            if ((number / 100000) > 0)
+            {
+                words += NumberToWords(number / 100000) + " Lakh ";
+                number %= 100000;
+            }
+
+            if ((number / 1000) > 0)
+            {
+                words += NumberToWords(number / 1000) + " Thousand ";
+                number %= 1000;
+            }
+
+            if ((number / 100) > 0)
+            {
+                words += NumberToWords(number / 100) + " Hundred ";
+                number %= 100;
+            }
+
+            if (number > 0)
+            {
+                if (words != "")
+                    words += "";
+
+                if (number < 20)
+                    words += unitsMap[number];
+                else
+                {
+                    words += tensMap[number / 10];
+                    if ((number % 10) > 0)
+                        words += " " + unitsMap[number % 10];
+                }
+            }
+
+            return words.Trim();
+        }
+        public static string GetLoanApplicationHtml(DataRow row)
+        {
             string logoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "mindalogo.png");
             string logoBase64 = Convert.ToBase64String(File.ReadAllBytes(logoPath));
             string logoSrc = $"data:image/png;base64,{logoBase64}";
+            string isDeviation = row["Devidation"]?.ToString() ?? "";
+            // Employee Details
+            string empCode = row["Employeecode"]?.ToString() ?? "";
+            string name = row["Empname"]?.ToString() ?? "";
+            string department = row["Deprtment"]?.ToString() ?? "";
+            string Salary_Drawn = EncryptionHelper.Decrypt( row["Salary_Drawn"]?.ToString() ?? ""); 
+            string doj = row["DOJ"]?.ToString() ?? "";
 
+            // Loan
+            string amount = EncryptionHelper.Decrypt(row["Amount_Applied_For_Rs"]?.ToString() ?? "");
+
+            long rupees = Convert.ToInt64(amount);
+
+            string amountInWords = NumberToWords(rupees) + " Rupees Only";
+
+            string installments = row["Number_of_installments"]?.ToString() ?? "";
+            string purpose = row["Purpose"]?.ToString() ?? "";
+
+            // Guarantor
+            string guarantor1 = row["Gauranteed1"]?.ToString() ?? "";
+            string guarantor2 = row["Gauranteed2"]?.ToString() ?? "";
+            string guarantor1_depart = row["Gauranteed1_Depart"]?.ToString() ?? "";
+            string guarantor2_depart = row["Gauranteed2_Depart"]?.ToString() ?? "";
+
+            // HR Validation
+            string basicHra = EncryptionHelper.Decrypt(row["Spoc_Salary_Basic_Hra"]?.ToString() ?? "");
+            string confirmed = row["Spoc_Whether_Confirmed_Not"]?.ToString() ?? "";
+            string lastLoanstatus = row["Spoc_Last_Loan_Repayment_status"]?.ToString() ?? "";
+            string eligibility = EncryptionHelper.Decrypt(row["Spoc_Eligibility"]?.ToString() ?? "");
+            string spocInstallment = row["Spoc_Installment"]?.ToString() ?? "";
+            string SPOC_Name = row["HRSpoc"]?.ToString() ?? "";
+            // Plant HR
+            string plantAmount = EncryptionHelper.Decrypt(row["Plant_BV_HR_Final_Amount"]?.ToString() ?? "");
+            string plantInstallment = row["Plant_BV_HR_Installments"]?.ToString() ?? "";
+            string Plant_BV_HR_Name = row["Plant_BV_HR_Name"]?.ToString() ?? "";
+
+            // Deviation
+            string deviationAmount = EncryptionHelper.Decrypt(row["BV_HR_Final_Amount"]?.ToString() ?? "");
+            string deviationInstallment = row["BV_HR_Installments"]?.ToString() ?? "";
+            string deviationName = row["BV_HR_Name"]?.ToString() ?? "";
+
+            // Payroll
+            string bankName = row["BankName"]?.ToString() ?? "";
+            string ifsc = row["IFSC_Code"]?.ToString() ?? "";
+            string account = row["Bank_Account"]?.ToString() ?? "";
+            string pan = row["Pan"]?.ToString() ?? "";
+            string costCenter = row["CostCenter"]?.ToString() ?? "";
+            string sapCost = row["Sap_Cost_Center"]?.ToString() ?? "";
+            string profit = row["Profit_Center"]?.ToString() ?? "";
+            string newCost = row["Newcostcenter"]?.ToString() ?? "";
+            string Central_Payroll_Name= row["Central_Payroll_Name"]?.ToString() ?? "";
+            string Central_Payroll_Ins = row["Central_Payroll_Ins"]?.ToString() ?? "";
             StringBuilder sb = new StringBuilder();
-
             sb.Append($@"
 <!DOCTYPE html>
 <html>
@@ -708,262 +812,325 @@ $"<a href='https://darwinmware.sparkminda.in/'>Click here</a>.</p>");
 <title>Application for Loan / Advance</title>
 
 <style>
+
 body {{
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-    margin: 0;
+font-family:Segoe UI,Arial;
+font-size:12px;
+margin:0;
+color:#333;
 }}
 
 .container {{
-    width: 800px;
-    margin: auto;
-    padding: 20px;
+width:820px;
+margin:auto;
+padding:20px;
 }}
 
-.header {{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.title {{
+text-align:center;
+font-size:20px;
+font-weight:600;
 }}
 
-.header-title {{
-    flex: 1;
-    text-align: center;
+.subtitle {{
+text-align:center;
+font-size:13px;
 }}
 
-.logo {{
-    width: 80px;
-    height: auto;
-}}
-
-.row {{
-    margin: 8px 0;
-}}
-
-.line {{
-    display: inline-block;
-    border-bottom: 1px solid #000;
-    width: 150px;
-    height: 14px;
-}}
-
-.long {{
-    width: 300px;
-}}
-
-.section {{
-    margin-top: 18px;
-    font-weight: bold;
-    text-decoration: underline;
-}}
-
-.signature {{
-    margin-top: 15px;
+.section-title {{
+background:#f2f2f2;
+font-weight:600;
+padding:6px 10px;
+margin-top:20px;
+border-left:4px solid #444;
 }}
 
 table {{
-    width: 100%;
-    border-collapse: collapse;
+width:100%;
+border-collapse:collapse;
+margin-top:5px;
 }}
 
 td {{
-    padding: 6px 0;
+border:1px solid #ccc;
+padding:6px;
+}}
+
+.label {{
+font-weight:600;
+width:160px;
+background:#fafafa;
+}}
+
+.value {{
+border-bottom:1px solid #000;
+}}
+
+.signature {{
+border-bottom:1px solid #000;
+width:250px;
+display:inline-block;
+margin-left:10px;
 }}
 
 .footer {{
-    font-size: 10px;
-    margin-top: 20px;
+font-size:10px;
+margin-top:25px;
+border-top:1px solid #ccc;
+padding-top:8px;
 }}
 
-@media print {{
-    @page {{
-        size: A4;
-        margin: 20mm;
-    }}
-
-    body {{
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }}
-}}
 </style>
+
 </head>
 
 <body onload='window.print()'>
+
 <div class='container'>
 
-<!-- Header -->
-<div class='header'>
-    <div class='header-title'>
-        <h2>APPLICATION FOR LOAN / ADVANCE</h2>
-        <h3>Annexure - 1</h3>
-    </div>
-    <img src='{logoSrc}' class='logo' />
-</div>
+<table style='border:none'>
+<tr>
 
-<!-- Applicant Details -->
+<td style='border:none;width:120px'>
+<img src='{logoSrc}' style='width:90px'/>
+</td>
 
-<div class='row'>
-Name <span class='line long'></span>
-Employee Code <span class='line'></span>
-Deptt <span class='line'></span>
-</div>
+<td style='border:none;text-align:center'>
+<div class='title'>APPLICATION FOR LOAN / ADVANCE</div>
+<div class='subtitle'>Annexure - 1</div>
+</td>
 
-<div class='row'>
-Salary Drawn <span class='line'></span>
-D.O.J <span class='line'></span>
-Amount applied for Rs <span class='line'></span>
-</div>
+</tr>
+</table>
 
-<div class='row'>
-(Rupees <span class='line long'></span>)
-Purpose <span class='line long'></span>
-</div>
 
-<div class='row'>
-Number of installments for Repayment <span class='line'></span>
-</div>
-
-<!-- GUARANTEE SECTION -->
-
-<div class='section'>GUARANTEE</div>
+<div class='section-title'>Applicant Details</div>
 
 <table>
 
 <tr>
-<td>(1) Name <span class='line'></span></td>
-<td>(2) Name <span class='line'></span></td>
+<td class='label'>Name</td>
+<td class='value'>{name}</td>
+
+<td class='label'>Employee Code</td>
+<td class='value'>{empCode}</td>
 </tr>
 
 <tr>
-<td>Deptt <span class='line'></span></td>
-<td>Deptt <span class='line'></span></td>
+<td class='label'>Department</td>
+<td class='value'>{department}</td>
+
+<td class='label'>Salary Drawn</td>
+<td class='value'>{Salary_Drawn}</td>
 </tr>
 
 <tr>
-<td>Employee Code <span class='line'></span></td>
-<td>Employee Code <span class='line'></span></td>
+<td class='label'>Date of Joining</td>
+<td class='value'>{doj}</td>
+
+<td class='label'>Amount Applied (Rs)</td>
+<td class='value'>{amount}</td>
 </tr>
 
 <tr>
-<td>Since <span class='line'></span></td>
-<td>Since <span class='line'></span></td>
+<td class='label'>Purpose</td>
+<td class='value'>{purpose}</td>
+
+<td class='label'>Installments</td>
+<td class='value'>{installments}</td>
+</tr>
+
+<tr>
+<td class='label'>Rupees (In Words)</td>
+<td class='value' colspan='3'>{amountInWords}</td>
 </tr>
 
 </table>
 
-<div class='row'>
+
+<div class='section-title'>Guarantee</div>
+
+<table>
+
+<tr>
+<td class='label'>Guarantor 1 Name</td>
+<td class='value'>{guarantor1}</td>
+
+<td class='label'>Guarantor 2 Name</td>
+<td class='value'>{guarantor2}</td>
+</tr>
+
+<tr>
+<td class='label'>Deptt</td>
+<td class='value'>{guarantor1_depart}</td>
+
+<td class='label'>Deptt</td>
+<td class='value'>{guarantor2_depart}</td>
+</tr>
+
+
+
+</table>
+
+<p style='margin-top:10px'>
 We hereby stand guarantee severally and jointly for the above amount and authorise the company
 to recover the amount from our salary or any other amount due to us from the company
 in the event said amount or any part thereof being not paid by the above borrower.
-</div>
+</p>
 
-<!-- HR Validation -->
 
-<div class='section'>Validate By HR/P&A Deptt</div>
+<div class='section-title'>Validate By HR / P&A Department</div>
 
-<div class='row'>
-Salary or Basic+VDA+HRA <span class='line'></span>
-Whether confirmed or not <span class='line'></span>
-</div>
+<table>
 
-<div class='row'>
-Status of last loan repayment <span class='line'></span>
-Eligibility amount as per Policy <span class='line'></span>
-</div>
+<tr>
+<td class='label'>Salary or Basic + HRA</td>
+<td class='value'>{basicHra}</td>
 
-<div class='row'>
-No. of Installment for Repayment as per policy <span class='line'></span>
-</div>
+<td class='label'>Whether Confirmed</td>
+<td class='value'>{confirmed}</td>
+</tr>
 
-<div class='row signature'>
-Verified by P & A <span class='line long'></span>
-</div>
+<tr>
+<td class='label'>Last Loan Repayment Status</td>
+<td class='value'>{lastLoanstatus}</td>
 
-<!-- Plant HR Approval -->
+<td class='label'>Eligibility Amount</td>
+<td class='value'>{eligibility}</td>
+</tr>
 
-<div class='section'>Validate By Plant/BV HR Head</div>
+<tr>
+<td class='label'>Installments as per Policy</td>
+<td class='value'>{spocInstallment}</td>
 
-<div class='row'>
-Final Amount <span class='line'></span>
-</div>
+<td></td>
+<td></td>
+</tr>
 
-<div class='row'>
-No. of Installments for Repayment <span class='line'></span>
-</div>
+<tr>
+<td colspan='4' style='padding-top:20px'>
+Verified by P & A
+<span class='signature'>{SPOC_Name}</span>
+</td>
+</tr>
 
-<div class='row signature'>
-Signature of Approving Authority <span class='line long'></span>
-</div>
+</table>
+
+
+<div class='section-title'>Validate By Plant / BV HR Head</div>
+
+<table>
+
+<tr>
+<td class='label'>Final Amount</td>
+<td class='value'>{plantAmount}</td>
+
+<td class='label'>Installments</td>
+<td class='value'>{plantInstallment}</td>
+</tr>
+
+<tr>
+<td colspan='4' style='padding-top:20px'>
+Signature of Approving Authority
+<span class='signature'>{Plant_BV_HR_Name}</span>
+</td>
+</tr>
+
+</table>
 ");
 
-            if (isDeviation == "Y")
+            if (isDeviation == "Yes")
             {
-                sb.Append(@"
+                sb.Append($@"
 
-<div class='section'>Validate By BV HR Head - Deviation</div>
+<div class='section-title'>Deviation Approval (BV HR Head)</div>
 
-<div class='row'>
-Final Amount <span class='line'></span>
-</div>
+<table>
 
-<div class='row'>
-No. of Installments for Repayment <span class='line'></span>
-</div>
+<tr>
+<td class='label'>Final Amount</td>
+<td class='value'>{deviationAmount}</td>
 
-<div class='row signature'>
-Signature of Approving Authority <span class='line long'></span>
-</div>
+<td class='label'>Installments</td>
+<td class='value'>{deviationInstallment}</td>
+</tr>
+
+<tr>
+<td colspan='4' style='padding-top:20px'>
+Signature of Approving Authority
+<span class='signature'>{deviationName}</span>
+</td>
+</tr>
+
+</table>
 ");
             }
 
-            sb.Append(@"
+            sb.Append($@"
 
-<!-- Central Payroll -->
+<div class='section-title'>Validate By Central Payroll HR</div>
 
-<div class='section'>Validate By Central Payroll HR</div>
+<table>
 
-<div class='row'>
-Bank Name* <span class='line'>YES BANK</span>
-IFSC Code* <span class='line'>21313</span>
-</div>
+<tr>
+<td class='label'>Bank Name</td>
+<td class='value'>{bankName}</td>
 
-<div class='row'>
-Bank Account Number* <span class='line long'>213213</span>
-</div>
+<td class='label'>IFSC Code</td>
+<td class='value'>{ifsc}</td>
+</tr>
 
-<div class='row'>
-Final Amount* <span class='line'>400500</span>
-No.of Installments* <span class='line'>20</span>
-</div>
+<tr>
+<td class='label'>Account Number</td>
+<td class='value'>{account}</td>
 
-<div class='row'>
-PAN Number* <span class='line'>CELPK7634B</span>
-</div>
+<td class='label'>PAN Number</td>
+<td class='value'>{pan}</td>
+</tr>
 
-<div class='row'>
-Cost Center* <span class='line long'>Minda Corporation Limited(Group Corporate Office)</span>
-</div>
+<tr>
+<td class='label'>Final Amount</td>
+<td class='value'>{amount}</td>
 
-<div class='row'>
-SAP Cost Center* <span class='line'>IN1101CO14</span>
-Profit Center* <span class='line'>IN1101COCO</span>
-</div>
+<td class='label'>Installments</td>
+<td class='value'>{Central_Payroll_Ins}</td>
+</tr>
 
-<div class='row signature'>
-Signature of Approving Authority <span class='line long'></span>
-</div>
+<tr>
+<td class='label'>Cost Center</td>
+<td class='value' colspan='3'>{costCenter}</td>
+</tr>
 
-<div class='row'>
-New Cost Center* <span class='line long'></span>
-</div>
+<tr>
+<td class='label'>SAP Cost Center</td>
+<td class='value'>{sapCost}</td>
+
+<td class='label'>Profit Center</td>
+<td class='value'>{profit}</td>
+</tr>
+
+
+<tr>
+<td class='label'>New Cost Center</td>
+<td class='value' colspan='3'>{newCost}</td>
+</tr>
+
+<tr>
+<td colspan='4' style='padding-top:20px'>
+Signature of Approving Authority
+<span class='signature'>{Central_Payroll_Name}</span>
+</td>
+</tr>
+</table>
+
 
 <div class='footer'>
-CSG-HR-324 REV.00 DATE:01-04-2010<br/>
+CSG-HR-324 REV.00 DATE:01-04-2010<br>
 Note: Xerox copy of the application for loan after final approval has to be kept in the individual personnel file
 </div>
 
 </div>
+
 </body>
 </html>
 ");
