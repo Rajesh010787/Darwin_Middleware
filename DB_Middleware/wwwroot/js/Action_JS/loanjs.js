@@ -124,12 +124,10 @@ function createRoleSuccess(Tag, Message, URL) {
 //}
 
 function Save_Loan_Request() {
-    var files = "";
+
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     var rid = params['id'];
-
-    
 
     $('#Loan_Request').validate({
         rules: {
@@ -145,8 +143,9 @@ function Save_Loan_Request() {
             textpurpos: "required",
             txtremark: "required"
         },
-        messages: {},
+
         errorElement: "em",
+
         errorPlacement: function (error, element) {
             error.addClass("invalid-feedback");
             if (element.prop("type") === "checkbox") {
@@ -155,51 +154,102 @@ function Save_Loan_Request() {
                 error.insertAfter(element.next(".pmd-textfield-focused"));
             }
         },
-        highlight: function (element, errorClass, validClass) {
+
+        highlight: function (element) {
             $(element).addClass("is-invalid").removeClass("is-valid");
         },
-        unhighlight: function (element, errorClass, validClass) {
+
+        unhighlight: function (element) {
             $(element).addClass("is-valid").removeClass("is-invalid");
         },
 
         submitHandler: function (form) {
-            var validationcheck = "OK";
+
+            // ---------------------------
+            // Custom Validations
+            // ---------------------------
+
             if ($('#dbgarantee1').val() == '') {
                 alert('Please Select Garanteed 1 List');
-                $("#dbgarantee1").focus();
-                $('#dbgarantee1').addClass("is-invalid");
-                validationcheck = "N";
-                return false;  // Prevent form submission
+                $("#dbgarantee1").focus().addClass("is-invalid");
+                return false;
             }
+
             if ($('#dbgarantee2').val() == '') {
                 alert('Please Select Garanteed 2 List');
-                $("#dbgarantee2").focus();
-                $('#dbgarantee2').addClass("is-invalid");
-                validationcheck = "N";
-                return false;  // Prevent form submission
+                $("#dbgarantee2").focus().addClass("is-invalid");
+                return false;
             }
-            var garantee1 = $("#dbgarantee1 > option:selected");
+
+            // ---------------------------
+            // Get selected guarantees
+            // ---------------------------
+
             var garanteeecode1 = [];
-            for (var garantee1 of document.getElementById("dbgarantee1").options) {
-                if (garantee1.selected) {
-                    garanteeecode1.push(garantee1.value);
-                }
-            }
-           
-            var garantee2 = $("#dbgarantee2 > option:selected");
+            $("#dbgarantee1 option:selected").each(function () {
+                garanteeecode1.push($(this).val());
+            });
+
             var garanteeecode2 = [];
-            for (var garantee2 of document.getElementById("dbgarantee2").options) {
-                if (garantee2.selected) {
-                    garanteeecode2.push(garantee2.value);
+            $("#dbgarantee2 option:selected").each(function () {
+                garanteeecode2.push($(this).val());
+            });
+
+            // ---------------------------
+            // File Validation
+            // ---------------------------
+
+            var fileInput = document.getElementById('fileupload');
+            var files = fileInput.files;
+            var totalSize = 0;
+
+            if (files.length > 0) {
+
+                for (var i = 0; i < files.length; i++) {
+
+                    var file = files[i];
+                    totalSize += file.size;
+
+                    // Size check (5MB)
+                    if (totalSize > 5 * 1024 * 1024) {
+                        alert("Maximum allowed file size is 5 MB");
+                        return false;
+                    }
+
+                    // Extension check
+                    var ext = file.name.split('.').pop().toLowerCase();
+                    if ($.inArray(ext, ["png", "jpg", "jpeg", "pdf"]) === -1) {
+                        alert("Only png, jpg, jpeg and pdf files are allowed.");
+                        return false;
+                    }
                 }
+
+            } else {
+               /* if ($("#btnsubmithrloancreation").text() === "Submit") {*/
+                    alert("Please upload attachment");
+                    return false;
+                /*}*/
             }
-               // Show spinner and disable the submit button
-            $('.spinner').css('display', 'block').fadeIn();
-            $("#btnsubmithrloancreation").prop("disabled", true);  // Disable the button
+
+            // ---------------------------
+            // UI Lock (ONLY AFTER VALIDATION)
+            // ---------------------------
+
+            $('.spinner').fadeIn();
+            $("#btnsubmithrloancreation").prop("disabled", true);
+
+            // ---------------------------
+            // FormData
+            // ---------------------------
 
             var formData = new FormData();
 
-            // Append Model Data
+            // Append files
+            for (var i = 0; i < files.length; i++) {
+                formData.append("files", files[i]);
+            }
+
+            // Append data
             formData.append("deviation", $("#dbdeviation").val());
             formData.append("installments", $("#txtinstallments").val());
             formData.append("salarydown", $("#txtsalarydown").val());
@@ -213,14 +263,9 @@ function Save_Loan_Request() {
             formData.append("id", $("#hiddenuniqueid").val());
             formData.append("hiddenimaegurl", $("#hiddenimageurl").val());
 
-            // Append Files
-            var files = $("#fileupload")[0].files;
-            for (var i = 0; i < files.length; i++) {
-                formData.append("files", files[i]);
-            }
-
-            $('.spinner').show();
-            $("#btnsubmithrloancreation").prop("disabled", true);
+            // ---------------------------
+            // AJAX Call
+            // ---------------------------
 
             $.ajax({
                 url: '/loan/Request_Loan_Initiated',
@@ -230,23 +275,18 @@ function Save_Loan_Request() {
                 contentType: false,
 
                 success: function (data) {
-                
+
                     if (data.flag == '1') {
                         createRoleSuccess("SUCCESS", data.message, "/Loan/Load_Request_Details");
-                        $('.spinner').fadeOut();
-                    } else {
-                       //createRoleSuccess(data.flag, data.message, "/Email_Request/Bind_Data_For_EmailCreation");
-                        $('.spinner').fadeOut();
                     }
-                    // Re-enable the submit button after the request completes
-                    $("#btnsubmithrloancreation").prop("disabled", false);
-                    $("#btnsubmithrloancreation").text("Submit");
-                },
-                error: function () {
-                    // In case of an error, re-enable the button as well
-                    $("#btnsubmithrloancreation").prop("disabled", false);
-                    $("#btnsubmithrloancreation").text("Submit");
+
                     $('.spinner').fadeOut();
+                    $("#btnsubmithrloancreation").prop("disabled", false).text("Submit");
+                },
+
+                error: function () {
+                    $('.spinner').fadeOut();
+                    $("#btnsubmithrloancreation").prop("disabled", false).text("Submit");
                 }
             });
         }

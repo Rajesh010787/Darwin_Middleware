@@ -432,7 +432,7 @@ namespace DB_Middleware.Controllers
                     );
                 }
                 // Rejected
-                else if (objdata.CStatus == "Reject")
+                else if (objdata.CStatus == "Rejected")
                 {
                     subject = "Loan Request Rejected";
                     mailBody = Emailtext.GetLoanRejectedMail(
@@ -568,7 +568,7 @@ namespace DB_Middleware.Controllers
 
 
                 // Rejected
-                if (objdata.CStatus == "Reject")
+                if (objdata.CStatus == "Rejected")
                 {
                     subject = "Loan Request Rejected";
                     mailBody = Emailtext.GetLoanRejectedMail(
@@ -628,7 +628,7 @@ namespace DB_Middleware.Controllers
         public ActionResult Validate_Loan_Request_GCO_HR([FromBody] loandata objdata)
         {
             Response returnresponse = new Response();
-
+            string gcofinalamount = EncryptionHelper.Encrypt(objdata.gcofinalamount);
             try
             {
                 string query = @"Validate_GCO_Loan";
@@ -646,7 +646,7 @@ namespace DB_Middleware.Controllers
                     cmd.Parameters.AddWithValue("@bankname", objdata.bankname);
                     cmd.Parameters.AddWithValue("@ifsccode", objdata.ifsccode);
                     cmd.Parameters.AddWithValue("@bankaccountnumber", objdata.accountnumber);
-                    cmd.Parameters.AddWithValue("@finalamount", objdata.gcofinalamount);
+                    cmd.Parameters.AddWithValue("@finalamount", gcofinalamount);
                     cmd.Parameters.AddWithValue("@instalment", objdata.gcoinstalment);
                     cmd.Parameters.AddWithValue("@pan", objdata.pan);
                     
@@ -701,7 +701,7 @@ namespace DB_Middleware.Controllers
                     );
                 }
                 // Rejected
-                else if (objdata.CStatus == "Reject")
+                else if (objdata.CStatus == "Rejected")
                 {
                     subject = "Loan Request Rejected";
                     mailBody = Emailtext.GetLoanRejectedMail(
@@ -824,7 +824,7 @@ namespace DB_Middleware.Controllers
                     );
                 }
                 // Rejected
-                else if (objdata.CStatus == "Reject")
+                else if (objdata.CStatus == "Rejected")
                 {
                     subject = "Loan Request Rejected";
                     mailBody = Emailtext.GetLoanRejectedMail(
@@ -933,7 +933,7 @@ namespace DB_Middleware.Controllers
                     );
                 }
                 // Rejected
-                else if (objdata.CStatus == "Reject")
+                else if (objdata.CStatus == "Rejected")
                 {
                     subject = "Loan Request Rejected";
                     mailBody = Emailtext.GetLoanRejectedMail(
@@ -1044,7 +1044,7 @@ namespace DB_Middleware.Controllers
                     );
                 }
                 // Rejected
-                else if (objdata.CStatus == "Reject")
+                else if (objdata.CStatus == "Rejected")
                 {
                     subject = "Loan Request Rejected";
                     mailBody = Emailtext.GetLoanRejectedMail(
@@ -1163,7 +1163,7 @@ namespace DB_Middleware.Controllers
                     );
                 }
                 // Rejected
-                else if (objdata.CStatus == "Reject")
+                else if (objdata.CStatus == "Rejected")
                 {
                     subject = "Loan Request Rejected";
                     mailBody = Emailtext.GetLoanRejectedMail(

@@ -156,6 +156,8 @@ string G2
 
             sb.AppendLine("<tr><td>");
 
+            sb.AppendLine("<p>To<strong> " + pendingemail + " </strong>,</p>");
+
             sb.AppendLine("<p>Dear <strong> " + Pending_Full_Name + " </strong>,</p>");
             sb.AppendLine("<p>Greetings!</p>");
 
@@ -226,7 +228,7 @@ string hrspocname
             sb.AppendLine("<table width='600' style='background:#ffffff;border-radius:6px;' cellpadding='20'>");
 
             sb.AppendLine("<tr><td>");
-
+            sb.AppendLine("<p>To<strong> " + Toemail + " </strong>,</p>");
             sb.AppendLine("<p>Dear <strong> " + pendingfullname + "</strong>,</p>");
             sb.AppendLine("<p>Greetings!</p>");
 
@@ -263,7 +265,7 @@ string deviationcase
                 sb.AppendLine("<table width='600' style='background:#ffffff;border-radius:6px;' cellpadding='20'>");
 
                 sb.AppendLine("<tr><td>");
-
+                sb.AppendLine("<p>To<strong> " + Toemail + " </strong>,</p>");
                 sb.AppendLine("<p>Dear <strong> " + pendingfullname + "</strong>,</p>");
                 sb.AppendLine("<p>Greetings!</p>");
 
@@ -287,7 +289,7 @@ string deviationcase
                 sb.AppendLine("<table width='600' style='background:#ffffff;border-radius:6px;' cellpadding='20'>");
 
                 sb.AppendLine("<tr><td>");
-
+                sb.AppendLine("<p>To<strong> " + Toemail + " </strong>,</p>");
                 sb.AppendLine("<p>Dear <strong> " + pendingfullname + "</strong>,</p>");
                 sb.AppendLine("<p>Greetings!</p>");
 
@@ -323,7 +325,7 @@ string createdby,
             sb.AppendLine("<table width='600' style='background:#ffffff;border-radius:6px;' cellpadding='20'>");
 
             sb.AppendLine("<tr><td>");
-
+            sb.AppendLine("<p>To<strong> " + Pendingemail + " </strong>,</p>");
             sb.AppendLine("<p>Dear <strong> " + Pending_Full_Name + "</strong>,</p>");
             sb.AppendLine("<p>Greetings!</p>");
 
@@ -359,7 +361,7 @@ string createdby,
             sb.AppendLine("<table width='600' style='background:#ffffff;border-radius:6px;' cellpadding='20'>");
 
             sb.AppendLine("<tr><td>");
-
+            sb.AppendLine("<p>To<strong> " + Pendingemail + " </strong>,</p>");
             sb.AppendLine("<p>Dear <strong> " + Pending_Full_Name + "</strong>,</p>");
             sb.AppendLine("<p>Greetings!</p>");
 
@@ -470,7 +472,7 @@ string pendingWith)
             sb.AppendLine("<table width='100%' style='font-family:Arial, sans-serif;'><tr><td align='left'>");
             sb.AppendLine("<table width='600' style='background:#ffffff;border-radius:6px;' cellpadding='20'>");
             sb.AppendLine("<tr><td>");
-
+            sb.AppendLine("<p>To<strong> " + Toemail + " </strong>,</p>");
             sb.AppendLine($"<p>Dear {Pending_Full_Name},</p>");
             sb.AppendLine("<p>Greetings!</p>");
 
@@ -572,7 +574,7 @@ $"<a href='https://darwinmware.sparkminda.in/'>Click here</a>.</p>");
             sb.AppendLine($"<p>Dear {employeeName},</p>");
             sb.AppendLine("<p>Greetings!</p>");
 
-            sb.AppendLine("<p>his is to inform you that your Loan Request Form has been reviewed by the approver <strong>" + actionBy + "</strong> and has been sent back for correction / clarification. You are requested to please review the remarks mentioned in the system and resubmit the form after making the necessary corrections at the earliest.</p>");
+            sb.AppendLine("<p>This is to inform you that your Loan Request Form has been reviewed by the approver <strong>" + actionBy + "</strong> and has been sent back for correction / clarification. You are requested to please review the remarks mentioned in the system and resubmit the form after making the necessary corrections at the earliest.</p>");
 
 
 
@@ -669,7 +671,7 @@ $"<a href='https://darwinmware.sparkminda.in/'>Click here</a>.</p>");
             sb.AppendLine("<table width='600' style='background:#ffffff;border-radius:6px;' cellpadding='20'>");
 
             sb.AppendLine("<tr><td>");
-
+            sb.AppendLine("<p>To<strong> " + Pending_Email + " </strong>,</p>");
             sb.AppendLine("<p>Dear " + Pending_Full_Name + ",</p>");
             sb.AppendLine("<p>Greetings!</p>");
 
@@ -760,7 +762,7 @@ $"<a href='https://darwinmware.sparkminda.in/'>Click here</a>.</p>");
             string doj = row["DOJ"]?.ToString() ?? "";
 
             // Loan
-            string amount = EncryptionHelper.Decrypt(row["Amount_Applied_For_Rs"]?.ToString() ?? "");
+            string amount = EncryptionHelper.Decrypt(row["Amount"]?.ToString() ?? "");
 
             long rupees = Convert.ToInt64(amount);
 
